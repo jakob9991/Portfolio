@@ -92,20 +92,20 @@ export const About = () => {
                                         Hi,
                                         <div className="w-full h-1 bg-primary rounded-full mt-1" />
                                     </span>
-                                      &nbsp;ich bin <span className="text-primary">Jakob</span>
+                                    &nbsp;ich bin <span className="text-primary">Jakob</span>
                                 </h2>
                             </div>
 
                             <p className="text-lg text-muted-foreground leading-relaxed">
-                                Ich kombiniere technische Präzision mit kreativem Problemlösen. Aktuell studiere ich{" "}
-                                <span className="text-foreground font-semibold">Medieninformatik</span> mit Fokus
-                                auf Web & Mobile Development.
+                                Ich baue digitale Lösungen, die funktionieren und Spaß machen. Aktuell studiere ich{" "}
+                                <span className="text-foreground font-semibold">Medieninformatik</span> in Frankfurt
+                                mit Fokus auf Web & Mobile Development.
                             </p>
 
                             <p className="text-muted-foreground leading-relaxed">
-                                Leidenschaftlich am Entwickeln moderner, nutzerzentrierter Anwendungen, die echte
-                                Probleme lösen. Von Full-Stack Web-Apps bis zu Mobile-Lösungen – ich liebe es,
-                                Ideen in die Realität umzusetzen.
+                                Was mich antreibt? Probleme zu lösen und Ideen Leben einzuhauchen. Von kompletten
+                                Web-Apps über Mobile-Lösungen bis hin zu Automation – wenn's technisch interessant
+                                ist und echten Mehrwert bringt, bin ich dabei.
                             </p>
 
                             <Button
@@ -114,7 +114,7 @@ export const About = () => {
                                 className="border-primary text-primary hover:bg-primary hover:text-primary-foreground group"
                                 onClick={() => {
                                     const link = document.createElement('a');
-                                    link.href = "/data//Lebenslauf_JakobDickhardt.pdf"
+                                    link.href = "/data/Lebenslauf_JakobDickhardt.pdf"
                                     link.download = "Jakob-Dickhardt-Lebenslauf.pdf"
                                     link.click()
                                 }}

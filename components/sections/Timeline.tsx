@@ -9,9 +9,9 @@ gsap.registerPlugin(ScrollTrigger);
 const timelineData = [
   {
     year: "2025 - Heute",
-    title: "AI & Automation Engineer",
-    subtitle: "Focus: Business Logic & Workflow Design",
-    description: "Spezialisierung auf KI-gestützte Prozessautomatisierung. Entwicklung von RAG-Systemen und n8n-Workflows für Geschäftskunden. Umsetzung komplexer Web-Projekte wie Cenra.ai.",
+    title: "AI & Automation",
+    subtitle: "Workflows & Prozessoptimierung",
+    description: "Aktuell spezialisiere ich mich auf KI-gestützte Automatisierung mit n8n und entwickle Webprojekte wie Cenra.ai. Der Fokus liegt auf praktischen Lösungen für echte Business-Probleme.",
     icon: <BrainCircuit className="w-6 h-6 text-white" />,
     color: "bg-purple-500",
     glow: "shadow-[0_0_20px_rgba(168,85,247,0.4)]"
@@ -19,8 +19,8 @@ const timelineData = [
   {
     year: "2023 - Heute",
     title: "B.Sc. Medieninformatik",
-    subtitle: "University of Applied Sciences Frankfurt",
-    description: "Vertiefung in Web & Mobile Development. Parallel dazu Mitgründer von SJP Connect und Lead Developer für die 'Vibon' App (React Native). Verbindung von Theorie und Praxis.",
+    subtitle: "Frankfurt University of Applied Sciences",
+    description: "Studium mit Schwerpunkt Web & Mobile Development. Parallel dazu Mitgründer von SJP Connect und Lead Dev für die Vibon App. Hier versuche ich, Uni-Wissen direkt in echten Projekten anzuwenden.",
     icon: <Code className="w-6 h-6 text-white" />,
     color: "bg-blue-500",
     glow: "shadow-[0_0_20px_rgba(59,130,246,0.4)]"
@@ -28,17 +28,17 @@ const timelineData = [
   {
     year: "2019 - 2023",
     title: "B.A. Soziale Arbeit",
-    subtitle: "Human-Centric Foundation (Grade: 1.8)",
-    description: "Abschluss mit Auszeichnung. Dieses Studium bildet mein Fundament für User Experience (UX). Es lehrte mich Psychologie, Kommunikation und Empathie – essenziell, um Software zu bauen, die Menschen intuitiv verstehen und gerne nutzen.",
+    subtitle: "Abschluss mit 1.8",
+    description: "Mag auf den ersten Blick ungewöhnlich wirken, aber genau hier habe ich gelernt, wirklich nutzerzentriert zu denken. Psychologie, Kommunikation und Empathie sind das Fundament für Software, die Menschen gerne nutzen – nicht nur technisch funktioniert.",
     icon: <HeartHandshake className="w-6 h-6 text-white" />,
     color: "bg-rose-500",
     glow: "shadow-[0_0_20px_rgba(244,63,94,0.4)]"
   },
   {
     year: "2018 - 2021",
-    title: "Entrepreneurship & Origins",
-    subtitle: "Amazon FBA & Python",
-    description: "Der Startschuss: Erste Schritte in der Programmierung mit Python (Game Dev). Gleichzeitig Aufbau eines eigenen E-Commerce Business (Amazon FBA), was mein unternehmerisches Denken und Verständnis für Wirtschaftskreisläufe prägte.",
+    title: "Der Anfang",
+    subtitle: "E-Commerce & erste Code-Zeilen",
+    description: "Hier hat alles angefangen: Erste Gehversuche mit Python (hauptsächlich kleine Games) und parallel ein eigenes Amazon FBA Business aufgebaut. Hat mir wirtschaftliches Denken und den Mut zum Ausprobieren gegeben.",
     icon: <Rocket className="w-6 h-6 text-white" />,
     color: "bg-orange-500",
     glow: "shadow-[0_0_20px_rgba(249,115,22,0.4)]"

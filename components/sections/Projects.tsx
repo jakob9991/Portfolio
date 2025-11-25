@@ -64,7 +64,7 @@ const academicProjects = [
   {
     title: "Modulhandbuch Webapp",
     role: "Frontend & Architecture",
-    description: "Eine moderne Webanwendung zur interaktiven Darstellung und Filterung von universitären Modulhandbüchern. Löst das Problem unübersichtlicher PDF-Dokumente durch eine durchsuchbare Datenbank-UI.",
+    description: "Gemeinsam mit meiner Gruppe haben wir die neue Prüfungsordnung des Medieninformatik-Studiengangs grafisch aufbereitet. Statt durch endlose PDFs zu scrollen, können Studierende nun interaktiv durch Module browsen und filtern.",
     tags: ["JavaScript", "GSAP", "TailwindCSS", "Git", "Scrum"],
     year: "2024",
     icon: <Layout className="w-6 h-6" />,
@@ -74,7 +74,7 @@ const academicProjects = [
   {
     title: "Java Snake",
     role: "Desktop Application",
-    description: "Objektorientierte Neuinterpretation des Klassikers 'Snake'. Fokus auf saubere OOP-Prinzipien, Event-Handling und Performance-Optimierung in einer Desktop-Umgebung.",
+    description: "Mein erstes Java-Projekt während der Einführung in die Programmierung. Der Klassiker Snake als Desktop-Anwendung – simpel, aber eine gute Übung für OOP-Grundlagen und Event-Handling.",
     tags: ["Java", "OOP Patterns"],
     year: "2023",
     icon: <Gamepad2 className="w-6 h-6" />,
@@ -363,7 +363,7 @@ export const Projects = () => {
             <div>
               <h3 className="text-3xl font-bold flex items-center gap-3 text-white">
                 <Terminal className="text-green-500 w-8 h-8" />
-                The Lab
+                Other Projects
               </h3>
               <p className="text-muted-foreground mt-2">Engineering, Hardware-Hacks & Automatisierungs-Skripte.</p>
             </div>

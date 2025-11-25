@@ -20,27 +20,29 @@ const getSkillColor = (level: number) => {
 export const TechStack = () => {
   // Enhanced data structure with skill levels
   const techStack = {
-    frontend: [
-      { name: "React", icon: "⚛️", level: 95, status: "Expert" },
-      { name: "Next.js", icon: "▲", level: 90, status: "Expert" },
-      { name: "TypeScript", icon: "🔷", level: 85, status: "Advanced" },
-      { name: "Tailwind CSS", icon: "🎨", level: 95, status: "Expert" },
-      { name: "GSAP", icon: "🎬", level: 75, status: "Advanced" },
-      { name: "Figma", icon: "🖌️", level: 80, status: "Advanced" },
-    ],
-    backend: [
-      { name: "Node.js", icon: "🟢", level: 85, status: "Advanced" },
-      { name: "Python", icon: "🐍", level: 70, status: "Intermediate" },
-      { name: "PostgreSQL", icon: "🐘", level: 80, status: "Advanced" },
-      { name: "Docker", icon: "🐳", level: 65, status: "Intermediate" },
-      { name: "Git", icon: "📦", level: 90, status: "Expert" },
-      { name: "n8n", icon: "🔄", level: 85, status: "Advanced" },
-    ],
-    mobile: [
-      { name: "Kotlin", icon: "🤖", level: 60, status: "Intermediate" },
-      { name: "React Native", icon: "⚛️", level: 100, status: "Expert" },
-    ],
-  };
+  frontend: [
+    { name: "React", icon: "⚛️", level: 95, status: "Expert" },
+    { name: "Next.js", icon: "▲", level: 85, status: "Advanced" },
+    { name: "TypeScript", icon: "🔷", level: 85, status: "Advanced" },
+    { name: "Tailwind CSS", icon: "🎨", level: 85, status: "Advanced" },
+    { name: "GSAP", icon: "🎬", level: 75, status: "Advanced" },
+    { name: "Figma", icon: "🖌️", level: 65, status: "Intermediate" },
+  ],
+  backend: [
+    { name: "Node.js", icon: "🟢", level: 85, status: "Advanced" },
+    { name: "Python", icon: "🐍", level: 70, status: "Intermediate" },
+    { name: "Java", icon: "☕", level: 60, status: "Intermediate" },
+    { name: "Firebase", icon: "🔥", level: 90, status: "Expert" },
+    { name: "PostgreSQL", icon: "🐘", level: 60, status: "Intermediate" },
+    { name: "Docker", icon: "🐳", level: 75, status: "Advanced" },
+    { name: "Git", icon: "📦", level: 90, status: "Expert" },
+    { name: "n8n", icon: "🔄", level: 85, status: "Advanced" },
+  ],
+  mobile: [
+    { name: "Kotlin", icon: "🤖", level: 60, status: "Intermediate" },
+    { name: "React Native", icon: "⚛️", level: 100, status: "Expert" },
+  ],
+};
 
   // Duplicate for seamless loop
   const duplicatedFrontend = [...techStack.frontend, ...techStack.frontend];
