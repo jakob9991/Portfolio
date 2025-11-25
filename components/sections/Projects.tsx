@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ExternalLink, Github, Code2, GraduationCap, Layout, Lock, Smartphone, Terminal, Workflow, Tv, Bot, Gamepad2, Database } from "lucide-react";
+import { ExternalLink, Github, Code2, GraduationCap, Layout, Lock, Smartphone, Terminal, Workflow, Tv, Bot, Gamepad2 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,7 +21,8 @@ const featuredProjects = [
     tags: ["React", "TypeScript", "Tailwind CSS", "GSAP"],
     links: { demo: "https://ai.madebyjakob.de", repo: "private" },
     color: "from-blue-500 to-indigo-600",
-    type: "web"
+    type: "web",
+    image: "/images/cenraAI.png" 
   },
   {
     id: "02",
@@ -36,7 +37,9 @@ const featuredProjects = [
     tags: ["React Native", "Firebase", "Google Maps API", "JavaScript",],
     links: { repo: "private" },
     color: "from-emerald-400 to-cyan-500",
-    type: "mobile"
+    type: "mobile",
+    // Hier nutzen wir jetzt ein Array für 3 Screenshots
+    images: ["/images/vibon/image2.jpeg", "/images/vibon/image1.jpeg", "/images/vibon/image3.jpeg"]
   },
   {
     id: "03",
@@ -51,7 +54,8 @@ const featuredProjects = [
     tags: ["n8n", "JavaScript", "Webhooks", "OpenAI API", "RAG"],
     links: { repo: "private" },
     color: "from-orange-400 to-red-500",
-    type: "automation"
+    type: "automation",
+    image: "/images/workflow.png"
   }
 ];
 
@@ -64,7 +68,7 @@ const academicProjects = [
     tags: ["JavaScript", "GSAP", "TailwindCSS", "Git", "Scrum"],
     year: "2024",
     icon: <Layout className="w-6 h-6" />,
-    link: "https://hosting.iem.thm.de/mpm-projects/mpm2025-1", // Placeholder
+    link: "https://hosting.iem.thm.de/mpm-projects/mpm2025-1", 
     hasDemo: true
   },
   {
@@ -94,7 +98,7 @@ const labProjects = [
     title: "Data Mining Bot",
     category: "Web Scraping",
     description: "Intelligente Crawler für strukturierte Datenerfassung und Prozessautomatisierung via Headless Browsers.",
-    tech: ["Python", "Selenium", "Pandas", "Beaufitful Soup"],
+    tech: ["Python", "Selenium", "Pandas", "Beautiful Soup"],
     icon: <Bot className="w-8 h-8 text-green-400" />,
     visual: "terminal",
     codeSnippet: "def scrape_data(url):\n  driver.get(url)\n  elements = driver.find_all()\n  return process(elements)"
@@ -112,7 +116,6 @@ const labProjects = [
         if self.collides_with_list():
             self.game_over()`
   }
-
 ];
 
 export const Projects = () => {
@@ -187,7 +190,7 @@ export const Projects = () => {
 
         {/* --- 1. FEATURED PROJECTS --- */}
         <div className="space-y-32 mb-40">
-          {featuredProjects.map((project, index) => (
+          {featuredProjects.map((project: any, index) => (
             <div
               key={index}
               className={`project-card-featured flex flex-col ${index % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-10 lg:gap-20 items-center`}
@@ -207,14 +210,50 @@ export const Projects = () => {
                     </div>
                   </div>
 
-                  {/* Mockup Content */}
-                  <div className={`aspect-video w-full bg-gradient-to-br ${project.color} opacity-10 flex items-center justify-center relative overflow-hidden`}>
-                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
-                    <div className="transform transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3">
+                  {/* Content (Image, Gallery, or CSS Mockup) */}
+                  <div className={`aspect-video w-full bg-gradient-to-br ${project.color} bg-opacity-10 flex items-center justify-center relative overflow-hidden bg-[#111]`}>
+                    
+                    {/* Background Grid Pattern (Always visible as base) */}
+                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
+
+                    {/* CASE 1: MULTIPLE MOBILE IMAGES (Gallery) */}
+                    {project.images ? (
+                        <div className="flex justify-center items-center gap-2 sm:gap-4 h-full w-full p-4 sm:p-8">
+                            {project.images.map((img: string, i: number) => (
+                                <div key={i} className={`relative h-full w-auto aspect-[9/19.5] rounded-[1rem] sm:rounded-[1.5rem] overflow-hidden border-[3px] sm:border-[6px] border-[#1a1a1a] shadow-xl bg-black transform transition-all duration-500 group-hover:scale-105 ${i === 1 ? 'z-10 scale-105' : 'scale-95 opacity-80'}`}>
+                                    {/* Phone Bezel/Mockup Styling */}
+                                    <img 
+                                        src={img} 
+                                        alt={`App Screen ${i}`} 
+                                        className="w-full h-full object-cover"
+                                        onError={(e) => {
+                                           e.currentTarget.style.display = 'none';
+                                        }}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    ) : project.image ? (
+                       // CASE 2: SINGLE IMAGE
+                       <img 
+                        src={project.image} 
+                        alt={project.title} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        onError={(e) => {
+                          // Fallback to showing the icon if image fails to load
+                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                        }}
+                       />
+                    ) : null}
+
+                    {/* CASE 3: FALLBACK ICON / MOCKUP (Visible if no image provided OR image error) */}
+                    <div className={`transform transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3 ${project.image || project.images ? 'hidden' : ''}`}>
                       {project.type === 'mobile' ? <Smartphone className="w-20 h-20 text-white/40" /> :
                         project.type === 'automation' ? <Workflow className="w-20 h-20 text-white/40" /> :
                           <Layout className="w-20 h-20 text-white/40" />}
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -236,7 +275,7 @@ export const Projects = () => {
                 <p className="text-muted-foreground text-lg leading-relaxed">{project.description}</p>
 
                 <div className="grid grid-cols-3 gap-6 py-4 border-y border-white/5">
-                  {project.stats.map((stat, i) => (
+                  {project.stats.map((stat: any, i: number) => (
                     <div key={i}>
                       <p className="text-xs text-gray-500 uppercase font-mono mb-1">{stat.label}</p>
                       <p className="text-sm font-semibold text-gray-200">{stat.value}</p>
