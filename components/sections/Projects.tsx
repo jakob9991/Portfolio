@@ -38,7 +38,7 @@ const featuredProjects = [
     links: { repo: "private" },
     color: "from-emerald-400 to-cyan-500",
     type: "mobile",
-    // Hier nutzen wir jetzt ein Array für 3 Screenshots
+
     images: ["/images/vibon/image2.jpeg", "/images/vibon/image1.jpeg", "/images/vibon/image3.jpeg"]
   },
   {
