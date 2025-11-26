@@ -142,7 +142,7 @@ export const Hero = () => {
           {/* Headline */}
           <h1
             ref={headlineRef}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-10 leading-[1.1] tracking-tight"
+            className="text-5xl md:text-7xl lg:text-7xl font-bold mb-10 leading-[1.1] tracking-tight"
           >
             Digitale Erlebnisse
             <br />

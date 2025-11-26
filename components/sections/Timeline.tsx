@@ -1,3 +1,4 @@
+
 'use client'
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
@@ -53,7 +54,6 @@ export const Timeline = () => {
     const ctx = gsap.context(() => {
       
       // 1. Line Drawing Animation
-      // The line grows vertically as the user scrolls through the section
       if (lineRef.current) {
         gsap.fromTo(lineRef.current,
           { height: "0%" },
@@ -64,17 +64,17 @@ export const Timeline = () => {
               trigger: containerRef.current,
               start: "top center",
               end: "bottom center",
-              scrub: 1, // Smooth scrubbing matches scroll position
+              scrub: 1, 
             }
           }
         );
       }
 
       // 2. Card Animations
-      // Cards slide in from left/right
       const cards = gsap.utils.toArray(".timeline-card");
       cards.forEach((card: any, i) => {
-        const isLeft = i % 2 === 0;
+        
+        const isLeft = i % 2 === 0; 
         
         gsap.fromTo(card,
           { 
@@ -90,7 +90,7 @@ export const Timeline = () => {
             ease: "power3.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 85%", // Start animation when card top is at 85% of viewport height
+              start: "top 85%",
               toggleActions: "play none none reverse"
             }
           }
@@ -98,7 +98,6 @@ export const Timeline = () => {
       });
 
       // 3. Dot Animations
-      // Dots pop in when scrolled to
       gsap.utils.toArray(".timeline-dot").forEach((dot: any) => {
         gsap.fromTo(dot,
           { scale: 0, opacity: 0 },
@@ -106,7 +105,7 @@ export const Timeline = () => {
             scale: 1,
             opacity: 1,
             duration: 0.6,
-            ease: "back.out(1.7)", // Bouncy effect
+            ease: "back.out(1.7)",
             scrollTrigger: {
               trigger: dot,
               start: "top 70%",
@@ -136,29 +135,30 @@ export const Timeline = () => {
         <div className="relative max-w-5xl mx-auto">
           {/* Central Line Container */}
           <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-white/5 md:-translate-x-1/2">
-            {/* The Animated Line (Progress) - Uses gradient to match the cards */}
             <div ref={lineRef} className="w-full bg-gradient-to-b from-purple-500 via-rose-500 to-orange-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
           </div>
 
           <div className="space-y-16 md:space-y-32">
             {timelineData.map((item, index) => {
-              const isEven = index % 2 === 0;
+              // Layout Logic:
+              // Index 0 (Even) -> Left Side -> flex-row-reverse (Spacer Right, Card Left)
+              // Index 1 (Odd)  -> Right Side -> flex-row (Spacer Left, Card Right)
+              const isLeft = index % 2 === 0;
+              
               return (
-                <div key={index} className={`relative flex items-center md:justify-between ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                <div key={index} className={`relative flex items-center md:justify-between ${isLeft ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
                   
                   {/* Timeline Dot (Absolute Center) */}
-                  <div className={`timeline-dot absolute left-[20px] md:left-1/2 w-10 h-10 -translate-x-1/2 flex items-center justify-center rounded-full z-10 bg-[#0a0a0a] border-2 border-white/10 ${item.glow}`}>
+                  <div className={`timeline-dot absolute left-[20px] md:left-1/2 w-10 h-10 -translate-x-1/2 flex items-center justify-center rounded-full z-30 bg-[#0a0a0a] border-2 border-white/10 ${item.glow}`}>
                      <div className={`w-3 h-3 rounded-full ${item.color}`}></div>
                   </div>
 
-                  {/* Spacer for the other side (Desktop only) to push card to correct side */}
-                  <div className="hidden md:block md:w-5/12"></div>
-
-                  {/* Content Card */}
-                  <div className="timeline-card pl-16 md:pl-0 w-full md:w-5/12">
+                
+                  {/* Content Card - z-20 ensures it sits above spacers/backgrounds */}
+                  <div className="timeline-card pl-16 md:pl-0 w-full md:w-5/12 relative z-20">
                      <div className="glass-effect p-8 rounded-2xl border-t border-white/10 hover:border-white/20 transition-colors relative group">
                         
-                        {/* Background Gradient for Hover - subtle colored tint based on item color */}
+                        {/* Background Gradient for Hover */}
                         <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-br ${item.color.replace('bg-', 'from-').replace('500', '400')} to-transparent rounded-2xl pointer-events-none`}></div>
 
                         <div className="flex items-center justify-between mb-4">
@@ -171,7 +171,7 @@ export const Timeline = () => {
                         </div>
 
                         <h3 className="text-2xl font-bold text-white mb-1">{item.title}</h3>
-                        <p className={`text-sm font-medium mb-4 bg-clip-text text-transparent bg-gradient-to-r ${item.color.replace('bg-', 'from-').replace('500', '400')} to-white`}>
+                        <p className={`text-sm font-medium mb-4 bg-clip-text `}>
                           {item.subtitle}
                         </p>
                         
@@ -180,8 +180,7 @@ export const Timeline = () => {
                         </p>
                      </div>
                   </div>
-
-                </div>
+                  </div>
               );
             })}
           </div>

@@ -3,18 +3,14 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Github, Linkedin, Mail, MapPin, Smartphone } from "lucide-react";
-
+import { socialLinks } from "@/public/data/socialLinks";
 gsap.registerPlugin(ScrollTrigger);
 
 export const Footer = () => {
   const footerRef = useRef<HTMLElement>(null);
 
   // Echte Daten aus dem CV
-  const socialLinks = [
-    { icon: <Github className="w-5 h-5" />, href: "https://github.com/jakob9991", label: "GitHub" },
-    { icon: <Linkedin className="w-5 h-5" />, href: "www.linkedin.com/in/jakob-dickhardt-b1a8ab293", label: "LinkedIn" }, 
-    { icon: <Mail className="w-5 h-5" />, href: "mailto:Jakob.dickhardt@t-online.de", label: "Email" },
-  ];
+
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -38,7 +34,7 @@ export const Footer = () => {
     return () => ctx.revert();
   }, []);
   const navLinks = ['Start', 'Skills', 'Projects', 'Career'];
-   const scrollToSection = (sectionId: string) => {
+  const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -47,25 +43,25 @@ export const Footer = () => {
 
   return (
     <footer ref={footerRef} id="contact" className="py-20 relative border-t border-white/10 bg-black/20 overflow-hidden">
-      
+
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-500/5 blur-[100px] rounded-full -z-10 pointer-events-none" />
 
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
-          
+
           {/* 1. Logo */}
           <div className="footer-item mb-10">
-            <a 
-              href="#start" 
+            <a
+              href="#start"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection("#start");
               }}
               className="block group transition-transform duration-300 hover:scale-105"
             >
-              <img 
-                src="/images/logo.svg" 
-                alt="Jakob Dickhardt Logo" 
+              <img
+                src="/images/logo.svg"
+                alt="Jakob Dickhardt Logo"
                 className="h-12 w-auto mx-auto filter brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
@@ -86,7 +82,7 @@ export const Footer = () => {
               </div>
               <span className="text-sm text-gray-400 group-hover:text-white transition-colors">Jakob.dickhardt@t-online.de</span>
             </a>
-            
+
             <a href="tel:+4915151629365" className="glass-effect p-4 flex flex-col items-center gap-3 hover-glow group transition-all duration-300 hover:-translate-y-1">
               <div className="p-2 bg-green-500/10 rounded-full text-green-400 group-hover:text-white group-hover:bg-green-500 transition-colors">
                 <Smartphone className="w-5 h-5" />
@@ -107,8 +103,8 @@ export const Footer = () => {
             {navLinks.map((item) => {
               const sectionId = item.toLowerCase() === 'start' ? '#start' : `#${item.toLowerCase()}`;
               return (
-                <a 
-                  key={item} 
+                <a
+                  key={item}
                   href={sectionId}
                   onClick={(e) => {
                     e.preventDefault();
@@ -125,18 +121,21 @@ export const Footer = () => {
 
           {/* 4. Social Icons */}
           <div className="footer-item flex gap-4 mb-10">
-            {socialLinks.map((social, index) => (
-              <a
-                key={index}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.label}
-                className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-500 hover:scale-110 transition-all duration-300 hover:shadow-[0_0_15px_rgba(37,99,235,0.5)]"
-              >
-                {social.icon}
-              </a>
-            ))}
+            {socialLinks.map((social, index) => {
+              const Icon = social.icon
+              return (
+                <a
+                  key={index}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-500 hover:scale-110 transition-all duration-300 hover:shadow-[0_0_15px_rgba(37,99,235,0.5)]"
+                >
+                  <Icon className= "w-5-h-5"/>
+                </a>
+              )
+            })}
           </div>
 
           {/* 5. Copyright & Legal */}
@@ -145,9 +144,9 @@ export const Footer = () => {
               © {new Date().getFullYear()} Jakob Dickhardt. All rights reserved.
             </p>
             <div className="flex justify-center gap-4 text-xs text-gray-600">
-               <a href="/impressum" className="hover:text-gray-400 transition-colors">Impressum</a>
-               <span>•</span>
-               <a href="/datenschutz" className="hover:text-gray-400 transition-colors">Datenschutz</a>
+              <a href="/impressum" className="hover:text-gray-400 transition-colors">Impressum</a>
+              <span>•</span>
+              <a href="/datenschutz" className="hover:text-gray-400 transition-colors">Datenschutz</a>
             </div>
           </div>
 
