@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ArrowRight, Terminal, CheckCircle2, Copy } from "lucide-react";
-import { shouldSkipMotion } from "@/components/utils/motion";
 
 const codeSnippets = [
   { text: "const dev = new Developer('Jakob');", top: 19.64, left: 44.47, rotate: -0.15 },
@@ -25,11 +24,6 @@ export const Hero = () => {
   
   // Typing Effect Logic
   useEffect(() => {
-    if (shouldSkipMotion()) {
-      setTypedText(fullText);
-      return;
-    }
-
     let index = 0;
     const interval = setInterval(() => {
       if (index <= fullText.length) {
@@ -44,12 +38,6 @@ export const Hero = () => {
 
   // 3D Tilt & Floating Animation
   useEffect(() => {
-    if (shouldSkipMotion()) {
-      gsap.set(containerRef.current, { opacity: 1, scale: 1, y: 0 });
-      gsap.set(".code-snippet", { opacity: 0.3, x: 0, y: 0 });
-      return;
-    }
-
     const ctx = gsap.context(() => {
       
       // 1. Floating Code Background

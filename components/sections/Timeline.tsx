@@ -4,7 +4,6 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GraduationCap, Code, Rocket, BrainCircuit, Terminal, HeartHandshake, GitCommit, Clock } from "lucide-react";
-import { shouldSkipMotion } from "@/components/utils/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -63,20 +62,6 @@ export const Timeline = () => {
   const lineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const skipGsap = shouldSkipMotion() || ScrollTrigger.isTouch;
-
-    if (skipGsap) {
-      // Avoid expensive scroll-trigger animations on mobile/reduced-motion and just show the content.
-      if (lineRef.current) {
-        gsap.set(lineRef.current, { height: "100%" });
-      }
-      gsap.set(".timeline-card", { opacity: 1, x: 0, scale: 1, rotateY: 0 });
-      gsap.set(".timeline-dot", { opacity: 1, scale: 1, rotation: 0 });
-      gsap.set(".terminal-header", { opacity: 1, y: 0 });
-      gsap.set(".timeline-content > *", { opacity: 1, y: 0 });
-      return;
-    }
-
     const ctx = gsap.context(() => {
 
       // 1. Line Drawing Animation

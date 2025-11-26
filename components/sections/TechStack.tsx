@@ -4,7 +4,6 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Terminal, Package, Cpu } from "lucide-react";
 import { TerminalHeader, SectionHeader, InstallProgress } from "@/components/ui/terminal";
-import { shouldSkipMotion } from "@/components/utils/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,27 +37,6 @@ export const TechStack = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (shouldSkipMotion()) {
-      gsap.set([
-        ".techstack-header",
-        ".frontend-section",
-        ".frontend-package",
-        ".backend-section",
-        ".install-line",
-        ".mobile-section",
-        ".mobile-package",
-        ".package-progress"
-      ], { clearProps: "all", opacity: 1, x: 0, y: 0, scale: 1, rotateX: 0 });
-
-      gsap.utils.toArray<HTMLElement>(".package-progress").forEach((bar) => {
-        if (bar.dataset.level) {
-          gsap.set(bar, { width: `${bar.dataset.level}%` });
-        }
-      });
-
-      return;
-    }
-
     const ctx = gsap.context(() => {
 
       // 1. Main Header Animation
