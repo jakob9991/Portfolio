@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ExternalLink, Github, Code2, GraduationCap, Layout, Lock, Smartphone, Terminal, Workflow, Tv, Bot, Gamepad2 } from "lucide-react";
 import { TerminalHeader, SectionHeader } from "@/components/ui/terminal";
+import { shouldSkipMotion } from "@/components/utils/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -123,6 +124,26 @@ export const Projects = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    const skipGsap = shouldSkipMotion() || ScrollTrigger.isTouch;
+
+    if (skipGsap) {
+      // Render static on touch devices / reduced-motion to keep performance smooth.
+      gsap.set([
+        ".section-header",
+        ".project-card-featured",
+        ".git-commit-header",
+        ".commit-info",
+        ".visual-preview",
+        ".academic-card",
+        ".academic-icon",
+        ".lab-card",
+        ".process-icon",
+        ".code-output",
+        ".dependency-tag"
+      ], { clearProps: "all", opacity: 1, x: 0, y: 0, scale: 1, rotateY: 0 });
+      return;
+    }
+
     const ctx = gsap.context(() => {
 
       // 1. Main Section Header - Terminal Window erscheint

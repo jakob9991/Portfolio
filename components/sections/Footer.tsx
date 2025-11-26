@@ -4,12 +4,25 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Github, Linkedin, Mail, MapPin, Smartphone, Terminal, Server, Wifi } from "lucide-react";
 import { socialLinks } from "@/public/data/socialLinks";
+import { shouldSkipMotion } from "@/components/utils/motion";
 gsap.registerPlugin(ScrollTrigger);
 
 export const Footer = () => {
   const footerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    if (shouldSkipMotion()) {
+      gsap.set([
+        ".footer-container",
+        ".footer-logo",
+        ".contact-card",
+        ".social-icon",
+        ".system-info-line",
+        ".footer-nav-link"
+      ], { clearProps: "all", opacity: 1, x: 0, y: 0, scale: 1, rotation: 0 });
+      return;
+    }
+
     const ctx = gsap.context(() => {
 
       // Main Footer Container

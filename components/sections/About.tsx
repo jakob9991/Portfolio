@@ -7,6 +7,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Terminal, Download } from "lucide-react";
 import { TerminalHeader, TerminalPrompt, GlassCard } from "@/components/ui/terminal";
+import { shouldSkipMotion } from "@/components/utils/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 export const About = () => {
@@ -17,6 +18,11 @@ export const About = () => {
     const textRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        if (shouldSkipMotion()) {
+            gsap.set([containerRef.current, imageRef.current, textRef.current], { opacity: 1, x: 0, y: 0, scale: 1 });
+            return;
+        }
+
         const ctx = gsap.context(() => {
             // Container fade-in
             gsap.from(containerRef.current, {
