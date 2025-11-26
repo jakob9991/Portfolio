@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ExternalLink, Github, Code2, GraduationCap, Layout, Lock, Smartphone, Terminal, Workflow, Tv, Bot, Gamepad2 } from "lucide-react";
+import { TerminalHeader, SectionHeader } from "@/components/ui/terminal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -123,49 +124,367 @@ export const Projects = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // General Stagger for sections
+
+      // 1. Main Section Header - Terminal Window erscheint
       gsap.fromTo(".section-header",
-        { y: 30, opacity: 0 },
+        {
+          y: 50,
+          opacity: 0,
+          scale: 0.95,
+          rotateX: -15
+        },
         {
           y: 0,
           opacity: 1,
-          duration: 0.8,
-          stagger: 0.2,
+          scale: 1,
+          rotateX: 0,
+          duration: 1,
+          ease: "power3.out",
           scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
+            trigger: ".section-header",
+            start: "top 85%",
+            toggleActions: "play none none reverse",
           }
         }
       );
 
-      // Featured Cards
-      gsap.utils.toArray(".project-card-featured").forEach((card: any) => {
+      // 2. Featured Projects - Git Commit Cards mit Stagger
+      gsap.utils.toArray(".project-card-featured").forEach((card: any, index: number) => {
+        const isEven = index % 2 === 0;
+
+        // Card Entrance
         gsap.fromTo(card,
-          { y: 50, opacity: 0 },
+          {
+            y: 80,
+            opacity: 0,
+            x: isEven ? -30 : 30,
+            rotateY: isEven ? -5 : 5
+          },
           {
             y: 0,
             opacity: 1,
+            x: 0,
+            rotateY: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+
+        // Terminal Header Animation
+        gsap.fromTo(card.querySelector(".git-commit-header"),
+          { opacity: 0, x: -20 },
+          {
+            opacity: 1,
+            x: 0,
             duration: 0.6,
+            delay: 0.2,
             scrollTrigger: {
               trigger: card,
               start: "top 80%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+
+        // Commit Info (Left Side)
+        gsap.fromTo(card.querySelector(".commit-info"),
+          { opacity: 0, x: -30 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.7,
+            delay: 0.3,
+            scrollTrigger: {
+              trigger: card,
+              start: "top 75%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+
+        // Visual Preview (Right Side)
+        gsap.fromTo(card.querySelector(".visual-preview"),
+          { opacity: 0, scale: 0.9, rotateY: 10 },
+          {
+            opacity: 1,
+            scale: 1,
+            rotateY: 0,
+            duration: 0.8,
+            delay: 0.4,
+            ease: "back.out(1.2)",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 75%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+
+        // Tech Tags Stagger
+        gsap.fromTo(card.querySelectorAll(".tech-tag"),
+          { opacity: 0, scale: 0.8, y: 10 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.4,
+            stagger: 0.05,
+            delay: 0.5,
+            scrollTrigger: {
+              trigger: card,
+              start: "top 70%",
+              toggleActions: "play none none reverse",
             }
           }
         );
       });
 
-      // Lab Cards
-      gsap.fromTo(".lab-card",
-        { y: 30, opacity: 0, scale: 0.95 },
+      // 3. Academic Section Header
+      gsap.fromTo(".academic-header",
+        {
+          y: 40,
+          opacity: 0,
+          scale: 0.95
+        },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.5,
-          stagger: 0.1,
+          duration: 0.8,
+          ease: "power3.out",
           scrollTrigger: {
-            trigger: ".lab-grid",
+            trigger: ".academic-header",
             start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // 4. Academic Cards - Lab Notebook Style
+      gsap.utils.toArray(".academic-card").forEach((card: any, index: number) => {
+        gsap.fromTo(card,
+          {
+            y: 60,
+            opacity: 0,
+            rotateX: -10,
+            scale: 0.95
+          },
+          {
+            y: 0,
+            opacity: 1,
+            rotateX: 0,
+            scale: 1,
+            duration: 0.7,
+            delay: index * 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+
+        // Icon Animation
+        gsap.fromTo(card.querySelector(".academic-icon"),
+          { scale: 0, rotation: -180 },
+          {
+            scale: 1,
+            rotation: 0,
+            duration: 0.6,
+            delay: index * 0.2 + 0.3,
+            ease: "back.out(2)",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+      });
+
+      // 5. Lab Section Header
+      gsap.fromTo(".lab-header",
+        {
+          y: 40,
+          opacity: 0,
+          scale: 0.95
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".lab-header",
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // 6. Process Monitor Table
+      gsap.fromTo(".process-monitor",
+        {
+          y: 50,
+          opacity: 0,
+          scale: 0.98
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".process-monitor",
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // 7. Lab Cards - Process Entries mit Stagger
+      gsap.utils.toArray(".lab-card").forEach((card: any, index: number) => {
+        // Process Icon pulsiert beim Erscheinen
+        gsap.fromTo(card.querySelector(".process-icon"),
+          {
+            scale: 0,
+            opacity: 0,
+          },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.6,
+            delay: index * 0.15,
+            ease: "back.out(2)",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+
+        // Status Badge
+        gsap.fromTo(card.querySelector(".status-badge"),
+          {
+            opacity: 0,
+            x: -10
+          },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.5,
+            delay: index * 0.15 + 0.2,
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+
+        // Process Details
+        gsap.fromTo(card.querySelector(".process-details"),
+          {
+            opacity: 0,
+            x: 20
+          },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            delay: index * 0.15 + 0.3,
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+
+        // Code Output Terminal
+        const codeOutput = card.querySelector(".code-output");
+        if (codeOutput) {
+          gsap.fromTo(codeOutput,
+            {
+              opacity: 0,
+              y: 10,
+              scaleY: 0.95
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scaleY: 1,
+              duration: 0.5,
+              delay: index * 0.15 + 0.4,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+              }
+            }
+          );
+
+          // Code Lines einzeln erscheinen lassen
+          gsap.fromTo(codeOutput.querySelectorAll(".code-line"),
+            { opacity: 0, x: -10 },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 0.3,
+              stagger: 0.05,
+              delay: index * 0.15 + 0.5,
+              scrollTrigger: {
+                trigger: card,
+                start: "top 75%",
+                toggleActions: "play none none reverse",
+              }
+            }
+          );
+        }
+
+        // Dependencies Tags
+        gsap.fromTo(card.querySelectorAll(".dependency-tag"),
+          { opacity: 0, scale: 0.8, y: 5 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.3,
+            stagger: 0.05,
+            delay: index * 0.15 + 0.6,
+            scrollTrigger: {
+              trigger: card,
+              start: "top 75%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+      });
+
+      // 8. Footer Stats Animation
+      gsap.fromTo(".process-footer",
+        {
+          opacity: 0,
+          y: 20
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          scrollTrigger: {
+            trigger: ".process-footer",
+            start: "top 90%",
+            toggleActions: "play none none reverse",
           }
         }
       );
@@ -175,179 +494,280 @@ export const Projects = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="projects" className="py-32 relative bg-transparent">
-      <div className="container mx-auto px-4">
+    <section ref={sectionRef} id="projects" className="py-32 relative bg-[#0a0d14] overflow-hidden">
 
-        {/* Main Heading */}
-        <div className="section-header text-center mb-24">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
-            Selected <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">Work</span>
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Ein tieferer Einblick in meine kommerziellen Projekte, akademischen Arbeiten und technischen Experimente.
-          </p>
+      {/* Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.02)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-blue-500/5 blur-[150px] rounded-full pointer-events-none"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
+
+        {/* Main Heading - Terminal Style */}
+        <div className="section-header max-w-4xl mx-auto mb-20">
+          <SectionHeader
+            terminalTitle={
+              <>
+                <Terminal className="w-3 h-3" />
+                ~/projects — git log --all
+              </>
+            }
+            command="ls"
+            args={["-la", "./work"]}
+            title={<>Selected <span className="text-sky-400">Work</span></>}
+            subtitle="Ein tieferer Einblick in meine kommerziellen Projekte, akademischen Arbeiten und technischen Experimente."
+          />
         </div>
 
-        {/* --- 1. FEATURED PROJECTS --- */}
-        <div className="space-y-32 mb-40">
+        {/* --- 1. FEATURED PROJECTS - Git Commit Style --- */}
+        <div className="space-y-8 mb-32">
           {featuredProjects.map((project: any, index) => (
             <div
               key={index}
-              className={`project-card-featured flex flex-col ${index % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-10 lg:gap-20 items-center`}
+              className="project-card-featured bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden group hover:border-sky-500/30 transition-all duration-300"
             >
-              {/* Visual Side */}
-              <div className="w-full lg:w-1/2 relative group perspective-1000">
-                <div className={`absolute -inset-4 bg-gradient-to-r ${project.color} rounded-[2rem] blur-2xl opacity-20 group-hover:opacity-30 transition duration-700`}></div>
-                <div className="relative rounded-xl bg-[#0a0a0a] border border-white/10 overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-[1.01] group-hover:-rotate-1">
-
-                  {/* Window Header */}
-                  <div className="h-8 bg-[#1a1a1a] border-b border-white/5 flex items-center px-4 gap-2">
-                    <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-                    <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
-                    <div className="ml-auto text-xs text-gray-600 font-mono hidden sm:block">
-                      {project.type === 'web' ? 'chrome://cenra.ai' : project.type === 'mobile' ? 'iPhone 15 Pro - Simulator' : 'n8n Workflow Editor'}
+              {/* Git Commit Header */}
+              <div className="git-commit-header h-12 bg-[#151921] border-b border-white/5 flex items-center px-6 gap-4">
+                <TerminalHeader
+                  className="!h-auto !bg-transparent !border-0 !p-0 flex-1"
+                  title={
+                    <div className="flex items-center gap-3 font-mono text-xs text-gray-500">
+                      <Terminal className="w-3 h-3" />
+                      <span>git show</span>
+                      <span className={`text-transparent bg-clip-text bg-gradient-to-r ${project.color}`}>
+                        {project.id}a4f7c
+                      </span>
                     </div>
-                  </div>
-
-                  {/* Content (Image, Gallery, or CSS Mockup) */}
-                  <div className={`aspect-video w-full bg-gradient-to-br ${project.color} bg-opacity-10 flex items-center justify-center relative overflow-hidden bg-[#111]`}>
-                    
-                    {/* Background Grid Pattern (Always visible as base) */}
-                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
-
-                    {/* CASE 1: MULTIPLE MOBILE IMAGES (Gallery) */}
-                    {project.images ? (
-                        <div className="flex justify-center items-center gap-2 sm:gap-4 h-full w-full p-4 sm:p-8">
-                            {project.images.map((img: string, i: number) => (
-                                <div key={i} className={`relative h-full w-auto aspect-[9/19.5] rounded-[1rem] sm:rounded-[1.5rem] overflow-hidden border-[3px] sm:border-[6px] border-[#1a1a1a] shadow-xl bg-black transform transition-all duration-500 group-hover:scale-105 ${i === 1 ? 'z-10 scale-105' : 'scale-95 opacity-80'}`}>
-                                    {/* Phone Bezel/Mockup Styling */}
-                                    <img 
-                                        src={img} 
-                                        alt={`App Screen ${i}`} 
-                                        className="w-full h-full object-cover"
-                                        onError={(e) => {
-                                           e.currentTarget.style.display = 'none';
-                                        }}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    ) : project.image ? (
-                       // CASE 2: SINGLE IMAGE
-                       <img 
-                        src={project.image} 
-                        alt={project.title} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        onError={(e) => {
-                          // Fallback to showing the icon if image fails to load
-                          e.currentTarget.style.display = 'none';
-                          e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                        }}
-                       />
-                    ) : null}
-
-                    {/* CASE 3: FALLBACK ICON / MOCKUP (Visible if no image provided OR image error) */}
-                    <div className={`transform transition-transform duration-700 group-hover:scale-110 group-hover:rotate-3 ${project.image || project.images ? 'hidden' : ''}`}>
-                      {project.type === 'mobile' ? <Smartphone className="w-20 h-20 text-white/40" /> :
-                        project.type === 'automation' ? <Workflow className="w-20 h-20 text-white/40" /> :
-                          <Layout className="w-20 h-20 text-white/40" />}
-                    </div>
-
-                  </div>
+                  }
+                />
+                <div className="flex items-center gap-2">
+                  <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r ${project.color} text-white`}>
+                    {project.type}
+                  </span>
                 </div>
               </div>
 
-              {/* Text Side */}
-              <div className="w-full lg:w-1/2 space-y-8">
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 text-white/70">
-                      {project.type}
-                    </span>
+              {/* Commit Content */}
+              <div className="grid lg:grid-cols-2 gap-8 p-8">
+
+                {/* Left: Commit Info */}
+                <div className="commit-info font-mono space-y-6">
+                  {/* Commit Message */}
+                  <div>
+                    <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
+                      <span className="text-yellow-500">commit</span>
+                      <span className={`text-transparent bg-clip-text bg-gradient-to-r ${project.color}`}>
+                        {project.id}a4f7c2d8b3e1
+                      </span>
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{project.title}</h3>
+                    <p className={`text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r ${project.color} mb-4`}>
+                      {project.subtitle}
+                    </p>
                   </div>
-                  <h3 className="text-4xl font-bold text-white mb-2">{project.title}</h3>
-                  <p className={`text-lg font-medium bg-clip-text text-transparent bg-gradient-to-r ${project.color}`}>
-                    {project.subtitle}
-                  </p>
-                </div>
 
-                <p className="text-muted-foreground text-lg leading-relaxed">{project.description}</p>
-
-                <div className="grid grid-cols-3 gap-6 py-4 border-y border-white/5">
-                  {project.stats.map((stat: any, i: number) => (
-                    <div key={i}>
-                      <p className="text-xs text-gray-500 uppercase font-mono mb-1">{stat.label}</p>
-                      <p className="text-sm font-semibold text-gray-200">{stat.value}</p>
+                  {/* Commit Details */}
+                  <div className="space-y-2 text-sm">
+                    <div className="flex gap-3">
+                      <span className="text-gray-500">Author:</span>
+                      <span className="text-gray-300">Jakob Dickhardt</span>
                     </div>
-                  ))}
+                    <div className="flex gap-3">
+                      <span className="text-gray-500">Date:</span>
+                      <span className="text-gray-300">{project.stats[1].value}</span>
+                    </div>
+                    <div className="flex gap-3">
+                      <span className="text-gray-500">Branch:</span>
+                      <span className="text-cyan-400">{project.stats[0].value.toLowerCase().replace(' ', '-')}</span>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <div className="border-l-2 border-sky-500/30 pl-4 text-gray-400 leading-relaxed text-sm">
+                    {project.description}
+                  </div>
+
+                  {/* Tech Stack Tags */}
+                  <div>
+                    <div className="text-xs text-gray-600 mb-2">// Stack:</div>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag: string) => (
+                        <span key={tag} className="tech-tag px-2 py-1 text-xs rounded bg-white/5 border border-white/10 text-gray-400">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex flex-wrap gap-3 pt-4 border-t border-white/5">
+                    {project.links.repo === 'private' ? (
+                      <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/5 opacity-60 cursor-not-allowed text-sm">
+                        <Lock className="w-4 h-4" />
+                        <span>Private Repo</span>
+                      </div>
+                    ) : (
+                      <a href={project.links.repo} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:border-sky-500/30 text-white hover:text-sky-400 transition-all text-sm">
+                        <Github className="w-4 h-4" />
+                        <span>View Code</span>
+                      </a>
+                    )}
+                    {project.links.demo && (
+                      <a href={project.links.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-500/10 border border-sky-500/30 text-sky-400 hover:bg-sky-500/20 transition-all text-sm font-semibold">
+                        <ExternalLink className="w-4 h-4" />
+                        Live Demo
+                      </a>
+                    )}
+                  </div>
                 </div>
 
-                <div className="flex flex-wrap gap-4">
-                  {project.links.repo === 'private' ? (
-                    <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/5 opacity-60 cursor-not-allowed">
-                      <Lock className="w-4 h-4" /> <span className="text-sm">Private Repo</span>
+                {/* Right: Visual Preview */}
+                <div className="visual-preview relative group/preview">
+                  {/* Glow Effect */}
+                  <div className={`absolute -inset-4 bg-gradient-to-r ${project.color} rounded-2xl blur-2xl opacity-20 group-hover:opacity-30 transition duration-700`}></div>
+
+                  {/* Preview Container */}
+                  <div className="relative bg-[#0a0a0a] border border-white/10 rounded-lg overflow-hidden">
+                    {/* Window Controls */}
+                    <TerminalHeader
+                      dots="small"
+                      className="!h-8"
+                      title={
+                        <span className="text-[10px] text-gray-600 font-mono hidden sm:block">
+                          {project.type === 'web' ? 'Browser Preview' : project.type === 'mobile' ? 'Mobile Simulator' : 'Workflow Editor'}
+                        </span>
+                      }
+                    />
+
+                    {/* Visual Content */}
+                    <div className={`aspect-video w-full bg-gradient-to-br ${project.color} bg-opacity-10 flex items-center justify-center relative overflow-hidden bg-[#0a0a0a]`}>
+                      {/* Background Grid */}
+                      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
+
+                      {/* Images */}
+                      {project.images ? (
+                        <div className="flex justify-center items-center gap-2 sm:gap-4 h-full w-full p-4 sm:p-8">
+                          {project.images.map((img: string, i: number) => (
+                            <div key={i} className={`relative h-full w-auto aspect-[9/19.5] rounded-xl overflow-hidden border-4 border-[#1a1a1a] shadow-2xl bg-black transform transition-all duration-500 group-hover/preview:scale-105 ${i === 1 ? 'z-10 scale-105' : 'scale-95 opacity-80'}`}>
+                              <img
+                                src={img}
+                                alt={`${project.title} Screen ${i}`}
+                                className="w-full h-full object-cover"
+                                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      ) : project.image ? (
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover/preview:scale-105"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                          }}
+                        />
+                      ) : null}
+
+                      {/* Fallback Icon */}
+                      <div className={`transform transition-transform duration-700 group-hover/preview:scale-110 ${project.image || project.images ? 'hidden' : ''}`}>
+                        {project.type === 'mobile' ? <Smartphone className="w-20 h-20 text-white/40" /> :
+                          project.type === 'automation' ? <Workflow className="w-20 h-20 text-white/40" /> :
+                            <Layout className="w-20 h-20 text-white/40" />}
+                      </div>
                     </div>
-                  ) : (
-                    <a href="#" className="flex items-center gap-2 text-white hover:text-blue-400 transition-colors">
-                      <Github className="w-5 h-5" /> <span className="text-sm font-medium">Source Code</span>
-                    </a>
-                  )}
-                  {project.links.demo && (
-                    <a href={project.links.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-2 rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-colors">
-                      Live Demo <ExternalLink className="w-4 h-4" />
-                    </a>
-                  )}
+                  </div>
                 </div>
+
               </div>
             </div>
           ))}
         </div>
 
 
-        {/* --- 2. ACADEMIC EXCELLENCE --- */}
+        {/* --- 2. ACADEMIC PROJECTS - Lab Notebook Style --- */}
         <div className="mb-32">
-          <div className="section-header flex items-end justify-between mb-12 border-b border-white/10 pb-6">
-            <div>
-              <h3 className="text-3xl font-bold flex items-center gap-3 text-white">
-                <GraduationCap className="text-blue-500 w-8 h-8" />
-                Academic Projects
-              </h3>
-              <p className="text-muted-foreground mt-2">Hochschulprojekte mit Fokus auf Software-Architektur und Informatik-Grundlagen.</p>
+          {/* Section Header */}
+          <div className="academic-header bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden mb-8">
+            <TerminalHeader
+              title={
+                <>
+                  <GraduationCap className="w-3 h-3" />
+                  ~/academic — research notes
+                </>
+              }
+            />
+            <div className="p-6 font-mono">
+              <div className="flex items-center gap-3 mb-2 text-sm">
+                <span className="text-purple-400">📚</span>
+                <span className="text-gray-400">cat</span>
+                <span className="text-cyan-400">university-projects.md</span>
+              </div>
+              <h3 className="text-2xl font-bold text-white">Academic Projects</h3>
+              <p className="text-gray-500 text-xs mt-2"># Hochschulprojekte mit Fokus auf Software-Architektur und Informatik-Grundlagen</p>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          {/* Academic Cards */}
+          <div className="grid md:grid-cols-2 gap-6">
             {academicProjects.map((project, index) => (
-              <div key={index} className="group relative bg-[#0a0a0a] rounded-2xl border border-white/10 overflow-hidden hover:border-blue-500/30 transition-colors duration-300">
-                <div className="p-8">
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="p-3 bg-blue-500/10 rounded-xl text-blue-400 group-hover:scale-110 transition-transform duration-300">
+              <div key={index} className="academic-card bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden group hover:border-purple-500/30 transition-all duration-300">
+
+                {/* Header Bar */}
+                <TerminalHeader
+                  dots="small"
+                  title={
+                    <div className="flex items-center justify-between w-full">
+                      <span className="font-mono text-[10px] text-gray-500">
+                        lab-entry-{index + 1}.txt
+                      </span>
+                      <span className="font-mono text-[10px] text-purple-400 border border-purple-500/20 px-2 py-0.5 rounded">
+                        {project.year}
+                      </span>
+                    </div>
+                  }
+                />
+
+                {/* Content */}
+                <div className="p-6 font-mono">
+                  {/* Icon & Title */}
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="academic-icon p-3 bg-purple-500/10 rounded-lg text-purple-400 group-hover:scale-110 transition-transform">
                       {project.icon}
                     </div>
-                    <span className="font-mono text-xs text-gray-500 border border-white/10 px-2 py-1 rounded">
-                      {project.year}
-                    </span>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-bold text-white mb-1">{project.title}</h4>
+                      <p className="text-purple-400 text-xs">// {project.role}</p>
+                    </div>
                   </div>
 
-                  <h4 className="text-2xl font-bold text-white mb-2">{project.title}</h4>
-                  <p className="text-blue-400 text-sm font-mono mb-4">{project.role}</p>
-
-                  <p className="text-muted-foreground leading-relaxed mb-6">
+                  {/* Description */}
+                  <div className="border-l-2 border-purple-500/30 pl-4 mb-4 text-sm text-gray-400 leading-relaxed">
                     {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {project.tags.map(tag => (
-                      <span key={tag} className="text-xs font-medium text-gray-400 bg-white/5 px-2 py-1 rounded">
-                        {tag}
-                      </span>
-                    ))}
                   </div>
 
+                  {/* Tags */}
+                  <div className="mb-4">
+                    <div className="text-[10px] text-gray-600 mb-2">tech_stack[]:</div>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map(tag => (
+                        <span key={tag} className="text-xs text-gray-400 bg-white/5 border border-white/10 px-2 py-1 rounded">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Link */}
                   {project.hasDemo && (
-                    <a href={project.link} className="inline-flex items-center gap-2 text-sm font-bold text-white hover:text-blue-400 transition-colors">
-                      View Project <ExternalLink className="w-4 h-4" />
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-purple-400 hover:text-purple-300 transition-colors border-b border-purple-500/30 pb-1"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      <span>View Project</span>
                     </a>
                   )}
                 </div>
@@ -357,83 +777,135 @@ export const Projects = () => {
         </div>
 
 
-        {/* --- 3. THE LAB (Technical Experiments) --- */}
+        {/* --- 3. THE LAB - System Process Monitor Style --- */}
         <div>
-          <div className="section-header flex items-end justify-between mb-12 border-b border-white/10 pb-6">
-            <div>
-              <h3 className="text-3xl font-bold flex items-center gap-3 text-white">
-                <Terminal className="text-green-500 w-8 h-8" />
-                Other Projects
-              </h3>
-              <p className="text-muted-foreground mt-2">Engineering, Hardware-Hacks & Automatisierungs-Skripte.</p>
+          {/* Section Header */}
+          <div className="lab-header bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden mb-8">
+            <TerminalHeader
+              title={
+                <>
+                  <Terminal className="w-3 h-3" />
+                  ~/lab — htop --processes
+                </>
+              }
+            />
+            <div className="p-6 font-mono">
+              <div className="flex items-center gap-3 mb-2 text-sm">
+                <span className="text-green-400">⚡</span>
+                <span className="text-gray-400">ps</span>
+                <span className="text-cyan-400">aux</span>
+                <span className="text-gray-500">| grep experiments</span>
+              </div>
+              <h3 className="text-2xl font-bold text-white">Other Projects</h3>
+              <p className="text-gray-500 text-xs mt-2"># Engineering, Hardware-Hacks & Automatisierungs-Skripte</p>
             </div>
           </div>
 
-          <div className="lab-grid grid md:grid-cols-3 gap-6">
-            {labProjects.map((project, index) => (
-              <div key={index} className="lab-card bg-[#050505] rounded-xl border border-white/10 overflow-hidden hover:border-green-500/20 transition-all duration-300 group">
+          {/* Process Monitor Table */}
+          <div className="process-monitor bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
+            {/* Table Header */}
+            <TerminalHeader
+              dots="small"
+              title={<span className="text-[10px] font-mono text-gray-500">process_monitor.log — 3 active tasks</span>}
+            />
 
-                {/* Visual Header (CSS Mockups) */}
-                <div className="h-40 bg-[#0a0a0a] border-b border-white/5 relative flex items-center justify-center overflow-hidden">
-                  {/* Background Grid */}
-                  <div className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:16px_16px]"></div>
+            {/* Table Content */}
+            <div className="divide-y divide-white/5">
+              {labProjects.map((project, index) => (
+                <div
+                  key={index}
+                  className="lab-card p-6 hover:bg-white/[0.02] transition-colors group"
+                >
+                  <div className="grid md:grid-cols-[auto_1fr] gap-6">
 
-                  {/* Content */}
-                  {project.visual === 'code' && (
-                    <div className="w-3/4 bg-[#111] rounded-lg border border-white/10 p-3 shadow-2xl transform group-hover:-translate-y-1 transition-transform">
-                      <div className="flex gap-1.5 mb-2">
-                        <div className="w-2 h-2 rounded-full bg-red-500/50"></div>
-                        <div className="w-2 h-2 rounded-full bg-yellow-500/50"></div>
+                    {/* Left: Process Status Indicator */}
+                    <div className="flex flex-col items-center gap-3">
+                      {/* Icon */}
+                      <div className="process-icon relative">
+                        <div className="absolute -inset-2 bg-green-500/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="relative p-4 bg-green-500/10 rounded-xl border border-green-500/20 group-hover:border-green-500/40 transition-all">
+                          {project.icon}
+                        </div>
                       </div>
-                      <div className="space-y-1">
-                        <div className="h-1.5 w-1/3 bg-purple-500/30 rounded"></div>
-                        <div className="h-1.5 w-2/3 bg-gray-700 rounded"></div>
-                        <div className="h-1.5 w-1/2 bg-gray-700 rounded"></div>
+
+                      {/* Status */}
+                      <div className="status-badge flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/5 border border-green-500/20">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        <span className="text-[10px] font-mono text-green-400 font-bold">RUNNING</span>
                       </div>
                     </div>
-                  )}
-                  {project.visual === 'terminal' && (
-                    <div className="w-3/4 bg-black rounded-lg border border-green-500/20 p-3 shadow-2xl font-mono text-[8px] text-green-500/70 leading-tight">
-                      <span className="text-green-400">$</span> run scraper.py<br />
-                      <span className="opacity-50">Connecting...</span><br />
-                      <span className="opacity-70">Found 142 items</span><br />
-                      <span className="animate-pulse">_</span>
-                    </div>
-                  )}
-                  {project.visual === 'grid' && (
-                    <div className="grid grid-cols-6 gap-1 p-4">
-                      {[...Array(12)].map((_, i) => (
-                        <div key={i} className={`w-3 h-3 rounded-sm ${i === 4 || i === 5 ? 'bg-blue-500' : 'bg-white/5'}`}></div>
-                      ))}
-                    </div>
-                  )}
-                </div>
 
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-bold text-green-400 uppercase tracking-widest">{project.category}</span>
-                    {project.icon}
+                    {/* Right: Process Details */}
+                    <div className="process-details font-mono space-y-4">
+
+                      {/* Process Header */}
+                      <div>
+                        <div className="flex items-start justify-between mb-2">
+                          <div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-xs text-gray-600">PID:</span>
+                              <span className="text-xs text-green-400 font-bold">{1000 + index}</span>
+                              <span className="text-xs text-gray-600">|</span>
+                              <span className="text-[10px] text-emerald-400 uppercase tracking-wider font-bold">{project.category}</span>
+                            </div>
+                            <h4 className="text-xl font-bold text-white">{project.title}</h4>
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-400 leading-relaxed">
+                          {project.description}
+                        </p>
+                      </div>
+
+                      {/* Code Output */}
+                      {project.codeSnippet && (
+                        <div className="code-output bg-[#0a0a0a] rounded-lg border border-white/5 p-4 group-hover:border-green-500/20 transition-colors">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-[10px] text-gray-600">STDOUT:</span>
+                            <div className="h-px flex-1 bg-white/5"></div>
+                          </div>
+                          <div className="font-mono text-xs text-green-500/70 space-y-1">
+                            {project.codeSnippet.split('\n').map((line, i) => (
+                              <div key={i} className="code-line flex gap-2">
+                                <span className="text-gray-700">{i + 1}</span>
+                                <span className="text-gray-500">{line}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Tech Stack - Process Resources */}
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-[10px] text-gray-600">DEPENDENCIES:</span>
+                          <div className="h-px flex-1 bg-white/5"></div>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {project.tech.map((t, i) => (
+                            <span key={t} className="dependency-tag text-[10px] font-mono text-gray-500 bg-white/5 border border-white/10 px-2 py-1 rounded">
+                              <span className="text-green-400">[{i + 1}]</span> {t}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
-
-                  <h4 className="text-xl font-bold text-white mb-2">{project.title}</h4>
-                  <p className="text-sm text-muted-foreground mb-4">{project.description}</p>
-
-                  {project.codeSnippet && (
-                    <div className="bg-[#111] p-3 rounded border border-white/5 font-mono text-xs text-gray-500 overflow-hidden">
-                      {project.codeSnippet.split('\n').map((line, i) => (
-                        <div key={i} className="truncate">{line}</div>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {project.tech.map(t => (
-                      <span key={t} className="text-[10px] text-gray-500 border border-white/5 px-2 py-0.5 rounded-full">{t}</span>
-                    ))}
-                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            {/* Footer Stats */}
+            <div className="process-footer h-10 bg-[#0a0a0a] border-t border-white/5 flex items-center px-6 font-mono text-[10px] text-gray-600">
+              <span className="text-green-400">3</span>&nbsp;processes&nbsp;
+              <span className="text-gray-700 mx-2">|</span>
+              <span className="text-green-400">100%</span>&nbsp;uptime&nbsp;
+              <span className="text-gray-700 mx-2">|</span>
+              <span>Last updated: just now</span>
+            </div>
           </div>
         </div>
 
