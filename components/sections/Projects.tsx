@@ -153,27 +153,8 @@ export const Projects = () => {
         const isEven = index % 2 === 0;
 
         // Card Entrance
-        gsap.fromTo(card,
-          {
-            y: 80,
-            opacity: 0,
-            x: isEven ? -30 : 30,
-            rotateY: isEven ? -5 : 5
-          },
-          {
-            y: 0,
-            opacity: 1,
-            x: 0,
-            rotateY: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            }
-          }
-        );
+       
+        
 
         // Terminal Header Animation
         gsap.fromTo(card.querySelector(".git-commit-header"),

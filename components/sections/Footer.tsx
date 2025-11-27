@@ -343,15 +343,7 @@ export const Footer = () => {
               <p className="text-xs text-gray-600">
                 <span className="text-gray-700">#</span> © {new Date().getFullYear()} Jakob Dickhardt. All rights reserved.
               </p>
-              <div className="flex justify-center gap-6 text-xs text-gray-600">
-                <a href="/impressum" className="hover:text-cyan-400 transition-colors">
-                  <span className="text-cyan-400/50">~/</span>impressum
-                </a>
-                <span className="text-gray-800">|</span>
-                <a href="/datenschutz" className="hover:text-cyan-400 transition-colors">
-                  <span className="text-cyan-400/50">~/</span>datenschutz
-                </a>
-              </div>
+              
             </div>
           </div>
 

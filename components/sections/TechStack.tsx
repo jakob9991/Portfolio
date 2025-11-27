@@ -10,29 +10,32 @@ gsap.registerPlugin(ScrollTrigger);
 export const TechStack = () => {
   // Tech Stack Data mit Package Manager Style
   const techStack = {
-    frontend: [
-      { name: "React", icon: "⚛️", level: 95, status: "Expert", version: "^18.3.1" },
-      { name: "Next.js", icon: "▲", level: 85, status: "Advanced", version: "^14.0.0" },
-      { name: "TypeScript", icon: "🔷", level: 85, status: "Advanced", version: "^5.3.0" },
-      { name: "Tailwind CSS", icon: "🎨", level: 85, status: "Advanced", version: "^3.4.0" },
-      { name: "GSAP", icon: "🎬", level: 75, status: "Advanced", version: "^3.12.0" },
-      { name: "Figma", icon: "🖌️", level: 65, status: "Intermediate", version: "latest" },
-    ],
-    backend: [
-      { name: "Node.js", icon: "🟢", level: 85, status: "Advanced", version: "^20.0.0" },
-      { name: "Python", icon: "🐍", level: 70, status: "Intermediate", version: "^3.12" },
-      { name: "Java", icon: "☕", level: 60, status: "Intermediate", version: "^17" },
-      { name: "Firebase", icon: "🔥", level: 90, status: "Expert", version: "^10.7.0" },
-      { name: "PostgreSQL", icon: "🐘", level: 60, status: "Intermediate", version: "^16" },
-      { name: "Docker", icon: "🐳", level: 75, status: "Advanced", version: "^24.0" },
-      { name: "Git", icon: "📦", level: 90, status: "Expert", version: "^2.43" },
-      { name: "n8n", icon: "🔄", level: 85, status: "Advanced", version: "^1.0" },
-    ],
-    mobile: [
-      { name: "Kotlin", icon: "🤖", level: 60, status: "Intermediate", version: "^1.9" },
-      { name: "React Native", icon: "⚛️", level: 100, status: "Expert", version: "^0.73.0" },
-    ],
-  };
+  frontend: [
+  { name: "JavaScript", icon: "🟨", level: 98, status: "Expert", version: "ES2024" },
+  { name: "TypeScript", icon: "🔷", level: 85, status: "Advanced", version: "^5.3.0" },
+  { name: "React", icon: "⚛️", level: 95, status: "Expert", version: "^18.3.1" },
+  { name: "Next.js", icon: "▲", level: 85, status: "Advanced", version: "^14.0.0" },
+  { name: "Tailwind CSS", icon: "🎨", level: 85, status: "Advanced", version: "^3.4.0" },
+  { name: "GSAP", icon: "🎬", level: 80, status: "Advanced", version: "^3.12.0" },
+  { name: "Figma", icon: "🖌️", level: 65, status: "Intermediate", version: "latest" },
+],
+  
+  backend: [
+    { name: "Node.js", icon: "🟢", level: 85, status: "Advanced", version: "^20.0.0" },
+    { name: "Python", icon: "🐍", level: 70, status: "Intermediate", version: "^3.12" },
+    { name: "Java", icon: "☕", level: 60, status: "Intermediate", version: "^17" },
+    { name: "Firebase", icon: "🔥", level: 90, status: "Expert", version: "^10.7.0" },
+    { name: "PostgreSQL", icon: "🐘", level: 60, status: "Intermediate", version: "^16" },
+    { name: "Docker", icon: "🐳", level: 75, status: "Advanced", version: "^24.0" },
+    { name: "n8n", icon: "🔄", level: 90, status: "Expert", version: "^1.0" },
+    { name: "Git", icon: "📦", level: 90, status: "Expert", version: "^2.43" },
+  ],
+  
+  mobile: [
+    { name: "Kotlin", icon: "🤖", level: 60, status: "Intermediate", version: "^1.9" },
+    { name: "React Native", icon: "⚛️", level: 100, status: "Expert", version: "^0.73.0" },
+  ],
+};
 
   const sectionRef = useRef<HTMLElement>(null);
 
