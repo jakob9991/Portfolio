@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Github, Linkedin, Mail, MapPin, Smartphone, Terminal, Server, Wifi } from "lucide-react";
 import { socialLinks } from "@/public/data/socialLinks";
+import { TerminalHeader } from "@/components/ui/terminal";
 gsap.registerPlugin(ScrollTrigger);
 
 export const Footer = () => {
@@ -146,18 +147,14 @@ export const Footer = () => {
           <div className="bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl shadow-2xl overflow-hidden mb-8">
 
             {/* Terminal Header */}
-            <div className="h-10 bg-[#151921] border-b border-white/5 flex items-center px-4 justify-between">
-              <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
-              </div>
-              <div className="text-[10px] font-mono text-gray-500 flex items-center gap-2">
-                <Terminal className="w-3 h-3" />
-                jakob@portfolio ~ systemctl status contact.service
-              </div>
-              <div className="w-10"></div>
-            </div>
+            <TerminalHeader
+              title={
+                <>
+                  <Terminal className="w-3 h-3" />
+                  jakob@portfolio ~ systemctl status contact.service
+                </>
+              }
+            />
 
             {/* Terminal Content */}
             <div className="p-8 md:p-12 font-mono">

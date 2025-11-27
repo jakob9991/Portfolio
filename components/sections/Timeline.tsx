@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GraduationCap, Code, Rocket, BrainCircuit, Terminal, HeartHandshake, GitCommit, Clock } from "lucide-react";
+import { TerminalHeader } from "@/components/ui/terminal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -62,10 +63,13 @@ export const Timeline = () => {
   const lineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Detect mobile devices
+    const isMobile = window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
 
-      // 1. Line Drawing Animation
-      if (lineRef.current) {
+      // 1. Line Drawing Animation - ONLY on desktop
+      if (lineRef.current && !isMobile) {
         gsap.fromTo(lineRef.current,
           { height: "0%" },
           {
@@ -79,84 +83,124 @@ export const Timeline = () => {
             }
           }
         );
+      } else if (lineRef.current && isMobile) {
+        // On mobile: just show the line without animation
+        gsap.set(lineRef.current, { height: "100%" });
       }
 
-      // 2. Card Animations
+      // 2. Card Animations - Simplified on mobile
       const cards = gsap.utils.toArray(".timeline-card");
       cards.forEach((card: any, i) => {
+        if (isMobile) {
+          // Mobile: Simple fade in only
+          gsap.fromTo(card,
+            { opacity: 0, y: 20 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 90%",
+                toggleActions: "play none none none"
+              }
+            }
+          );
+        } else {
+          // Desktop: Full animation
+          const isLeft = i % 2 === 0;
+          gsap.fromTo(card,
+            {
+              opacity: 0,
+              x: isLeft ? -80 : 80,
+              scale: 0.9,
+              rotateY: isLeft ? -15 : 15
+            },
+            {
+              opacity: 1,
+              x: 0,
+              scale: 1,
+              rotateY: 0,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 85%",
+                toggleActions: "play none none reverse"
+              }
+            }
+          );
+        }
+      });
 
-        const isLeft = i % 2 === 0;
+      // 3. Dot Animations - Simplified on mobile
+      gsap.utils.toArray(".timeline-dot").forEach((dot: any, i) => {
+        if (isMobile) {
+          // Mobile: Just fade in
+          gsap.fromTo(dot,
+            { opacity: 0 },
+            {
+              opacity: 1,
+              duration: 0.4,
+              scrollTrigger: {
+                trigger: dot,
+                start: "top 80%",
+              }
+            }
+          );
+        } else {
+          // Desktop: Full animation
+          gsap.fromTo(dot,
+            { scale: 0, opacity: 0, rotation: -180 },
+            {
+              scale: 1,
+              opacity: 1,
+              rotation: 0,
+              duration: 0.8,
+              ease: "back.out(1.7)",
+              scrollTrigger: {
+                trigger: dot,
+                start: "top 70%",
+              }
+            }
+          );
+        }
+      });
 
-        gsap.fromTo(card,
-          {
+      // 4. Terminal Header Animations - SKIP on mobile
+      if (!isMobile) {
+        gsap.utils.toArray(".terminal-header").forEach((header: any) => {
+          gsap.from(header, {
             opacity: 0,
-            x: isLeft ? -80 : 80,
-            scale: 0.9,
-            rotateY: isLeft ? -15 : 15
-          },
-          {
-            opacity: 1,
-            x: 0,
-            scale: 1,
-            rotateY: 0,
-            duration: 1,
-            ease: "power3.out",
+            y: -10,
+            duration: 0.4,
             scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
+              trigger: header,
+              start: "top 80%",
               toggleActions: "play none none reverse"
             }
-          }
-        );
-      });
+          });
+        });
+      }
 
-      // 3. Dot Animations
-      gsap.utils.toArray(".timeline-dot").forEach((dot: any, i) => {
-        gsap.fromTo(dot,
-          { scale: 0, opacity: 0, rotation: -180 },
-          {
-            scale: 1,
-            opacity: 1,
-            rotation: 0,
-            duration: 0.8,
-            ease: "back.out(1.7)",
+      // 5. Content Stagger - SKIP on mobile
+      if (!isMobile) {
+        gsap.utils.toArray(".timeline-content").forEach((content: any) => {
+          gsap.from(content.children, {
+            opacity: 0,
+            y: 10,
+            stagger: 0.1,
+            duration: 0.5,
+            delay: 0.3,
             scrollTrigger: {
-              trigger: dot,
-              start: "top 70%",
+              trigger: content,
+              start: "top 75%",
+              toggleActions: "play none none reverse"
             }
-          }
-        );
-      });
-
-      // 4. Terminal Header Animations
-      gsap.utils.toArray(".terminal-header").forEach((header: any) => {
-        gsap.from(header, {
-          opacity: 0,
-          y: -10,
-          duration: 0.4,
-          scrollTrigger: {
-            trigger: header,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          }
+          });
         });
-      });
-
-      // 5. Content Stagger
-      gsap.utils.toArray(".timeline-content").forEach((content: any) => {
-        gsap.from(content.children, {
-          opacity: 0,
-          y: 10,
-          stagger: 0.1,
-          duration: 0.5,
-          delay: 0.3,
-          scrollTrigger: {
-            trigger: content,
-            start: "top 75%",
-            toggleActions: "play none none reverse"
-          }
-        });
-      });
+      }
 
     }, containerRef);
 
@@ -169,15 +213,15 @@ export const Timeline = () => {
       {/* Background Grid Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.02)_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none"></div>
 
-      {/* Ambient Glows */}
-      <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-purple-500/5 blur-[120px] rounded-full pointer-events-none"></div>
-      <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-cyan-500/5 blur-[100px] rounded-full pointer-events-none"></div>
+      {/* Ambient Glows - Reduced on mobile */}
+      <div className="hidden md:block absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-purple-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="hidden md:block absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-cyan-500/5 blur-[100px] rounded-full pointer-events-none"></div>
 
       <div className="container mx-auto px-4 relative z-10">
 
         {/* Section Header */}
         <div className="text-center mb-24">
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 mb-6">
+          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[#0f1219]/60 backdrop-blur-sm md:backdrop-blur-xl border border-white/5 mb-6">
             <GitCommit className="w-4 h-4 text-cyan-400" />
             <span className="font-mono text-sm text-gray-400">git log --all --graph</span>
           </div>
@@ -205,30 +249,27 @@ export const Timeline = () => {
                 <div key={index} className={`relative flex items-center md:justify-between ${isLeft ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
 
                   {/* Timeline Dot (Center) */}
-                  <div className={`timeline-dot absolute left-[20px] md:left-1/2 w-12 h-12 -translate-x-1/2 flex items-center justify-center rounded-full z-30 bg-[#0a0d14] border-2 ${colors.border} ${colors.glow}`}>
-                     <div className={`w-4 h-4 rounded-full ${colors.bg} ${colors.border} border-2 animate-pulse`}></div>
+                  <div className={`timeline-dot absolute left-[20px] md:left-1/2 w-12 h-12 -translate-x-1/2 flex items-center justify-center rounded-full z-30 bg-[#0a0d14] border-2 ${colors.border} md:${colors.glow}`}>
+                     <div className={`w-4 h-4 rounded-full ${colors.bg} ${colors.border} border-2 md:animate-pulse`}></div>
                   </div>
 
                   {/* Terminal Card */}
                   <div className="timeline-card pl-16 md:pl-0 w-full md:w-[47%] relative z-20">
-                     <div className="bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl shadow-2xl overflow-hidden group hover:border-white/10 transition-all">
+                     <div className="bg-[#0f1219]/60 backdrop-blur-sm md:backdrop-blur-xl border border-white/5 rounded-xl shadow-2xl overflow-hidden group hover:border-white/10 transition-all">
 
-                        {/* Glow Effect on Hover */}
-                        <div className={`absolute -inset-[1px] bg-gradient-to-br ${colors.border.replace('border-', 'from-').replace('/30', '/20')} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl pointer-events-none`}></div>
+                        {/* Glow Effect on Hover - Desktop only */}
+                        <div className={`hidden md:block absolute -inset-[1px] bg-gradient-to-br ${colors.border.replace('border-', 'from-').replace('/30', '/20')} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl pointer-events-none`}></div>
 
                         {/* Terminal Header */}
-                        <div className="terminal-header h-10 bg-[#151921] border-b border-white/5 flex items-center px-4 justify-between relative">
-                          <div className="flex gap-2">
-                            <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                            <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                            <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
-                          </div>
-                          <div className="text-[10px] font-mono text-gray-500 flex items-center gap-2">
-                            <Terminal className="w-3 h-3" />
-                            jakob@timeline ~ {item.year.replace(' ', '_')}
-                          </div>
-                          <div className="w-10"></div>
-                        </div>
+                        <TerminalHeader
+                          className="terminal-header"
+                          title={
+                            <>
+                              <Terminal className="w-3 h-3" />
+                              jakob@timeline ~ {item.year.replace(' ', '_')}
+                            </>
+                          }
+                        />
 
                         {/* Terminal Content */}
                         <div className="timeline-content p-6 font-mono">
