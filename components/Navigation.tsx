@@ -22,9 +22,9 @@ export const Navigation = () => {
   const navLinks = [
     { name: 'Start', href: '#start' },
     { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Career', href: '#career' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Projekte', href: '#projects' },
+    { name: 'Karriere', href: '#career' },
+    { name: 'Kontakt', href: '#contact' },
   ];
 
   useEffect(() => {
