@@ -74,8 +74,6 @@ export const About = () => {
             {/* Diagonal Grid Pattern - anders als Hero */}
             <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(14,165,233,0.02)_1px,transparent_1px),linear-gradient(45deg,rgba(14,165,233,0.02)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none"></div>
 
-            {/* Dual Ambient Glows - kreativere Variante */}
-         
             {/* --- MAIN CONTENT --- */}
             <div
                 ref={containerRef}

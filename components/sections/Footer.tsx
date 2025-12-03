@@ -196,14 +196,14 @@ export const Footer = () => {
               <div className="contact-grid grid md:grid-cols-3 gap-4 mb-10">
 
                 {/* Email Card */}
-                <a href="mailto:Jakob.dickhardt@t-online.de" className="contact-card bg-[#0a0d14]/60 backdrop-blur-xl border border-white/5 rounded-lg p-4 hover:border-cyan-500/30 transition-all group">
+                <a href="mailto:Jakob.dickhardt@gmail.com" className="contact-card bg-[#0a0d14]/60 backdrop-blur-xl border border-white/5 rounded-lg p-4 hover:border-cyan-500/30 transition-all group">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="p-2 bg-cyan-500/10 rounded-lg text-cyan-400 group-hover:scale-110 transition-transform">
                       <Mail className="w-4 h-4" />
                     </div>
                     <div className="flex-1">
                       <div className="text-[10px] text-gray-600 mb-1">EMAIL:</div>
-                      <div className="text-xs text-cyan-400 font-semibold break-all">Jakob.dickhardt@<br className="hidden sm:inline"/>t-online.de</div>
+                      <div className="text-xs text-cyan-400 font-semibold break-all">Jakob.dickhardt@<br className="hidden sm:inline"/>gmail.com</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 text-[10px]">
@@ -237,7 +237,8 @@ export const Footer = () => {
                     </div>
                     <div className="flex-1">
                       <div className="text-[10px] text-gray-600 mb-1">LOCATION:</div>
-                      <div className="text-xs text-purple-400 font-semibold">Frankfurt am Main</div>
+                      <div className="text-xs text-purple-400 font-semibold">Frankfurt am Main, 60437</div>
+                       <div className="text-xs text-purple-400 font-semibold">Alt-Niedereschbach 17</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 text-[10px]">
@@ -338,7 +339,7 @@ export const Footer = () => {
           <div className="text-center font-mono">
             <div className="bg-[#0f1219]/40 backdrop-blur-xl border border-white/5 rounded-lg p-4 space-y-3">
               <p className="text-xs text-gray-600">
-                <span className="text-gray-700">#</span> © {new Date().getFullYear()} Jakob Dickhardt. All rights reserved.
+                <span className="text-gray-700">#</span> © {new Date().getFullYear()}  Jakob Dickhardt | Impressum & Inhalt
               </p>
               
             </div>
