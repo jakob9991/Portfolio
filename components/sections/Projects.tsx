@@ -23,7 +23,7 @@ const featuredProjects = [
     links: { demo: "https://ai.madebyjakob.de", repo: "private" },
     color: "from-blue-500 to-indigo-600",
     type: "web",
-    image: "/images/cenraAI.png" 
+    image: "/images/cenra.png" 
   },
   {
     id: "02",

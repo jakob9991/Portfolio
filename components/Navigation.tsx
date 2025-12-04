@@ -126,7 +126,8 @@ export const Navigation = () => {
           })}
 
           <a
-            href="mailto:Jakob.dickhardt@t-online.de"
+            href="#contact"
+            onClick={(e) => handleNavClick(e, '#contact')}
             className="px-4 py-2 text-sm font-bold text-black bg-white rounded-full hover:bg-gray-200 transition-colors"
           >
             Let's Talk

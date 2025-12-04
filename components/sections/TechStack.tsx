@@ -2,40 +2,48 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Terminal, Package, Cpu } from "lucide-react";
-import { TerminalHeader, SectionHeader, InstallProgress } from "@/components/ui/terminal";
+import { Terminal, Package, Cpu, Code2, Wrench } from "lucide-react";
+import { TerminalHeader, SectionHeader } from "@/components/ui/terminal";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const TechStack = () => {
-  // Tech Stack Data mit Package Manager Style
+  // Tech Stack Data - Neue Struktur
   const techStack = {
-  frontend: [
-  { name: "JavaScript", icon: "🟨", level: 98, status: "Expert", version: "ES2024" },
-  { name: "TypeScript", icon: "🔷", level: 85, status: "Advanced", version: "^5.3.0" },
-  { name: "React", icon: "⚛️", level: 95, status: "Expert", version: "^18.3.1" },
-  { name: "Next.js", icon: "▲", level: 85, status: "Advanced", version: "^14.0.0" },
-  { name: "Tailwind CSS", icon: "🎨", level: 85, status: "Advanced", version: "^3.4.0" },
-  { name: "GSAP", icon: "🎬", level: 80, status: "Advanced", version: "^3.12.0" },
-  { name: "Figma", icon: "🖌️", level: 65, status: "Intermediate", version: "latest" },
-],
-  
-  backend: [
-    { name: "Node.js", icon: "🟢", level: 85, status: "Advanced", version: "^20.0.0" },
-    { name: "Python", icon: "🐍", level: 70, status: "Intermediate", version: "^3.12" },
-    { name: "Java", icon: "☕", level: 60, status: "Intermediate", version: "^17" },
-    { name: "Firebase", icon: "🔥", level: 90, status: "Expert", version: "^10.7.0" },
-    { name: "PostgreSQL", icon: "🐘", level: 60, status: "Intermediate", version: "^16" },
-    { name: "Docker", icon: "🐳", level: 75, status: "Advanced", version: "^24.0" },
-    { name: "n8n", icon: "🔄", level: 90, status: "Expert", version: "^1.0" },
-    { name: "Git", icon: "📦", level: 90, status: "Expert", version: "^2.43" },
-  ],
-  
-  mobile: [
-    { name: "Kotlin", icon: "🤖", level: 60, status: "Intermediate", version: "^1.9" },
-    { name: "React Native", icon: "⚛️", level: 100, status: "Expert", version: "^0.73.0" },
-  ],
-};
+    languages: [
+      { name: "TypeScript", icon: "🔷", level: 90, version: "v5.3" },
+      { name: "JavaScript", icon: "🟨", level: 98, version: "ES2024" },
+      { name: "Kotlin", icon: "🤖", level: 60, version: "1.9" },
+        { name: "Java", icon: "☕", level: 60, version: "17" },
+              { name: "Dart", icon: "🎯", level: 25, version: "3.0" },
+      { name: "Python", icon: "🐍", level: 70, version: "3.12" },
+
+    
+    ],
+
+    frameworks: [
+      { name: "React Native", icon: "⚛️", level: 100, status: "Expert", desc: "Cross-Platform Mobile" },
+      { name: "Flutter", icon: "💙", level: 20, status: "Learning", desc: "UI Toolkit (Transitioning)" },
+      { name: "React / Next.js", icon: "▲", level: 95, status: "Expert", desc: "Web & Server Components" },
+         { name: "Vue.js", icon: "💚", level: 80, status: "Advanced", desc: "Progressive Web Framework" }, 
+      { name: "Tailwind CSS", icon: "🎨", level: 90, status: "Expert", desc: "Utility-First Styling" },
+
+    ],
+
+    infrastructure: [
+      { name: "Firebase / Firestore", icon: "🔥", level: 90, status: "Expert" },
+      { name: "Node.js", icon: "🟢", level: 85, status: "Advanced" },
+      { name: "Docker", icon: "🐳", level: 75, status: "Advanced" },
+      { name: "PostgreSQL", icon: "🐘", level: 60, status: "Intermediate" },
+    ],
+
+    tools: [
+      { name: "n8n (AI Auto)", icon: "🔄", desc: "Workflow Automation" },
+      { name: "Git / GitHub", icon: "📦", desc: "Version Control" },
+      { name: "Figma", icon: "🖌️", desc: "UI/UX Design" },
+      { name: "GSAP", icon: "🎬", desc: "High-Perf Animations" },
+    ]
+  };
 
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -60,8 +68,8 @@ export const TechStack = () => {
         }
       );
 
-      // 2. Frontend Section
-      gsap.fromTo(".frontend-section",
+      // 2. Languages Section
+      gsap.fromTo(".languages-section",
         { y: 40, opacity: 0, scale: 0.98 },
         {
           y: 0,
@@ -70,15 +78,15 @@ export const TechStack = () => {
           duration: 0.8,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: ".frontend-section",
+            trigger: ".languages-section",
             start: "top 85%",
             toggleActions: "play none none reverse",
           }
         }
       );
 
-      // Frontend Package Cards
-      gsap.utils.toArray(".frontend-package").forEach((card: any, index: number) => {
+      // Language Cards
+      gsap.utils.toArray(".language-card").forEach((card: any, index: number) => {
         gsap.fromTo(card,
           { y: 30, opacity: 0, scale: 0.9 },
           {
@@ -96,14 +104,20 @@ export const TechStack = () => {
           }
         );
 
-        // Progress bar
-        const progressBar = card.querySelector(".package-progress");
-        if (progressBar) {
-          gsap.fromTo(progressBar,
-            { width: "0%" },
+        // Circular Progress Animation
+        const progressCircle = card.querySelector(".language-progress");
+        if (progressCircle) {
+          const level = parseInt(progressCircle.dataset.level || "0");
+          const circumference = 2 * Math.PI * 28; // radius = 28
+          const offset = circumference * (1 - level / 100);
+
+          gsap.fromTo(progressCircle,
             {
-              width: progressBar.dataset.level + "%",
-              duration: 1,
+              strokeDashoffset: circumference
+            },
+            {
+              strokeDashoffset: offset,
+              duration: 1.2,
               delay: index * 0.1 + 0.3,
               ease: "power2.out",
               scrollTrigger: {
@@ -116,8 +130,8 @@ export const TechStack = () => {
         }
       });
 
-      // 3. Backend Section
-      gsap.fromTo(".backend-section",
+      // 3. Frameworks Section
+      gsap.fromTo(".frameworks-section",
         { y: 40, opacity: 0 },
         {
           y: 0,
@@ -125,50 +139,15 @@ export const TechStack = () => {
           duration: 0.8,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: ".backend-section",
+            trigger: ".frameworks-section",
             start: "top 85%",
             toggleActions: "play none none reverse",
           }
         }
       );
 
-      // Backend Install Lines
-      gsap.utils.toArray(".install-line").forEach((line: any, index: number) => {
-        gsap.fromTo(line,
-          { opacity: 0, x: -20 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.4,
-            delay: index * 0.08,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: ".backend-section",
-              start: "top 75%",
-              toggleActions: "play none none reverse",
-            }
-          }
-        );
-      });
-
-      // 4. Mobile Section
-      gsap.fromTo(".mobile-section",
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".mobile-section",
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-
-      // Mobile Cards
-      gsap.utils.toArray(".mobile-package").forEach((card: any, index: number) => {
+      // Framework Cards
+      gsap.utils.toArray(".framework-card").forEach((card: any, index: number) => {
         gsap.fromTo(card,
           { y: 40, opacity: 0, rotateX: -10 },
           {
@@ -178,6 +157,76 @@ export const TechStack = () => {
             duration: 0.7,
             delay: index * 0.2,
             ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+      });
+
+      // 4. Infrastructure Section
+      gsap.fromTo(".infrastructure-section",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".infrastructure-section",
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // Infrastructure Lines
+      gsap.utils.toArray(".infrastructure-line").forEach((line: any, index: number) => {
+        gsap.fromTo(line,
+          { opacity: 0, x: -20 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.4,
+            delay: index * 0.08,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: ".infrastructure-section",
+              start: "top 75%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+      });
+
+      // 5. Tools Section
+      gsap.fromTo(".tools-section",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".tools-section",
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // Tool Cards
+      gsap.utils.toArray(".tool-card").forEach((card: any, index: number) => {
+        gsap.fromTo(card,
+          { opacity: 0, scale: 0.9 },
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.5,
+            delay: index * 0.1,
+            ease: "back.out(1.5)",
             scrollTrigger: {
               trigger: card,
               start: "top 85%",
@@ -201,76 +250,175 @@ export const TechStack = () => {
 
       <div className="container mx-auto px-4 relative z-10">
 
-        {/* Main Heading - SectionHeader Component */}
+        {/* Main Heading */}
         <div className="techstack-header max-w-4xl mx-auto mb-20">
           <SectionHeader
             terminalTitle={
               <>
                 <Terminal className="w-3 h-3" />
-                ~/skills — package.json
+                ~/skills — stack.config
               </>
             }
-            command="npm"
-            args={["list", "--depth=0"]}
+            command="cat"
+            args={["tech-stack.yml"]}
             title={<>Tech <span className="text-purple-400">Stack</span></>}
-            subtitle="Ein Überblick über mein technologisches Portfolio und meine Erfahrungswerte."
+            subtitle="Ein Überblick über mein technologisches Portfolio — Sprachen, Frameworks, Infrastructure & Tools."
           />
         </div>
 
-        {/* 1. FRONTEND - Package Cards */}
-        <div className="frontend-section mb-24">
+        {/* 1. LANGUAGES - Compiler Output Style */}
+        <div className="languages-section mb-24">
+          {/* Section Header */}
+          <div className="bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden mb-8">
+            <TerminalHeader
+              title={
+                <>
+                  <Code2 className="w-3 h-3" />
+                  gcc --version && python --version && java --version
+                </>
+              }
+            />
+            <div className="p-6 font-mono">
+              <h3 className="text-2xl font-bold text-white flex items-center gap-2">
+                <span className="text-yellow-400">Programming</span> Languages
+              </h3>
+              <p className="text-gray-500 text-xs mt-2"># Core Language Proficiencies</p>
+            </div>
+          </div>
+
+          {/* Languages Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {techStack.languages.map((lang, index) => {
+              return (
+                <div key={index} className="language-card bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden group hover:border-yellow-500/30 transition-all duration-300">
+                  {/* Header */}
+                  <div className="h-8 bg-[#151921] border-b border-white/5 flex items-center px-3">
+                    <div className="text-[9px] font-mono text-gray-600">{lang.version}</div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-4 text-center">
+                    <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform">
+                      {lang.icon}
+                    </div>
+                    <h4 className="font-mono font-bold text-white text-sm mb-2">{lang.name}</h4>
+
+                    {/* Circular Progress */}
+                    <div className="relative w-16 h-16 mx-auto mb-2">
+                      <svg className="transform -rotate-90 w-16 h-16">
+                        <defs>
+                          <linearGradient id={`gradient-${index}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                            {lang.level >= 90 && (
+                              <>
+                                <stop offset="0%" stopColor="#a855f7" />
+                                <stop offset="100%" stopColor="#ec4899" />
+                              </>
+                            )}
+                            {lang.level >= 70 && lang.level < 90 && (
+                              <>
+                                <stop offset="0%" stopColor="#eab308" />
+                                <stop offset="100%" stopColor="#f97316" />
+                              </>
+                            )}
+                            {lang.level >= 50 && lang.level < 70 && (
+                              <>
+                                <stop offset="0%" stopColor="#3b82f6" />
+                                <stop offset="100%" stopColor="#06b6d4" />
+                              </>
+                            )}
+                            {lang.level < 50 && (
+                              <>
+                                <stop offset="0%" stopColor="#6b7280" />
+                                <stop offset="100%" stopColor="#4b5563" />
+                              </>
+                            )}
+                          </linearGradient>
+                        </defs>
+                        <circle
+                          cx="32"
+                          cy="32"
+                          r="28"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          fill="none"
+                          className="text-white/5"
+                        />
+                        <circle
+                          cx="32"
+                          cy="32"
+                          r="28"
+                          stroke={`url(#gradient-${index})`}
+                          strokeWidth="4"
+                          fill="none"
+                          strokeDasharray={`${2 * Math.PI * 28}`}
+                          strokeDashoffset={`${2 * Math.PI * 28}`}
+                          className="language-progress"
+                          data-level={lang.level}
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-xs font-mono font-bold text-white">{lang.level}%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 2. FRAMEWORKS - Feature Cards */}
+        <div className="frameworks-section mb-24">
           {/* Section Header */}
           <div className="bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden mb-8">
             <TerminalHeader
               title={
                 <>
                   <Package className="w-3 h-3" />
-                  npm install @frontend/* --save
+                  npm list --global frameworks
                 </>
               }
             />
             <div className="p-6 font-mono">
               <h3 className="text-2xl font-bold text-white flex items-center gap-2">
-                <span className="text-blue-400">Frontend</span> & Design
+                <span className="text-blue-400">Frameworks</span> & Libraries
               </h3>
-              <p className="text-gray-500 text-xs mt-2"># User Interface & Experience</p>
+              <p className="text-gray-500 text-xs mt-2"># UI, Mobile & Web Development Frameworks</p>
             </div>
           </div>
 
-          {/* Frontend Packages Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {techStack.frontend.map((tech, index) => (
-              <div key={index} className="frontend-package bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden group hover:border-blue-500/30 transition-all duration-300">
-                <TerminalHeader dots="small" title={<span className="text-[9px] text-gray-600">{tech.version}</span>} />
+          {/* Frameworks Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {techStack.frameworks.map((framework, index) => (
+              <div key={index} className="framework-card bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden group hover:border-blue-500/30 transition-all duration-300">
+                <TerminalHeader
+                  dots="small"
+                  title={<span className="text-[10px] text-gray-500">{framework.status}</span>}
+                />
 
-                {/* Package Content */}
+                {/* Content */}
                 <div className="p-6">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="text-4xl transform group-hover:scale-110 transition-transform">
-                      {tech.icon}
+                    <div className="text-5xl transform group-hover:scale-110 transition-transform">
+                      {framework.icon}
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-mono font-bold text-white text-lg">{tech.name}</h4>
-                      <p className={`text-xs font-mono ${
-                        tech.level >= 90 ? 'text-purple-400' :
-                        tech.level >= 75 ? 'text-blue-400' :
-                        'text-cyan-400'
-                      }`}>
-                        {tech.status}
-                      </p>
+                      <h4 className="font-mono font-bold text-white text-xl mb-1">{framework.name}</h4>
+                      <p className="text-xs text-gray-500">{framework.desc}</p>
                     </div>
                   </div>
 
                   {/* Progress Bar */}
                   <div className="space-y-2">
-                    <div className="flex justify-between text-[10px] font-mono text-gray-500">
-                      <span>Experience</span>
-                      <span>{tech.level}%</span>
+                    <div className="flex justify-between text-xs font-mono">
+                      <span className="text-gray-500">Proficiency</span>
+                      <span className="text-blue-400 font-bold">{framework.level}%</span>
                     </div>
-                    <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
                       <div
-                        className="package-progress h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
-                        data-level={tech.level}
+                        className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-all duration-1000"
+                        style={{ width: `${framework.level}%` }}
                       ></div>
                     </div>
                   </div>
@@ -280,92 +428,166 @@ export const TechStack = () => {
           </div>
         </div>
 
-        {/* 2. BACKEND - Terminal Install Log with InstallProgress Component */}
-        <div className="backend-section mb-24">
+        {/* 3. INFRASTRUCTURE - System Monitor Style */}
+        <div className="infrastructure-section mb-24">
           {/* Section Header */}
           <div className="bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden mb-8">
             <TerminalHeader
               title={
                 <>
                   <Cpu className="w-3 h-3" />
-                  npm install @backend/* @database/* @devops/*
+                  htop --process-tree /infrastructure
                 </>
               }
             />
             <div className="p-6 font-mono">
               <h3 className="text-2xl font-bold text-white flex items-center gap-2">
-                <span className="text-green-400">Backend</span> & Tools
+                <span className="text-green-400">Infrastructure</span> & Backend
               </h3>
-              <p className="text-gray-500 text-xs mt-2"># Server, Database & DevOps</p>
+              <p className="text-gray-500 text-xs mt-2"># Backend, Database & DevOps — System Monitor</p>
             </div>
           </div>
 
-          {/* Terminal Install Output */}
+          {/* System Monitor Display */}
           <div className="bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
             <TerminalHeader
               dots="small"
-              title={<span className="text-[9px] text-gray-600">install.log — {techStack.backend.length} packages</span>}
+              title={<span className="text-[9px] text-gray-600">htop — {techStack.infrastructure.length} running processes</span>}
             />
 
             <div className="p-6 font-mono text-sm">
-              <InstallProgress items={techStack.backend} />
+              {/* System Monitor Header */}
+              <div className="grid grid-cols-12 gap-2 mb-4 pb-3 border-b border-white/5 text-[10px] text-gray-600 font-bold">
+                <div className="col-span-1">PID</div>
+                <div className="col-span-4">PROCESS</div>
+                <div className="col-span-2 text-center">STATUS</div>
+                <div className="col-span-3 text-center">SKILL LEVEL</div>
+                <div className="col-span-2 text-right">UPTIME</div>
+              </div>
+
+              {/* Process List */}
+              <div className="space-y-3">
+                {techStack.infrastructure.map((tech, index) => {
+                  const getSkillColor = (level: number) => {
+                    if (level >= 90) return { text: 'text-purple-400', bg: 'bg-purple-500', border: 'border-purple-500/30', glow: 'shadow-[0_0_15px_rgba(168,85,247,0.3)]' };
+                    if (level >= 75) return { text: 'text-emerald-400', bg: 'bg-emerald-500', border: 'border-emerald-500/30', glow: 'shadow-[0_0_15px_rgba(16,185,129,0.3)]' };
+                    if (level >= 60) return { text: 'text-blue-400', bg: 'bg-blue-500', border: 'border-blue-500/30', glow: 'shadow-[0_0_15px_rgba(59,130,246,0.3)]' };
+                    return { text: 'text-cyan-400', bg: 'bg-cyan-500', border: 'border-cyan-500/30', glow: 'shadow-[0_0_15px_rgba(6,182,212,0.3)]' };
+                  };
+
+                  const colors = getSkillColor(tech.level);
+
+                  return (
+                    <div key={index} className="infrastructure-line grid grid-cols-12 gap-2 items-center group hover:bg-white/[0.02] p-2 rounded-lg transition-all">
+                      {/* PID */}
+                      <div className="col-span-1 text-gray-600 text-xs">
+                        {2000 + index}
+                      </div>
+
+                      {/* Process Name */}
+                      <div className="col-span-4 flex items-center gap-2">
+                        <span className="text-2xl">{tech.icon}</span>
+                        <div>
+                          <div className={`font-bold ${colors.text}`}>{tech.name}</div>
+                          <div className="text-[9px] text-gray-600">{tech.status}</div>
+                        </div>
+                      </div>
+
+                      {/* Status Badge */}
+                      <div className="col-span-2 flex justify-center">
+                        <div className={`px-2 py-1 rounded-md text-[9px] font-bold ${colors.text} border ${colors.border} flex items-center gap-1`}
+                          style={{ backgroundColor: `rgb(${colors.bg.includes('purple') ? '168 85 247' : colors.bg.includes('emerald') ? '16 185 129' : colors.bg.includes('blue') ? '59 130 246' : '6 182 212'} / 0.1)` }}>
+                          <span className="relative flex h-1.5 w-1.5">
+                            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${colors.bg} opacity-75`}></span>
+                            <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${colors.bg}`}></span>
+                          </span>
+                          ACTIVE
+                        </div>
+                      </div>
+
+                      {/* Skill Level Bar */}
+                      <div className="col-span-3">
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-[9px]">
+                            <span className="text-gray-600">SKILL</span>
+                            <span className={`font-bold ${colors.text}`}>{tech.level}%</span>
+                          </div>
+                          <div className="h-2 bg-[#0a0a0a] rounded-full overflow-hidden border border-white/5">
+                            <div
+                              className={`h-full rounded-full ${colors.bg} ${colors.glow} transition-all duration-1000`}
+                              style={{ width: `${tech.level}%` }}
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Uptime */}
+                      <div className="col-span-2 text-right text-cyan-400 text-xs">
+                        99.9%
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* System Footer Stats */}
+              <div className="mt-6 pt-4 border-t border-white/5 grid grid-cols-3 gap-4 text-xs">
+                <div className="text-center">
+                  <div className="text-gray-600 mb-1">TOTAL PROCESSES</div>
+                  <div className="text-green-400 font-bold text-lg">{techStack.infrastructure.length}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-gray-600 mb-1">AVG SKILL LEVEL</div>
+                  <div className="text-purple-400 font-bold text-lg">
+                    {Math.round(techStack.infrastructure.reduce((sum, t) => sum + t.level, 0) / techStack.infrastructure.length)}%
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-gray-600 mb-1">SYSTEM STATUS</div>
+                  <div className="text-emerald-400 font-bold text-lg flex items-center justify-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    OPTIMAL
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* 3. MOBILE - Featured Cards */}
-        <div className="mobile-section max-w-4xl mx-auto">
+        {/* 4. TOOLS - Simple Badge Grid */}
+        <div className="tools-section max-w-4xl mx-auto">
           {/* Section Header */}
           <div className="bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden mb-8">
             <TerminalHeader
               title={
                 <>
-                  <Terminal className="w-3 h-3" />
-                  npm install @mobile/*
+                  <Wrench className="w-3 h-3" />
+                  ls -la ~/.config/tools
                 </>
               }
             />
             <div className="p-6 font-mono">
               <h3 className="text-2xl font-bold text-white flex items-center gap-2">
-                <span className="text-emerald-400">Mobile</span> Development
+                <span className="text-orange-400">Tools</span> & Workflows
               </h3>
-              <p className="text-gray-500 text-xs mt-2"># Cross-Platform Applications</p>
+              <p className="text-gray-500 text-xs mt-2"># Development Tools & Automation</p>
             </div>
           </div>
 
-          {/* Mobile Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {techStack.mobile.map((tech, index) => (
-              <div key={index} className="mobile-package bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
-                <TerminalHeader
-                  dots="small"
-                  title={<span className="text-[10px] text-gray-500">v{tech.version}</span>}
-                />
-
-                {/* Content */}
-                <div className="p-8">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="text-5xl transform group-hover:scale-110 transition-transform">
-                      {tech.icon}
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-mono font-bold text-white text-2xl mb-1">{tech.name}</h4>
-                      <p className="text-sm font-mono text-emerald-400">{tech.status}</p>
-                    </div>
+          {/* Tools Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {techStack.tools.map((tool, index) => (
+              <div key={index} className="tool-card bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-lg p-6 hover:border-orange-500/30 transition-all duration-300 group">
+                <div className="flex items-center gap-4">
+                  <div className="text-4xl transform group-hover:scale-110 transition-transform">
+                    {tool.icon}
                   </div>
-
-                  {/* Proficiency */}
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-xs font-mono">
-                      <span className="text-gray-500">Proficiency</span>
-                      <span className="text-emerald-400 font-bold">{tech.level}%</span>
-                    </div>
-                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all duration-1000"
-                        style={{ width: `${tech.level}%` }}
-                      ></div>
-                    </div>
+                  <div className="flex-1">
+                    <h4 className="font-mono font-bold text-white text-lg mb-1">{tool.name}</h4>
+                    <p className="text-xs text-gray-500">{tool.desc}</p>
                   </div>
                 </div>
               </div>
