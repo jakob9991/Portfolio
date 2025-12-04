@@ -163,7 +163,7 @@ export const Navigation = () => {
           <div className="flex gap-6 mt-8">
             <a href="https://github.com/jakobdickhardt" className="p-3 bg-white/5 rounded-full text-white"><Github /></a>
             <a href="https://linkedin.com/in/jakob-dickhardt" className="p-3 bg-white/5 rounded-full text-white"><Linkedin /></a>
-            <a href="mailto:Jakob.dickhardt@t-online.de" className="p-3 bg-white/5 rounded-full text-white"><Mail /></a>
+            <a href="mailto:Jakob.dickhardt@gmail.com" className="p-3 bg-white/5 rounded-full text-white"><Mail /></a>
           </div>
         </div>
 
