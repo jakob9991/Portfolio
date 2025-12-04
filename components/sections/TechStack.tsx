@@ -441,8 +441,10 @@ export const TechStack = () => {
               }
             />
             <div className="p-6 font-mono">
-              <h3 className="text-2xl font-bold text-white flex items-center gap-2">
-                <span className="text-green-400">Infrastructure</span> & Backend
+              <h3 className="text-2xl font-bold text-white flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                <span className="text-green-400">Infrastructure</span>
+                <span className="hidden sm:inline">&</span>
+                <span className="sm:inline">Backend</span>
               </h3>
               <p className="text-gray-500 text-xs mt-2"># Backend, Database & DevOps — System Monitor</p>
             </div>
@@ -455,9 +457,9 @@ export const TechStack = () => {
               title={<span className="text-[9px] text-gray-600">htop — {techStack.infrastructure.length} running processes</span>}
             />
 
-            <div className="p-6 font-mono text-sm">
-              {/* System Monitor Header */}
-              <div className="grid grid-cols-12 gap-2 mb-4 pb-3 border-b border-white/5 text-[10px] text-gray-600 font-bold">
+            <div className="p-4 sm:p-6 font-mono text-sm">
+              {/* System Monitor Header - Desktop Only */}
+              <div className="hidden md:grid grid-cols-12 gap-2 mb-4 pb-3 border-b border-white/5 text-[10px] text-gray-600 font-bold">
                 <div className="col-span-1">PID</div>
                 <div className="col-span-4">PROCESS</div>
                 <div className="col-span-2 text-center">STATUS</div>
@@ -466,7 +468,7 @@ export const TechStack = () => {
               </div>
 
               {/* Process List */}
-              <div className="space-y-3">
+              <div className="space-y-3 md:space-y-3">
                 {techStack.infrastructure.map((tech, index) => {
                   const getSkillColor = (level: number) => {
                     if (level >= 90) return { text: 'text-purple-400', bg: 'bg-purple-500', border: 'border-purple-500/30', glow: 'shadow-[0_0_15px_rgba(168,85,247,0.3)]' };
@@ -478,52 +480,81 @@ export const TechStack = () => {
                   const colors = getSkillColor(tech.level);
 
                   return (
-                    <div key={index} className="infrastructure-line grid grid-cols-12 gap-2 items-center group hover:bg-white/[0.02] p-2 rounded-lg transition-all">
-                      {/* PID */}
-                      <div className="col-span-1 text-gray-600 text-xs">
-                        {2000 + index}
-                      </div>
-
-                      {/* Process Name */}
-                      <div className="col-span-4 flex items-center gap-2">
-                        <span className="text-2xl">{tech.icon}</span>
-                        <div>
-                          <div className={`font-bold ${colors.text}`}>{tech.name}</div>
-                          <div className="text-[9px] text-gray-600">{tech.status}</div>
+                    <div key={index} className="infrastructure-line group hover:bg-white/[0.02] p-3 md:p-2 rounded-lg transition-all border border-white/5 md:border-0">
+                      {/* Mobile Layout */}
+                      <div className="md:hidden space-y-3">
+                        {/* Header: Icon + Name */}
+                        <div className="flex items-center gap-3">
+                          <span className="text-3xl">{tech.icon}</span>
+                          <div className="flex-1">
+                            <div className={`font-bold text-base ${colors.text}`}>{tech.name}</div>
+                            <div className="text-[10px] text-gray-600">{tech.status}</div>
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Status Badge */}
-                      <div className="col-span-2 flex justify-center">
-                        <div className={`px-2 py-1 rounded-md text-[9px] font-bold ${colors.text} border ${colors.border} flex items-center gap-1`}
-                          style={{ backgroundColor: `rgb(${colors.bg.includes('purple') ? '168 85 247' : colors.bg.includes('emerald') ? '16 185 129' : colors.bg.includes('blue') ? '59 130 246' : '6 182 212'} / 0.1)` }}>
-                          <span className="relative flex h-1.5 w-1.5">
-                            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${colors.bg} opacity-75`}></span>
-                            <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${colors.bg}`}></span>
-                          </span>
-                          ACTIVE
-                        </div>
-                      </div>
-
-                      {/* Skill Level Bar */}
-                      <div className="col-span-3">
-                        <div className="space-y-1">
-                          <div className="flex items-center justify-between text-[9px]">
-                            <span className="text-gray-600">SKILL</span>
+                        {/* Skill Level Bar - Mobile */}
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-gray-500">Skill Level</span>
                             <span className={`font-bold ${colors.text}`}>{tech.level}%</span>
                           </div>
-                          <div className="h-2 bg-[#0a0a0a] rounded-full overflow-hidden border border-white/5">
+                          <div className="h-2.5 bg-[#0a0a0a] rounded-full overflow-hidden border border-white/5">
                             <div
-                              className={`h-full rounded-full ${colors.bg} ${colors.glow} transition-all duration-1000`}
+                              className={`h-full rounded-full ${colors.bg} transition-all duration-1000`}
                               style={{ width: `${tech.level}%` }}
                             ></div>
                           </div>
                         </div>
                       </div>
 
-                      {/* Uptime */}
-                      <div className="col-span-2 text-right text-cyan-400 text-xs">
-                        99.9%
+                      {/* Desktop Layout */}
+                      <div className="hidden md:grid grid-cols-12 gap-2 items-center">
+                        {/* PID */}
+                        <div className="col-span-1 text-gray-600 text-xs">
+                          {2000 + index}
+                        </div>
+
+                        {/* Process Name */}
+                        <div className="col-span-4 flex items-center gap-2">
+                          <span className="text-2xl">{tech.icon}</span>
+                          <div>
+                            <div className={`font-bold ${colors.text}`}>{tech.name}</div>
+                            <div className="text-[9px] text-gray-600">{tech.status}</div>
+                          </div>
+                        </div>
+
+                        {/* Status Badge */}
+                        <div className="col-span-2 flex justify-center">
+                          <div className={`px-2 py-1 rounded-md text-[9px] font-bold ${colors.text} border ${colors.border} flex items-center gap-1`}
+                            style={{ backgroundColor: `rgb(${colors.bg.includes('purple') ? '168 85 247' : colors.bg.includes('emerald') ? '16 185 129' : colors.bg.includes('blue') ? '59 130 246' : '6 182 212'} / 0.1)` }}>
+                            <span className="relative flex h-1.5 w-1.5">
+                              <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${colors.bg} opacity-75`}></span>
+                              <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${colors.bg}`}></span>
+                            </span>
+                            ACTIVE
+                          </div>
+                        </div>
+
+                        {/* Skill Level Bar */}
+                        <div className="col-span-3">
+                          <div className="space-y-1">
+                            <div className="flex items-center justify-between text-[9px]">
+                              <span className="text-gray-600">SKILL</span>
+                              <span className={`font-bold ${colors.text}`}>{tech.level}%</span>
+                            </div>
+                            <div className="h-2 bg-[#0a0a0a] rounded-full overflow-hidden border border-white/5">
+                              <div
+                                className={`h-full rounded-full ${colors.bg} ${colors.glow} transition-all duration-1000`}
+                                style={{ width: `${tech.level}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Uptime */}
+                        <div className="col-span-2 text-right text-cyan-400 text-xs">
+                          99.9%
+                        </div>
                       </div>
                     </div>
                   );
