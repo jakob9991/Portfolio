@@ -20,7 +20,7 @@ const featuredProjects = [
       { label: "Stack", value: "React / TS" },
     ],
     tags: ["React", "TypeScript", "Tailwind CSS", "GSAP"],
-    links: { demo: "https://ai.madebyjakob.de", repo: "private" },
+    links: { demo: "https://www.cenra.de", repo: "private" },
     color: "from-blue-500 to-indigo-600",
     type: "web",
     image: "/images/cenra.png" 

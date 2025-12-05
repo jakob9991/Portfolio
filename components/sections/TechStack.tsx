@@ -1,9 +1,10 @@
 'use client'
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Terminal, Package, Cpu, Code2, Wrench } from "lucide-react";
 import { TerminalHeader, SectionHeader } from "@/components/ui/terminal";
+import { useMobile } from "@/hooks/useMobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -46,190 +47,284 @@ export const TechStack = () => {
   };
 
   const sectionRef = useRef<HTMLElement>(null);
+  const isMobile = useMobile();
+  const [isInView, setIsInView] = useState(false);
+
+  // Intersection Observer for lazy loading animations
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect(); // Stop observing once in view
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '100px' // Start loading slightly before visible
+      }
+    );
+
+    observer.observe(sectionRef.current);
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
+    if (!isInView) return; // Only run animations when section is in view
+
     const ctx = gsap.context(() => {
 
-      // 1. Main Header Animation
+      // 1. Main Header Animation - Reduced complexity on mobile
       gsap.fromTo(".techstack-header",
-        { y: 50, opacity: 0, scale: 0.95, rotateX: -15 },
+        isMobile ? { y: 30, opacity: 0 } : { y: 50, opacity: 0, scale: 0.95, rotateX: -15 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
           rotateX: 0,
-          duration: 1,
+          duration: isMobile ? 0.6 : 1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".techstack-header",
             start: "top 85%",
+            end: "bottom 20%",
             toggleActions: "play none none reverse",
           }
         }
       );
 
-      // 2. Languages Section
+      // 2. Languages Section - Simplified on mobile
       gsap.fromTo(".languages-section",
-        { y: 40, opacity: 0, scale: 0.98 },
+        isMobile ? { opacity: 0 } : { y: 40, opacity: 0, scale: 0.98 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.8,
+          duration: isMobile ? 0.5 : 0.8,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".languages-section",
             start: "top 85%",
+            end: "bottom 20%",
             toggleActions: "play none none reverse",
           }
         }
       );
 
-      // Language Cards
-      gsap.utils.toArray(".language-card").forEach((card: any, index: number) => {
-        gsap.fromTo(card,
-          { y: 30, opacity: 0, scale: 0.9 },
-          {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.5,
-            delay: index * 0.1,
-            ease: "back.out(1.5)",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            }
-          }
-        );
-
-        // Circular Progress Animation
-        const progressCircle = card.querySelector(".language-progress");
-        if (progressCircle) {
-          const level = parseInt(progressCircle.dataset.level || "0");
-          const circumference = 2 * Math.PI * 28; // radius = 28
-          const offset = circumference * (1 - level / 100);
-
-          gsap.fromTo(progressCircle,
+      // Language Cards - Only animate on desktop, or reduce complexity on mobile
+      if (!isMobile) {
+        gsap.utils.toArray(".language-card").forEach((card: any, index: number) => {
+          gsap.fromTo(card,
+            { y: 30, opacity: 0, scale: 0.9 },
             {
-              strokeDashoffset: circumference
-            },
-            {
-              strokeDashoffset: offset,
-              duration: 1.2,
-              delay: index * 0.1 + 0.3,
-              ease: "power2.out",
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.5,
+              delay: index * 0.1,
+              ease: "back.out(1.5)",
               scrollTrigger: {
                 trigger: card,
-                start: "top 80%",
+                start: "top 85%",
+                end: "bottom 20%",
                 toggleActions: "play none none reverse",
               }
             }
           );
-        }
-      });
 
-      // 3. Frameworks Section
+          // Circular Progress Animation
+          const progressCircle = card.querySelector(".language-progress");
+          if (progressCircle) {
+            const level = parseInt(progressCircle.dataset.level || "0");
+            const circumference = 2 * Math.PI * 28; // radius = 28
+            const offset = circumference * (1 - level / 100);
+
+            gsap.fromTo(progressCircle,
+              {
+                strokeDashoffset: circumference
+              },
+              {
+                strokeDashoffset: offset,
+                duration: 1.2,
+                delay: index * 0.1 + 0.3,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top 80%",
+                  toggleActions: "play none none reverse",
+                }
+              }
+            );
+          }
+        });
+      } else {
+        // Mobile: Simpler fade in without individual card animations
+        gsap.fromTo(".language-card",
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.05,
+            scrollTrigger: {
+              trigger: ".languages-section",
+              start: "top 75%",
+              end: "bottom 20%",
+              toggleActions: "play none none reverse",
+            }
+          }
+        );
+
+        // Circular Progress on Mobile - Still animate but simpler
+        gsap.utils.toArray(".language-progress").forEach((progressCircle: any, index: number) => {
+          const level = parseInt(progressCircle.dataset.level || "0");
+          const circumference = 2 * Math.PI * 28;
+          const offset = circumference * (1 - level / 100);
+
+          gsap.fromTo(progressCircle,
+            { strokeDashoffset: circumference },
+            {
+              strokeDashoffset: offset,
+              duration: 0.8,
+              delay: index * 0.05,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: ".languages-section",
+                start: "top 70%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse",
+              }
+            }
+          );
+        });
+      }
+
+      // 3. Frameworks Section - Simplified on mobile
       gsap.fromTo(".frameworks-section",
-        { y: 40, opacity: 0 },
+        isMobile ? { opacity: 0 } : { y: 40, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.8,
+          duration: isMobile ? 0.5 : 0.8,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".frameworks-section",
             start: "top 85%",
+            end: "bottom 20%",
             toggleActions: "play none none reverse",
           }
         }
       );
 
-      // Framework Cards
+      // Framework Cards - Reduce complexity on mobile
       gsap.utils.toArray(".framework-card").forEach((card: any, index: number) => {
         gsap.fromTo(card,
-          { y: 40, opacity: 0, rotateX: -10 },
+          isMobile ? { opacity: 0 } : { y: 40, opacity: 0, rotateX: -10 },
           {
             y: 0,
             opacity: 1,
             rotateX: 0,
-            duration: 0.7,
-            delay: index * 0.2,
+            duration: isMobile ? 0.4 : 0.7,
+            delay: isMobile ? index * 0.1 : index * 0.2,
             ease: "power3.out",
             scrollTrigger: {
               trigger: card,
               start: "top 85%",
+              end: "bottom 20%",
               toggleActions: "play none none reverse",
             }
           }
         );
       });
 
-      // 4. Infrastructure Section
+      // 4. Infrastructure Section - Simplified on mobile
       gsap.fromTo(".infrastructure-section",
-        { y: 40, opacity: 0 },
+        isMobile ? { opacity: 0 } : { y: 40, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.8,
+          duration: isMobile ? 0.5 : 0.8,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".infrastructure-section",
             start: "top 85%",
+            end: "bottom 20%",
             toggleActions: "play none none reverse",
           }
         }
       );
 
-      // Infrastructure Lines
-      gsap.utils.toArray(".infrastructure-line").forEach((line: any, index: number) => {
-        gsap.fromTo(line,
-          { opacity: 0, x: -20 },
+      // Infrastructure Lines - Only on desktop or simpler on mobile
+      if (!isMobile) {
+        gsap.utils.toArray(".infrastructure-line").forEach((line: any, index: number) => {
+          gsap.fromTo(line,
+            { opacity: 0, x: -20 },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 0.4,
+              delay: index * 0.08,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: ".infrastructure-section",
+                start: "top 75%",
+                end: "bottom 20%",
+                toggleActions: "play none none reverse",
+              }
+            }
+          );
+        });
+      } else {
+        // Mobile: Simple fade in
+        gsap.fromTo(".infrastructure-line",
+          { opacity: 0 },
           {
             opacity: 1,
-            x: 0,
-            duration: 0.4,
-            delay: index * 0.08,
-            ease: "power2.out",
+            duration: 0.3,
+            stagger: 0.05,
             scrollTrigger: {
               trigger: ".infrastructure-section",
               start: "top 75%",
+              end: "bottom 20%",
               toggleActions: "play none none reverse",
             }
           }
         );
-      });
+      }
 
-      // 5. Tools Section
+      // 5. Tools Section - Simplified on mobile
       gsap.fromTo(".tools-section",
-        { y: 40, opacity: 0 },
+        isMobile ? { opacity: 0 } : { y: 40, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.8,
+          duration: isMobile ? 0.5 : 0.8,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".tools-section",
             start: "top 85%",
+            end: "bottom 20%",
             toggleActions: "play none none reverse",
           }
         }
       );
 
-      // Tool Cards
+      // Tool Cards - Simplified on mobile
       gsap.utils.toArray(".tool-card").forEach((card: any, index: number) => {
         gsap.fromTo(card,
-          { opacity: 0, scale: 0.9 },
+          isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.9 },
           {
             opacity: 1,
             scale: 1,
-            duration: 0.5,
-            delay: index * 0.1,
-            ease: "back.out(1.5)",
+            duration: isMobile ? 0.3 : 0.5,
+            delay: isMobile ? index * 0.05 : index * 0.1,
+            ease: isMobile ? "power2.out" : "back.out(1.5)",
             scrollTrigger: {
               trigger: card,
               start: "top 85%",
+              end: "bottom 20%",
               toggleActions: "play none none reverse",
             }
           }
@@ -239,7 +334,7 @@ export const TechStack = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isInView, isMobile]);
 
   return (
     <section ref={sectionRef} id="skills" className="py-32 relative bg-[#0a0d14] overflow-hidden">
