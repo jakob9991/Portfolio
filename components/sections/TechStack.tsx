@@ -1,10 +1,11 @@
 'use client'
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Terminal, Package, Cpu, Code2, Wrench } from "lucide-react";
 import { TerminalHeader, SectionHeader } from "@/components/ui/terminal";
 import { useMobile } from "@/hooks/useMobile";
+import { useInView } from "@/hooks/useInView";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -46,34 +47,12 @@ export const TechStack = () => {
     ]
   };
 
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
   const isMobile = useMobile();
-  const [isInView, setIsInView] = useState(false);
-
-  // Intersection Observer for lazy loading animations
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect(); // Stop observing once in view
-        }
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '100px' // Start loading slightly before visible
-      }
-    );
-
-    observer.observe(sectionRef.current);
-
-    return () => observer.disconnect();
-  }, []);
+  const isInView = useInView(sectionRef, { threshold: 0.1 });
 
   useEffect(() => {
-    if (!isInView) return; // Only run animations when section is in view
+    if (!isInView || !sectionRef.current) return; // Only run animations when section is in view
 
     const ctx = gsap.context(() => {
 

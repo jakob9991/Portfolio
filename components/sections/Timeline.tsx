@@ -5,6 +5,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GraduationCap, Code, Rocket, BrainCircuit, Terminal, HeartHandshake, GitCommit, Clock } from "lucide-react";
 import { TerminalHeader } from "@/components/ui/terminal";
+import { useMobile } from "@/hooks/useMobile";
+import { useInView } from "@/hooks/useInView";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,12 +61,13 @@ const colorMap: Record<string, { text: string; border: string; bg: string; glow:
 };
 
 export const Timeline = () => {
-  const containerRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLElement | null>(null);
   const lineRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMobile();
+  const isInView = useInView(containerRef, { threshold: 0.1 });
 
   useEffect(() => {
-    // Detect mobile devices
-    const isMobile = window.innerWidth < 768;
+    if (!isInView || !containerRef.current) return;
 
     const ctx = gsap.context(() => {
 
@@ -205,7 +208,7 @@ export const Timeline = () => {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isInView, isMobile]);
 
   return (
     <section ref={containerRef} id="career" className="py-32 relative overflow-hidden bg-[#0a0d14] text-slate-200">

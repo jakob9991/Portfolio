@@ -5,22 +5,28 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Github, Linkedin, Mail, MapPin, Smartphone, Terminal, Server, Wifi } from "lucide-react";
 import { socialLinks } from "@/public/data/socialLinks";
 import { TerminalHeader } from "@/components/ui/terminal";
+import { useMobile } from "@/hooks/useMobile";
+import { useInView } from "@/hooks/useInView";
 gsap.registerPlugin(ScrollTrigger);
 
 export const Footer = () => {
-  const footerRef = useRef<HTMLElement>(null);
+  const footerRef = useRef<HTMLElement | null>(null);
+  const isMobile = useMobile();
+  const isInView = useInView(footerRef, { threshold: 0.1 });
 
   useEffect(() => {
+    if (!isInView || !footerRef.current) return;
+
     const ctx = gsap.context(() => {
 
-      // Main Footer Container
+      // Main Footer Container - Simplified on mobile
       gsap.fromTo(".footer-container",
-        { y: 50, opacity: 0, scale: 0.98 },
+        isMobile ? { y: 30, opacity: 0 } : { y: 50, opacity: 0, scale: 0.98 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 1,
+          duration: isMobile ? 0.6 : 1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: footerRef.current,
@@ -30,14 +36,15 @@ export const Footer = () => {
         }
       );
 
-      // Logo Animation
+      // Logo Animation - Simplified rotation on mobile
       gsap.fromTo(".footer-logo",
-        { scale: 0, rotation: -180 },
+        isMobile ? { scale: 0, opacity: 0 } : { scale: 0, rotation: -180 },
         {
           scale: 1,
+          opacity: 1,
           rotation: 0,
-          duration: 0.8,
-          delay: 0.3,
+          duration: isMobile ? 0.5 : 0.8,
+          delay: isMobile ? 0.2 : 0.3,
           ease: "back.out(1.7)",
           scrollTrigger: {
             trigger: footerRef.current,
@@ -47,16 +54,16 @@ export const Footer = () => {
         }
       );
 
-      // Contact Cards Stagger
+      // Contact Cards Stagger - Reduced delays on mobile
       gsap.fromTo(".contact-card",
         { y: 30, opacity: 0, scale: 0.9 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.6,
-          stagger: 0.1,
-          delay: 0.4,
+          duration: isMobile ? 0.4 : 0.6,
+          stagger: isMobile ? 0.05 : 0.1,
+          delay: isMobile ? 0.2 : 0.4,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".contact-grid",
@@ -66,16 +73,16 @@ export const Footer = () => {
         }
       );
 
-      // Social Icons
+      // Social Icons - Simplified on mobile (no rotation)
       gsap.fromTo(".social-icon",
-        { scale: 0, opacity: 0, rotation: -90 },
+        isMobile ? { scale: 0, opacity: 0 } : { scale: 0, opacity: 0, rotation: -90 },
         {
           scale: 1,
           opacity: 1,
           rotation: 0,
-          duration: 0.5,
-          stagger: 0.08,
-          delay: 0.6,
+          duration: isMobile ? 0.3 : 0.5,
+          stagger: isMobile ? 0.04 : 0.08,
+          delay: isMobile ? 0.3 : 0.6,
           ease: "back.out(2)",
           scrollTrigger: {
             trigger: ".social-icons",
@@ -91,9 +98,9 @@ export const Footer = () => {
         {
           opacity: 1,
           x: 0,
-          duration: 0.4,
-          stagger: 0.1,
-          delay: 0.8,
+          duration: isMobile ? 0.3 : 0.4,
+          stagger: isMobile ? 0.05 : 0.1,
+          delay: isMobile ? 0.4 : 0.8,
           scrollTrigger: {
             trigger: ".system-info",
             start: "top 85%",
@@ -108,9 +115,9 @@ export const Footer = () => {
         {
           opacity: 1,
           y: 0,
-          duration: 0.4,
-          stagger: 0.05,
-          delay: 0.5,
+          duration: isMobile ? 0.3 : 0.4,
+          stagger: isMobile ? 0.03 : 0.05,
+          delay: isMobile ? 0.3 : 0.5,
           scrollTrigger: {
             trigger: ".footer-nav",
             start: "top 85%",
@@ -122,7 +129,7 @@ export const Footer = () => {
     }, footerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isInView, isMobile]);
 
   const navLinks = ['Start', 'Skills', 'Projects', 'Career'];
 

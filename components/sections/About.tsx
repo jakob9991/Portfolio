@@ -7,16 +7,20 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Terminal, Download } from "lucide-react";
 import { TerminalHeader, TerminalPrompt, GlassCard } from "@/components/ui/terminal";
+import { useInView } from "@/hooks/useInView";
 
 gsap.registerPlugin(ScrollTrigger);
 export const About = () => {
 
-    const sectionRef = useRef<HTMLElement>(null);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const imageRef = useRef<HTMLDivElement>(null);
-    const textRef = useRef<HTMLDivElement>(null);
+    const sectionRef = useRef<HTMLElement | null>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const imageRef = useRef<HTMLDivElement | null>(null);
+    const textRef = useRef<HTMLDivElement | null>(null);
+    const isInView = useInView(sectionRef, { threshold: 0.1 });
 
     useEffect(() => {
+        if (!isInView || !sectionRef.current) return;
+
         const ctx = gsap.context(() => {
             // Container fade-in
             gsap.from(containerRef.current, {
@@ -61,7 +65,7 @@ export const About = () => {
         }, sectionRef);
 
         return () => ctx.revert();
-    }, []);
+    }, [isInView]);
 
     return (
         <section

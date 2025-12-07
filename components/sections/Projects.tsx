@@ -1,9 +1,11 @@
 'use client'
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ExternalLink, Github, Code2, GraduationCap, Layout, Lock, Smartphone, Terminal, Workflow, Tv, Bot, Gamepad2 } from "lucide-react";
 import { TerminalHeader, SectionHeader } from "@/components/ui/terminal";
+import { useMobile } from "@/hooks/useMobile";
+import { useInView } from "@/hooks/useInView";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -120,25 +122,24 @@ const labProjects = [
 ];
 
 export const Projects = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const isMobile = useMobile();
+  const isInView = useInView(sectionRef, { threshold: 0.1 });
 
   useEffect(() => {
+    if (!isInView || !sectionRef.current) return;
+
     const ctx = gsap.context(() => {
 
-      // 1. Main Section Header - Terminal Window erscheint
+      // 1. Main Section Header - Simplified on mobile
       gsap.fromTo(".section-header",
-        {
-          y: 50,
-          opacity: 0,
-          scale: 0.95,
-          rotateX: -15
-        },
+        isMobile ? { y: 30, opacity: 0 } : { y: 50, opacity: 0, scale: 0.95, rotateX: -15 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
           rotateX: 0,
-          duration: 1,
+          duration: isMobile ? 0.6 : 1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".section-header",
@@ -150,20 +151,14 @@ export const Projects = () => {
 
       // 2. Featured Projects - Git Commit Cards mit Stagger
       gsap.utils.toArray(".project-card-featured").forEach((card: any, index: number) => {
-        const isEven = index % 2 === 0;
-
-        // Card Entrance
-       
-        
-
-        // Terminal Header Animation
+        // Terminal Header Animation - Simplified on mobile
         gsap.fromTo(card.querySelector(".git-commit-header"),
-          { opacity: 0, x: -20 },
+          { opacity: 0, x: isMobile ? -10 : -20 },
           {
             opacity: 1,
             x: 0,
-            duration: 0.6,
-            delay: 0.2,
+            duration: isMobile ? 0.4 : 0.6,
+            delay: isMobile ? 0.1 : 0.2,
             scrollTrigger: {
               trigger: card,
               start: "top 80%",
@@ -174,12 +169,12 @@ export const Projects = () => {
 
         // Commit Info (Left Side)
         gsap.fromTo(card.querySelector(".commit-info"),
-          { opacity: 0, x: -30 },
+          { opacity: 0, x: isMobile ? -15 : -30 },
           {
             opacity: 1,
             x: 0,
-            duration: 0.7,
-            delay: 0.3,
+            duration: isMobile ? 0.5 : 0.7,
+            delay: isMobile ? 0.15 : 0.3,
             scrollTrigger: {
               trigger: card,
               start: "top 75%",
@@ -188,15 +183,15 @@ export const Projects = () => {
           }
         );
 
-        // Visual Preview (Right Side)
+        // Visual Preview (Right Side) - No rotation on mobile
         gsap.fromTo(card.querySelector(".visual-preview"),
-          { opacity: 0, scale: 0.9, rotateY: 10 },
+          isMobile ? { opacity: 0, scale: 0.95 } : { opacity: 0, scale: 0.9, rotateY: 10 },
           {
             opacity: 1,
             scale: 1,
             rotateY: 0,
-            duration: 0.8,
-            delay: 0.4,
+            duration: isMobile ? 0.5 : 0.8,
+            delay: isMobile ? 0.2 : 0.4,
             ease: "back.out(1.2)",
             scrollTrigger: {
               trigger: card,
@@ -206,16 +201,16 @@ export const Projects = () => {
           }
         );
 
-        // Tech Tags Stagger
+        // Tech Tags Stagger - Reduced on mobile
         gsap.fromTo(card.querySelectorAll(".tech-tag"),
           { opacity: 0, scale: 0.8, y: 10 },
           {
             opacity: 1,
             scale: 1,
             y: 0,
-            duration: 0.4,
-            stagger: 0.05,
-            delay: 0.5,
+            duration: isMobile ? 0.3 : 0.4,
+            stagger: isMobile ? 0.03 : 0.05,
+            delay: isMobile ? 0.25 : 0.5,
             scrollTrigger: {
               trigger: card,
               start: "top 70%",
@@ -225,18 +220,14 @@ export const Projects = () => {
         );
       });
 
-      // 3. Academic Section Header
+      // 3. Academic Section Header - Simplified on mobile
       gsap.fromTo(".academic-header",
-        {
-          y: 40,
-          opacity: 0,
-          scale: 0.95
-        },
+        isMobile ? { y: 30, opacity: 0 } : { y: 40, opacity: 0, scale: 0.95 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.8,
+          duration: isMobile ? 0.5 : 0.8,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".academic-header",
@@ -249,19 +240,14 @@ export const Projects = () => {
       // 4. Academic Cards - Lab Notebook Style
       gsap.utils.toArray(".academic-card").forEach((card: any, index: number) => {
         gsap.fromTo(card,
-          {
-            y: 60,
-            opacity: 0,
-            rotateX: -10,
-            scale: 0.95
-          },
+          isMobile ? { y: 30, opacity: 0 } : { y: 60, opacity: 0, rotateX: -10, scale: 0.95 },
           {
             y: 0,
             opacity: 1,
             rotateX: 0,
             scale: 1,
-            duration: 0.7,
-            delay: index * 0.2,
+            duration: isMobile ? 0.5 : 0.7,
+            delay: isMobile ? index * 0.1 : index * 0.2,
             ease: "power3.out",
             scrollTrigger: {
               trigger: card,
@@ -271,14 +257,15 @@ export const Projects = () => {
           }
         );
 
-        // Icon Animation
+        // Icon Animation - No rotation on mobile
         gsap.fromTo(card.querySelector(".academic-icon"),
-          { scale: 0, rotation: -180 },
+          isMobile ? { scale: 0, opacity: 0 } : { scale: 0, rotation: -180 },
           {
             scale: 1,
+            opacity: 1,
             rotation: 0,
-            duration: 0.6,
-            delay: index * 0.2 + 0.3,
+            duration: isMobile ? 0.4 : 0.6,
+            delay: isMobile ? index * 0.1 + 0.15 : index * 0.2 + 0.3,
             ease: "back.out(2)",
             scrollTrigger: {
               trigger: card,
@@ -289,18 +276,14 @@ export const Projects = () => {
         );
       });
 
-      // 5. Lab Section Header
+      // 5. Lab Section Header - Simplified on mobile
       gsap.fromTo(".lab-header",
-        {
-          y: 40,
-          opacity: 0,
-          scale: 0.95
-        },
+        isMobile ? { y: 30, opacity: 0 } : { y: 40, opacity: 0, scale: 0.95 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.8,
+          duration: isMobile ? 0.5 : 0.8,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".lab-header",
@@ -310,18 +293,14 @@ export const Projects = () => {
         }
       );
 
-      // 6. Process Monitor Table
+      // 6. Process Monitor Table - Simplified on mobile
       gsap.fromTo(".process-monitor",
-        {
-          y: 50,
-          opacity: 0,
-          scale: 0.98
-        },
+        isMobile ? { y: 30, opacity: 0 } : { y: 50, opacity: 0, scale: 0.98 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.8,
+          duration: isMobile ? 0.5 : 0.8,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".process-monitor",
@@ -342,8 +321,8 @@ export const Projects = () => {
           {
             scale: 1,
             opacity: 1,
-            duration: 0.6,
-            delay: index * 0.15,
+            duration: isMobile ? 0.4 : 0.6,
+            delay: isMobile ? index * 0.08 : index * 0.15,
             ease: "back.out(2)",
             scrollTrigger: {
               trigger: card,
@@ -357,13 +336,13 @@ export const Projects = () => {
         gsap.fromTo(card.querySelector(".status-badge"),
           {
             opacity: 0,
-            x: -10
+            x: isMobile ? -5 : -10
           },
           {
             opacity: 1,
             x: 0,
-            duration: 0.5,
-            delay: index * 0.15 + 0.2,
+            duration: isMobile ? 0.3 : 0.5,
+            delay: isMobile ? index * 0.08 + 0.1 : index * 0.15 + 0.2,
             scrollTrigger: {
               trigger: card,
               start: "top 85%",
@@ -376,13 +355,13 @@ export const Projects = () => {
         gsap.fromTo(card.querySelector(".process-details"),
           {
             opacity: 0,
-            x: 20
+            x: isMobile ? 10 : 20
           },
           {
             opacity: 1,
             x: 0,
-            duration: 0.6,
-            delay: index * 0.15 + 0.3,
+            duration: isMobile ? 0.4 : 0.6,
+            delay: isMobile ? index * 0.08 + 0.15 : index * 0.15 + 0.3,
             scrollTrigger: {
               trigger: card,
               start: "top 85%",
@@ -395,17 +374,13 @@ export const Projects = () => {
         const codeOutput = card.querySelector(".code-output");
         if (codeOutput) {
           gsap.fromTo(codeOutput,
-            {
-              opacity: 0,
-              y: 10,
-              scaleY: 0.95
-            },
+            isMobile ? { opacity: 0, y: 5 } : { opacity: 0, y: 10, scaleY: 0.95 },
             {
               opacity: 1,
               y: 0,
               scaleY: 1,
-              duration: 0.5,
-              delay: index * 0.15 + 0.4,
+              duration: isMobile ? 0.3 : 0.5,
+              delay: isMobile ? index * 0.08 + 0.2 : index * 0.15 + 0.4,
               ease: "power2.out",
               scrollTrigger: {
                 trigger: card,
@@ -415,22 +390,39 @@ export const Projects = () => {
             }
           );
 
-          // Code Lines einzeln erscheinen lassen
-          gsap.fromTo(codeOutput.querySelectorAll(".code-line"),
-            { opacity: 0, x: -10 },
-            {
-              opacity: 1,
-              x: 0,
-              duration: 0.3,
-              stagger: 0.05,
-              delay: index * 0.15 + 0.5,
-              scrollTrigger: {
-                trigger: card,
-                start: "top 75%",
-                toggleActions: "play none none reverse",
+          // Code Lines einzeln erscheinen lassen - Skip on mobile for performance
+          if (!isMobile) {
+            gsap.fromTo(codeOutput.querySelectorAll(".code-line"),
+              { opacity: 0, x: -10 },
+              {
+                opacity: 1,
+                x: 0,
+                duration: 0.3,
+                stagger: 0.05,
+                delay: index * 0.15 + 0.5,
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top 75%",
+                  toggleActions: "play none none reverse",
+                }
               }
-            }
-          );
+            );
+          } else {
+            // On mobile, just fade in all code lines together
+            gsap.fromTo(codeOutput.querySelectorAll(".code-line"),
+              { opacity: 0 },
+              {
+                opacity: 1,
+                duration: 0.3,
+                delay: index * 0.08 + 0.25,
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top 75%",
+                  toggleActions: "play none none reverse",
+                }
+              }
+            );
+          }
         }
 
         // Dependencies Tags
@@ -440,9 +432,9 @@ export const Projects = () => {
             opacity: 1,
             scale: 1,
             y: 0,
-            duration: 0.3,
-            stagger: 0.05,
-            delay: index * 0.15 + 0.6,
+            duration: isMobile ? 0.2 : 0.3,
+            stagger: isMobile ? 0.03 : 0.05,
+            delay: isMobile ? index * 0.08 + 0.3 : index * 0.15 + 0.6,
             scrollTrigger: {
               trigger: card,
               start: "top 75%",
@@ -452,16 +444,16 @@ export const Projects = () => {
         );
       });
 
-      // 8. Footer Stats Animation
+      // 8. Footer Stats Animation - Simplified on mobile
       gsap.fromTo(".process-footer",
         {
           opacity: 0,
-          y: 20
+          y: isMobile ? 10 : 20
         },
         {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: isMobile ? 0.4 : 0.6,
           scrollTrigger: {
             trigger: ".process-footer",
             start: "top 90%",
@@ -472,7 +464,7 @@ export const Projects = () => {
 
     }, sectionRef);
     return () => ctx.revert();
-  }, []);
+  }, [isInView, isMobile]);
 
   return (
     <section ref={sectionRef} id="projects" className="py-32 relative bg-[#0a0d14] overflow-hidden">
