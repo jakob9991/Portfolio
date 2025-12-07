@@ -144,7 +144,7 @@ export const Projects = () => {
           scrollTrigger: {
             trigger: ".section-header",
             start: "top 85%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           }
         }
       );
@@ -162,7 +162,7 @@ export const Projects = () => {
             scrollTrigger: {
               trigger: card,
               start: "top 80%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -178,7 +178,7 @@ export const Projects = () => {
             scrollTrigger: {
               trigger: card,
               start: "top 75%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -196,7 +196,7 @@ export const Projects = () => {
             scrollTrigger: {
               trigger: card,
               start: "top 75%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -214,7 +214,7 @@ export const Projects = () => {
             scrollTrigger: {
               trigger: card,
               start: "top 70%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -232,7 +232,7 @@ export const Projects = () => {
           scrollTrigger: {
             trigger: ".academic-header",
             start: "top 85%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           }
         }
       );
@@ -252,7 +252,7 @@ export const Projects = () => {
             scrollTrigger: {
               trigger: card,
               start: "top 85%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -270,7 +270,7 @@ export const Projects = () => {
             scrollTrigger: {
               trigger: card,
               start: "top 80%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -288,7 +288,7 @@ export const Projects = () => {
           scrollTrigger: {
             trigger: ".lab-header",
             start: "top 85%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           }
         }
       );
@@ -305,7 +305,7 @@ export const Projects = () => {
           scrollTrigger: {
             trigger: ".process-monitor",
             start: "top 85%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           }
         }
       );
@@ -327,7 +327,7 @@ export const Projects = () => {
             scrollTrigger: {
               trigger: card,
               start: "top 85%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -346,7 +346,7 @@ export const Projects = () => {
             scrollTrigger: {
               trigger: card,
               start: "top 85%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -365,7 +365,7 @@ export const Projects = () => {
             scrollTrigger: {
               trigger: card,
               start: "top 85%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -385,7 +385,7 @@ export const Projects = () => {
               scrollTrigger: {
                 trigger: card,
                 start: "top 80%",
-                toggleActions: "play none none reverse",
+                toggleActions: "play none none none",
               }
             }
           );
@@ -403,7 +403,7 @@ export const Projects = () => {
                 scrollTrigger: {
                   trigger: card,
                   start: "top 75%",
-                  toggleActions: "play none none reverse",
+                  toggleActions: "play none none none",
                 }
               }
             );
@@ -418,7 +418,7 @@ export const Projects = () => {
                 scrollTrigger: {
                   trigger: card,
                   start: "top 75%",
-                  toggleActions: "play none none reverse",
+                  toggleActions: "play none none none",
                 }
               }
             );
@@ -438,7 +438,7 @@ export const Projects = () => {
             scrollTrigger: {
               trigger: card,
               start: "top 75%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -457,7 +457,7 @@ export const Projects = () => {
           scrollTrigger: {
             trigger: ".process-footer",
             start: "top 90%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           }
         }
       );

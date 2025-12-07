@@ -70,7 +70,7 @@ export const TechStack = () => {
             trigger: ".techstack-header",
             start: "top 85%",
             end: "bottom 20%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           }
         }
       );
@@ -88,7 +88,7 @@ export const TechStack = () => {
             trigger: ".languages-section",
             start: "top 85%",
             end: "bottom 20%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           }
         }
       );
@@ -109,7 +109,7 @@ export const TechStack = () => {
                 trigger: card,
                 start: "top 85%",
                 end: "bottom 20%",
-                toggleActions: "play none none reverse",
+                toggleActions: "play none none none",
               }
             }
           );
@@ -133,7 +133,7 @@ export const TechStack = () => {
                 scrollTrigger: {
                   trigger: card,
                   start: "top 80%",
-                  toggleActions: "play none none reverse",
+                  toggleActions: "play none none none",
                 }
               }
             );
@@ -151,7 +151,7 @@ export const TechStack = () => {
               trigger: ".languages-section",
               start: "top 75%",
               end: "bottom 20%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -173,7 +173,7 @@ export const TechStack = () => {
                 trigger: ".languages-section",
                 start: "top 70%",
                 end: "bottom 20%",
-                toggleActions: "play none none reverse",
+                toggleActions: "play none none none",
               }
             }
           );
@@ -192,7 +192,7 @@ export const TechStack = () => {
             trigger: ".frameworks-section",
             start: "top 85%",
             end: "bottom 20%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           }
         }
       );
@@ -212,7 +212,7 @@ export const TechStack = () => {
               trigger: card,
               start: "top 85%",
               end: "bottom 20%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -230,7 +230,7 @@ export const TechStack = () => {
             trigger: ".infrastructure-section",
             start: "top 85%",
             end: "bottom 20%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           }
         }
       );
@@ -250,7 +250,7 @@ export const TechStack = () => {
                 trigger: ".infrastructure-section",
                 start: "top 75%",
                 end: "bottom 20%",
-                toggleActions: "play none none reverse",
+                toggleActions: "play none none none",
               }
             }
           );
@@ -267,7 +267,7 @@ export const TechStack = () => {
               trigger: ".infrastructure-section",
               start: "top 75%",
               end: "bottom 20%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );
@@ -285,7 +285,7 @@ export const TechStack = () => {
             trigger: ".tools-section",
             start: "top 85%",
             end: "bottom 20%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           }
         }
       );
@@ -304,7 +304,7 @@ export const TechStack = () => {
               trigger: card,
               start: "top 85%",
               end: "bottom 20%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             }
           }
         );

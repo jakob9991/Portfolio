@@ -71,8 +71,8 @@ export const Timeline = () => {
 
     const ctx = gsap.context(() => {
 
-      // 1. Line Drawing Animation - ONLY on desktop
-      if (lineRef.current && !isMobile) {
+      // 1. Line Drawing Animation - Works on both mobile and desktop
+      if (lineRef.current) {
         gsap.fromTo(lineRef.current,
           { height: "0%" },
           {
@@ -80,28 +80,62 @@ export const Timeline = () => {
             ease: "none",
             scrollTrigger: {
               trigger: containerRef.current,
-              start: "top center",
-              end: "bottom center",
-              scrub: 1,
+              start: isMobile ? "top center" : "top center",
+              end: isMobile ? "bottom center" : "bottom center",
+              scrub: isMobile ? 0.5 : 1, // Slightly smoother scrub on mobile
+              onUpdate: (self) => {
+                // Light up dots as the line reaches them
+                const dots = gsap.utils.toArray(".timeline-dot");
+                const progress = self.progress;
+
+                dots.forEach((dot: any, i) => {
+                  // Calculate when this dot should light up (evenly distributed)
+                  const dotThreshold = i / (dots.length - 1);
+
+                  if (progress >= dotThreshold) {
+                    // Light up the dot
+                    const innerDot = dot.querySelector(".timeline-dot-inner");
+                    if (innerDot) {
+                      gsap.to(innerDot, {
+                        scale: 1.2,
+                        opacity: 1,
+                        boxShadow: "0 0 20px currentColor",
+                        duration: 0.3,
+                        ease: "power2.out"
+                      });
+                    }
+                  } else {
+                    // Dim the dot
+                    const innerDot = dot.querySelector(".timeline-dot-inner");
+                    if (innerDot) {
+                      gsap.to(innerDot, {
+                        scale: 1,
+                        opacity: 0.5,
+                        boxShadow: "none",
+                        duration: 0.3,
+                        ease: "power2.out"
+                      });
+                    }
+                  }
+                });
+              }
             }
           }
         );
-      } else if (lineRef.current && isMobile) {
-        // On mobile: just show the line without animation
-        gsap.set(lineRef.current, { height: "100%" });
       }
 
-      // 2. Card Animations - Simplified on mobile
+      // 2. Card Animations
       const cards = gsap.utils.toArray(".timeline-card");
       cards.forEach((card: any, i) => {
         if (isMobile) {
-          // Mobile: Simple fade in only
+          // Mobile: Slide in from left (all cards from same side)
           gsap.fromTo(card,
-            { opacity: 0, y: 20 },
+            { opacity: 0, x: -50, y: 20 },
             {
               opacity: 1,
+              x: 0,
               y: 0,
-              duration: 0.5,
+              duration: 0.6,
               ease: "power2.out",
               scrollTrigger: {
                 trigger: card,
@@ -111,7 +145,7 @@ export const Timeline = () => {
             }
           );
         } else {
-          // Desktop: Full animation
+          // Desktop: Full animation with alternating sides
           const isLeft = i % 2 === 0;
           gsap.fromTo(card,
             {
@@ -130,7 +164,7 @@ export const Timeline = () => {
               scrollTrigger: {
                 trigger: card,
                 start: "top 85%",
-                toggleActions: "play none none reverse"
+                toggleActions: "play none none none"
               }
             }
           );
@@ -138,7 +172,7 @@ export const Timeline = () => {
       });
 
       // 3. Dot Animations - Simplified on mobile
-      gsap.utils.toArray(".timeline-dot").forEach((dot: any, i) => {
+      gsap.utils.toArray(".timeline-dot").forEach((dot: any) => {
         if (isMobile) {
           // Mobile: Just fade in
           gsap.fromTo(dot,
@@ -149,6 +183,7 @@ export const Timeline = () => {
               scrollTrigger: {
                 trigger: dot,
                 start: "top 80%",
+                toggleActions: "play none none none"
               }
             }
           );
@@ -165,6 +200,7 @@ export const Timeline = () => {
               scrollTrigger: {
                 trigger: dot,
                 start: "top 70%",
+                toggleActions: "play none none none"
               }
             }
           );
@@ -181,7 +217,7 @@ export const Timeline = () => {
             scrollTrigger: {
               trigger: header,
               start: "top 80%",
-              toggleActions: "play none none reverse"
+              toggleActions: "play none none none"
             }
           });
         });
@@ -199,7 +235,7 @@ export const Timeline = () => {
             scrollTrigger: {
               trigger: content,
               start: "top 75%",
-              toggleActions: "play none none reverse"
+              toggleActions: "play none none none"
             }
           });
         });
@@ -253,7 +289,7 @@ export const Timeline = () => {
 
                   {/* Timeline Dot (Center) */}
                   <div className={`timeline-dot absolute left-[20px] md:left-1/2 w-12 h-12 -translate-x-1/2 flex items-center justify-center rounded-full z-30 bg-[#0a0d14] border-2 ${colors.border} md:${colors.glow}`}>
-                     <div className={`w-4 h-4 rounded-full ${colors.bg} ${colors.border} border-2 md:animate-pulse`}></div>
+                     <div className={`timeline-dot-inner w-4 h-4 rounded-full ${colors.bg} ${colors.border} border-2 ${colors.text} opacity-50 transition-all duration-300`}></div>
                   </div>
 
                   {/* Terminal Card */}
