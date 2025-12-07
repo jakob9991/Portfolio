@@ -27,7 +27,7 @@ export const About = () => {
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: "top 80%",
-                    toggleActions: "play none none none",
+                    toggleActions: "play reset play reset",
                 },
                 opacity: 0,
                 y: 30,
@@ -40,7 +40,7 @@ export const About = () => {
                 scrollTrigger: {
                     trigger: imageRef.current,
                     start: "top 80%",
-                    toggleActions: "play none none none",
+                    toggleActions: "play reset play reset",
                 },
                 opacity: 0,
                 scale: 0.9,
@@ -54,7 +54,7 @@ export const About = () => {
                 scrollTrigger: {
                     trigger: textRef.current,
                     start: "top 80%",
-                    toggleActions: "play none none none",
+                    toggleActions: "play reset play reset",
                 },
                 opacity: 0,
                 x: 30,

@@ -140,7 +140,7 @@ export const Timeline = () => {
               scrollTrigger: {
                 trigger: card,
                 start: "top 90%",
-                toggleActions: "play none none none"
+                toggleActions: "play reset play reset"
               }
             }
           );
@@ -164,7 +164,7 @@ export const Timeline = () => {
               scrollTrigger: {
                 trigger: card,
                 start: "top 85%",
-                toggleActions: "play none none none"
+                toggleActions: "play reset play reset"
               }
             }
           );
@@ -183,7 +183,7 @@ export const Timeline = () => {
               scrollTrigger: {
                 trigger: dot,
                 start: "top 80%",
-                toggleActions: "play none none none"
+                toggleActions: "play reset play reset"
               }
             }
           );
@@ -200,7 +200,7 @@ export const Timeline = () => {
               scrollTrigger: {
                 trigger: dot,
                 start: "top 70%",
-                toggleActions: "play none none none"
+                toggleActions: "play reset play reset"
               }
             }
           );
@@ -217,7 +217,7 @@ export const Timeline = () => {
             scrollTrigger: {
               trigger: header,
               start: "top 80%",
-              toggleActions: "play none none none"
+              toggleActions: "play reset play reset"
             }
           });
         });
@@ -235,7 +235,7 @@ export const Timeline = () => {
             scrollTrigger: {
               trigger: content,
               start: "top 75%",
-              toggleActions: "play none none none"
+              toggleActions: "play reset play reset"
             }
           });
         });

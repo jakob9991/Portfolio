@@ -31,7 +31,7 @@ export const Footer = () => {
           scrollTrigger: {
             trigger: footerRef.current,
             start: "top 90%",
-            toggleActions: "play none none none"
+            toggleActions: "play reset play reset"
           }
         }
       );
@@ -49,7 +49,7 @@ export const Footer = () => {
           scrollTrigger: {
             trigger: footerRef.current,
             start: "top 85%",
-            toggleActions: "play none none none"
+            toggleActions: "play reset play reset"
           }
         }
       );
@@ -68,7 +68,7 @@ export const Footer = () => {
           scrollTrigger: {
             trigger: ".contact-grid",
             start: "top 85%",
-            toggleActions: "play none none none"
+            toggleActions: "play reset play reset"
           }
         }
       );
@@ -87,7 +87,7 @@ export const Footer = () => {
           scrollTrigger: {
             trigger: ".social-icons",
             start: "top 85%",
-            toggleActions: "play none none none"
+            toggleActions: "play reset play reset"
           }
         }
       );
@@ -104,7 +104,7 @@ export const Footer = () => {
           scrollTrigger: {
             trigger: ".system-info",
             start: "top 85%",
-            toggleActions: "play none none none"
+            toggleActions: "play reset play reset"
           }
         }
       );
@@ -121,7 +121,7 @@ export const Footer = () => {
           scrollTrigger: {
             trigger: ".footer-nav",
             start: "top 85%",
-            toggleActions: "play none none none"
+            toggleActions: "play reset play reset"
           }
         }
       );
