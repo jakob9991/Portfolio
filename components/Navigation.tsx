@@ -189,18 +189,25 @@ export const Navigation = () => {
           style={{ maxHeight: 'calc(100vh - 100px)' }}
         >
           {/* Terminal Header */}
-          <div className="h-10 bg-[#151921] border-b border-white/5 flex items-center px-4 justify-between">
-            <div className="flex gap-2">
-              <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+            <div className="h-10 bg-[#151921] border-b border-white/5 flex items-center px-4 justify-between">
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+              </div>
+              <div className="text-[10px] font-mono text-gray-500 flex items-center gap-2">
+                <Terminal className="w-3 h-3" />
+                navigation.sh
+              </div>
+              <button
+                type="button"
+                aria-label="Menü schließen"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-10 h-8 -mr-2 flex items-center justify-end text-gray-500 hover:text-white transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
-            <div className="text-[10px] font-mono text-gray-500 flex items-center gap-2">
-              <Terminal className="w-3 h-3" />
-              navigation.sh
-            </div>
-            <div className="w-10"></div>
-          </div>
 
           {/* Terminal Content */}
           <div className="p-6 font-mono overflow-y-auto" style={{ maxHeight: 'calc(100vh - 140px)' }}>
