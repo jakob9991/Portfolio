@@ -15,7 +15,7 @@ export const Footer = () => {
   const isInView = useInView(footerRef, { threshold: 0.1 });
 
   useEffect(() => {
-    if (!isInView || !footerRef.current) return;
+    if (!footerRef.current) return;
 
     const ctx = gsap.context(() => {
 
@@ -129,7 +129,7 @@ export const Footer = () => {
     }, footerRef);
 
     return () => ctx.revert();
-  }, [isInView, isMobile]);
+  }, [isMobile]);
 
   const navLinks = ['Start', 'Skills', 'Projects', 'Career'];
 

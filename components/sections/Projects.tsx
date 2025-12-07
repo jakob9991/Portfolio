@@ -127,7 +127,7 @@ export const Projects = () => {
   const isInView = useInView(sectionRef, { threshold: 0.1 });
 
   useEffect(() => {
-    if (!isInView || !sectionRef.current) return;
+    if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
 
@@ -464,7 +464,7 @@ export const Projects = () => {
 
     }, sectionRef);
     return () => ctx.revert();
-  }, [isInView, isMobile]);
+  }, [isMobile]);
 
   return (
     <section ref={sectionRef} id="projects" className="py-32 relative bg-[#0a0d14] overflow-hidden">

@@ -52,7 +52,7 @@ export const TechStack = () => {
   const isInView = useInView(sectionRef, { threshold: 0.1 });
 
   useEffect(() => {
-    if (!isInView || !sectionRef.current) return; // Only run animations when section is in view
+    if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
 
@@ -313,7 +313,7 @@ export const TechStack = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [isInView, isMobile]);
+  }, [isMobile]);
 
   return (
     <section ref={sectionRef} id="skills" className="py-32 relative bg-[#0a0d14] overflow-hidden">

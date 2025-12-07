@@ -67,7 +67,7 @@ export const Timeline = () => {
   const isInView = useInView(containerRef, { threshold: 0.1 });
 
   useEffect(() => {
-    if (!isInView || !containerRef.current) return;
+    if (!containerRef.current) return;
 
     const ctx = gsap.context(() => {
 
