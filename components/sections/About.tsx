@@ -98,7 +98,7 @@ export const About = () => {
                                 title={
                                     <>
                                         <Terminal className="w-3 h-3" />
-                                        profile.png
+                                        ~/profile
                                     </>
                                 }
                             />
@@ -113,26 +113,14 @@ export const About = () => {
                                     sizes="400px"
                                     priority
                                 />
-                                {/* Scan-line Effekt beim Hover */}
-                                <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(14,165,233,0.03)_50%)] bg-[size:100%_4px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                                 {/* Bottom Gradient */}
                                 <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0f1219] via-[#0f1219]/50 to-transparent"></div>
                             </div>
 
-                            {/* Status Footer */}
+                            {/* Location Footer */}
                             <div className="p-4 bg-[#0a0d14]/80 border-t border-white/5 font-mono text-xs">
-                                <div className="flex items-center justify-between mb-2">
-                                    <span className="text-gray-400">STATUS:</span>
-                                    <div className="flex items-center gap-2">
-                                        <span className="relative flex h-2 w-2">
-                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                                        </span>
-                                        <span className="text-green-400 font-bold">ONLINE</span>
-                                    </div>
-                                </div>
                                 <div className="flex items-center justify-between text-gray-500">
-                                    <span>LOCATION:</span>
+                                    <span className="text-gray-400">Standort</span>
                                     <span className="text-cyan-400">Frankfurt, DE</span>
                                 </div>
                             </div>
@@ -149,15 +137,13 @@ export const About = () => {
                                     title={
                                         <>
                                             <Terminal className="w-3 h-3" />
-                                            jakob@portfolio ~ whoami
+                                            ~/about
                                         </>
                                     }
                                 />
 
                                 {/* Content */}
                                 <div className="p-6 font-mono">
-                                    <TerminalPrompt command="cat" args={["bio.json"]} className="mb-4" />
-
                                     <div className="pl-4 border-l-2 border-sky-500/30 space-y-3 text-sm">
                                         <div>
                                             <h2 className="text-2xl md:text-3xl font-bold mb-2">
@@ -168,14 +154,14 @@ export const About = () => {
                                         <p className="text-gray-300 leading-relaxed">
                                             Ich baue digitale Lösungen, die funktionieren und Spaß machen. Aktuell studiere ich{" "}
                                             <span className="text-cyan-400 font-semibold">Medieninformatik</span> in Frankfurt
-                                            mit Fokus auf Web & Mobile Development.
+                                            mit Fokus auf Web- & Mobile-Entwicklung.
                                         </p>
 
-                                        <p className="text-gray-400 leading-relaxed">
-                                            Was mich antreibt? Probleme zu lösen und Ideen Leben einzuhauchen. Von kompletten
-                                            Web-Apps über Mobile-Lösungen bis hin zu Automation – wenn's technisch interessant
-                                            ist und echten Mehrwert bringt, bin ich dabei.
-                                        </p>
+                                            <p className="text-gray-400 leading-relaxed">
+                                                Was mich antreibt? Probleme zu lösen und Ideen Leben einzuhauchen. Von kompletten
+                                            Web-Apps über Mobile-Lösungen bis hin zu Automatisierung – wenn es technisch interessant
+                                                ist und echten Mehrwert bringt, bin ich dabei.
+                                            </p>
                                     </div>
                                 </div>
                             </div>

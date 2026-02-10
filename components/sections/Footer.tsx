@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Github, Linkedin, Mail, MapPin, Smartphone, Terminal, Server, Wifi } from "lucide-react";
+import { Mail, MapPin, Smartphone, Terminal } from "lucide-react";
 import { socialLinks } from "@/public/data/socialLinks";
 import { TerminalHeader } from "@/components/ui/terminal";
 import { useMobile } from "@/hooks/useMobile";
@@ -131,7 +131,12 @@ export const Footer = () => {
     return () => ctx.revert();
   }, [isMobile]);
 
-  const navLinks = ['Start', 'Skills', 'Projects', 'Career'];
+  const navLinks = [
+    { label: 'Start', href: '#start' },
+    { label: 'Skills', href: '#skills' },
+    { label: 'Projekte', href: '#projects' },
+    { label: 'Karriere', href: '#career' },
+  ];
 
   const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
@@ -158,21 +163,13 @@ export const Footer = () => {
               title={
                 <>
                   <Terminal className="w-3 h-3" />
-                  jakob@portfolio ~ systemctl status contact.service
+                  ~/contact
                 </>
               }
             />
 
             {/* Terminal Content */}
             <div className="p-8 md:p-12 font-mono">
-
-              {/* Command Prompt */}
-              <div className="flex items-center gap-2 mb-8 text-sm">
-                <span className="text-green-400">❯</span>
-                <span className="text-gray-400">systemctl</span>
-                <span className="text-cyan-400">status</span>
-                <span className="text-gray-400">contact.service</span>
-              </div>
 
               {/* Logo / Brand */}
               <div className="footer-logo flex justify-center mb-10">
@@ -204,53 +201,41 @@ export const Footer = () => {
 
                 {/* Email Card */}
                 <a href="mailto:Jakob.dickhardt@gmail.com" className="contact-card bg-[#0a0d14]/60 backdrop-blur-xl border border-white/5 rounded-lg p-4 hover:border-cyan-500/30 transition-all group">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center gap-3">
                     <div className="p-2 bg-cyan-500/10 rounded-lg text-cyan-400 group-hover:scale-110 transition-transform">
                       <Mail className="w-4 h-4" />
                     </div>
                     <div className="flex-1">
-                      <div className="text-[10px] text-gray-600 mb-1">EMAIL:</div>
+                      <div className="text-[10px] text-gray-600 mb-1">E-Mail</div>
                       <div className="text-xs text-cyan-400 font-semibold break-all">Jakob.dickhardt@<br className="hidden sm:inline"/>gmail.com</div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2 text-[10px]">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
-                    <span className="text-green-400">ACTIVE</span>
                   </div>
                 </a>
 
                 {/* Phone Card */}
                 <a href="tel:+4915151629365" className="contact-card bg-[#0a0d14]/60 backdrop-blur-xl border border-white/5 rounded-lg p-4 hover:border-emerald-500/30 transition-all group">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center gap-3">
                     <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-400 group-hover:scale-110 transition-transform">
                       <Smartphone className="w-4 h-4" />
                     </div>
                     <div className="flex-1">
-                      <div className="text-[10px] text-gray-600 mb-1">PHONE:</div>
+                      <div className="text-[10px] text-gray-600 mb-1">Telefon</div>
                       <div className="text-xs text-emerald-400 font-semibold">+49 151 516 293 65</div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2 text-[10px]">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
-                    <span className="text-green-400">REACHABLE</span>
                   </div>
                 </a>
 
                 {/* Location Card */}
                 <div className="contact-card bg-[#0a0d14]/60 backdrop-blur-xl border border-white/5 rounded-lg p-4 hover:border-purple-500/30 transition-all group cursor-default">
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center gap-3">
                     <div className="p-2 bg-purple-500/10 rounded-lg text-purple-400 group-hover:scale-110 transition-transform">
                       <MapPin className="w-4 h-4" />
                     </div>
                     <div className="flex-1">
-                      <div className="text-[10px] text-gray-600 mb-1">LOCATION:</div>
+                      <div className="text-[10px] text-gray-600 mb-1">Standort</div>
                       <div className="text-xs text-purple-400 font-semibold">Frankfurt am Main, 60437</div>
-                       <div className="text-xs text-purple-400 font-semibold">Alt-Niedereschbach 17</div>
+                      <div className="text-xs text-purple-400 font-semibold">Alt-Niedereschbach 17</div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2 text-[10px]">
-                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-500"></div>
-                    <span className="text-cyan-400">DE</span>
                   </div>
                 </div>
 
@@ -264,9 +249,8 @@ export const Footer = () => {
 
                 {/* Left: Social Icons */}
                 <div>
-                  <div className="text-xs text-gray-600 mb-4 flex items-center gap-2">
-                    <Server className="w-3 h-3" />
-                    SOCIAL_ENDPOINTS:
+                  <div className="text-xs text-gray-500 mb-4">
+                    Socials
                   </div>
                   <div className="social-icons flex gap-3">
                     {socialLinks.map((social, index) => {
@@ -289,24 +273,22 @@ export const Footer = () => {
 
                 {/* Right: Navigation */}
                 <div>
-                  <div className="text-xs text-gray-600 mb-4 flex items-center gap-2">
-                    <Wifi className="w-3 h-3" />
-                    QUICK_NAVIGATION:
+                  <div className="text-xs text-gray-500 mb-4">
+                    Navigation
                   </div>
                   <div className="footer-nav flex flex-wrap gap-4 text-sm">
                     {navLinks.map((item) => {
-                      const sectionId = item.toLowerCase() === 'start' ? '#start' : `#${item.toLowerCase()}`;
                       return (
                         <a
-                          key={item}
-                          href={sectionId}
+                          key={item.href}
+                          href={item.href}
                           onClick={(e) => {
                             e.preventDefault();
-                            scrollToSection(sectionId);
+                            scrollToSection(item.href);
                           }}
                           className="footer-nav-link text-gray-400 hover:text-cyan-400 transition-colors relative group cursor-pointer"
                         >
-                          <span className="text-cyan-400/50">$</span> {item}
+                          {item.label}
                           <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-cyan-400 transition-all duration-300 group-hover:w-full" />
                         </a>
                       );
@@ -316,25 +298,14 @@ export const Footer = () => {
 
               </div>
 
-              {/* System Info - Bottom */}
-              <div className="system-info bg-[#0a0a0a] rounded-lg border border-white/5 p-4 space-y-2 text-xs">
-                <div className="system-info-line flex items-center justify-between">
-                  <span className="text-gray-600">STATUS:</span>
-                  <span className="text-green-400 flex items-center gap-2">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                    </span>
-                    ONLINE & AVAILABLE
+              {/* Status */}
+              <div className="system-info flex items-center justify-center gap-3 text-xs text-gray-500">
+                <div className="system-info-line flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                   </span>
-                </div>
-                <div className="system-info-line flex items-center justify-between text-gray-500">
-                  <span>UPTIME:</span>
-                  <span className="text-cyan-400">99.9%</span>
-                </div>
-                <div className="system-info-line flex items-center justify-between text-gray-500">
-                  <span>LAST_UPDATED:</span>
-                  <span className="text-gray-400">{new Date().getFullYear()}</span>
+                  <span className="text-green-400">Verfügbar für Projekte</span>
                 </div>
               </div>
 
@@ -346,7 +317,7 @@ export const Footer = () => {
           <div className="text-center font-mono">
             <div className="bg-[#0f1219]/40 backdrop-blur-xl border border-white/5 rounded-lg p-4 space-y-3">
               <p className="text-xs text-gray-600">
-                <span className="text-gray-700">#</span> © {new Date().getFullYear()}  Jakob Dickhardt | Impressum & Inhalt
+                © {new Date().getFullYear()} Jakob Dickhardt | Impressum & Inhalt
               </p>
               
             </div>

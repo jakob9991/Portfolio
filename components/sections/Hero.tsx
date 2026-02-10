@@ -255,7 +255,7 @@ export const Hero = () => {
             </div>
             <div className="text-[10px] font-mono text-gray-500 flex items-center gap-2">
                <Terminal className="w-3 h-3" />
-               bash — 80x24
+               ~/home
             </div>
             <div className="w-10"></div> {/* Spacer for centering */}
           </div>
@@ -263,12 +263,9 @@ export const Hero = () => {
           {/* Terminal Body */}
           <div className="p-6 md:p-12 font-mono text-left">
             
-            {/* Line 1: Prompt */}
-            <div className="terminal-line flex items-center gap-3 mb-6 opacity-80">
-              <span className="text-green-400 font-bold">➜</span>
-              <span className="text-cyan-400 font-bold">~</span>
-              <span className="text-gray-400">$</span>
-              <span className="text-gray-200">jakob.whoami()</span>
+            {/* Line 1: Greeting */}
+            <div className="terminal-line mb-6">
+              <span className="text-gray-400 text-sm">Hey, ich bin Jakob.</span>
             </div>
 
             {/* Line 2: Main Headline Output */}
@@ -311,14 +308,6 @@ export const Hero = () => {
 
           </div>
           
-          {/* Decorative Corner Stats - Hidden on Mobile */}
-          <div className="absolute bottom-4 right-4 text-[10px] text-gray-700 font-mono hidden md:block">
-            <div className="flex flex-col items-end gap-1">
-               <span>RAM: 32GB</span>
-               <span>CPU: 12%</span>
-               <span>UPTIME: 99.9%</span>
-            </div>
-          </div>
 
         </div>
       </div>

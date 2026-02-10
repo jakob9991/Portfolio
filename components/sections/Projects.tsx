@@ -14,11 +14,11 @@ const featuredProjects = [
   {
     id: "01",
     title: "Cenra.ai",
-    subtitle: "AI Corporate Website",
+    subtitle: "KI-Corporate-Website",
     description: "Entwicklung einer Website für DSGVO-konforme KI-Sprachmodelle. Fokus auf modernes Frontend-Design, SEO-Optimierung und Responsive Architektur.",
     stats: [
-      { label: "Role", value: "Fullstack Dev" },
-      { label: "Year", value: "2025" },
+      { label: "Rolle", value: "Full-Stack Entwickler" },
+      { label: "Jahr", value: "2025" },
       { label: "Stack", value: "React / TS" },
     ],
     tags: ["React", "TypeScript", "Tailwind CSS", "GSAP"],
@@ -30,12 +30,12 @@ const featuredProjects = [
   {
     id: "02",
     title: "Vibon App",
-    subtitle: "Social Interaction Platform",
-    description: "Eigenständige Entwicklung einer Cross-Platform Mobile App für Echtzeit-Interaktionen und Event-Management. Implementierung komplexer Location-Based Features.",
+    subtitle: "Interaktionsplattform",
+    description: "Eigenständige Entwicklung einer Cross-Platform-App für Echtzeit-Interaktionen und Event-Management. Implementierung komplexer standortbasierter Features.",
     stats: [
-      { label: "Role", value: "Lead Developer" },
-      { label: "Status", value: "Released" },
-      { label: "Platform", value: "iOS / Android" },
+      { label: "Rolle", value: "Lead Developer" },
+      { label: "Status", value: "Veröffentlicht" },
+      { label: "Plattform", value: "iOS / Android" },
     ],
     tags: ["React Native", "Firebase", "Google Maps API", "JavaScript",],
     links: { repo: "private" },
@@ -47,12 +47,12 @@ const featuredProjects = [
   {
     id: "03",
     title: "AI Automation",
-    subtitle: "Business Process Logic",
+    subtitle: "Business-Prozesslogik",
     description: "Design und Implementierung komplexer Automatisierungsstrecken für Geschäftskunden. Integration von RAG-Datenbanken und API-Schnittstellen zur Prozessoptimierung.",
     stats: [
-      { label: "Focus", value: "Backend Logic" },
+      { label: "Fokus", value: "Backend-Logik" },
       { label: "Tech", value: "Low-Code / API" },
-      { label: "Client", value: "B2B" },
+      { label: "Kunde", value: "B2B" },
     ],
     tags: ["n8n", "JavaScript", "Webhooks", "OpenAI API", "RAG"],
     links: { repo: "private" },
@@ -66,8 +66,8 @@ const featuredProjects = [
 const academicProjects = [
   {
     title: "Modulhandbuch Webapp",
-    role: "Frontend & Architecture",
-    description: "Gemeinsam mit meiner Gruppe haben wir die neue Prüfungsordnung des Medieninformatik-Studiengangs grafisch aufbereitet. Statt durch endlose PDFs zu scrollen, können Studierende nun interaktiv durch Module browsen und filtern.",
+    role: "Frontend & Architektur",
+    description: "Gemeinsam mit meiner Gruppe haben wir die neue Prüfungsordnung des Medieninformatik-Studiengangs grafisch aufbereitet. Statt durch endlose PDFs zu scrollen, können Studierende nun interaktiv durch Module navigieren und filtern.",
     tags: ["JavaScript", "GSAP", "TailwindCSS", "Git", "Scrum"],
     year: "2024",
     icon: <Layout className="w-6 h-6" />,
@@ -76,7 +76,7 @@ const academicProjects = [
   },
   {
     title: "Java Snake",
-    role: "Desktop Application",
+    role: "Desktop-App",
     description: "Mein erstes Java-Projekt während der Einführung in die Programmierung. Der Klassiker Snake als Desktop-Anwendung – simpel, aber eine gute Übung für OOP-Grundlagen und Event-Handling.",
     tags: ["Java", "OOP Patterns"],
     year: "2023",
@@ -90,17 +90,17 @@ const academicProjects = [
 const labProjects = [
   {
     title: "FireTV Automation",
-    category: "Assistive Technology",
-    description: "Automatisierte Steuerung für Nutzer mit kognitiven Einschränkungen. Brücke zwischen Smart-Home und Accessibility.",
-    tech: ["JavaScript", "ADB Shell", "Network"],
+    category: "Assistive Technologien",
+    description: "Automatisierte Steuerung für Nutzer mit kognitiven Einschränkungen. Brücke zwischen Smart-Home und Barrierefreiheit.",
+    tech: ["JavaScript", "ADB Shell", "Netzwerk"],
     icon: <Tv className="w-8 h-8 text-purple-400" />,
     visual: "code",
     codeSnippet: "> adb connect 192.168.1.5\n> adb shell input keyevent 26\n> Starting app: Netflix..."
   },
   {
     title: "Data Mining Bot",
-    category: "Web Scraping",
-    description: "Intelligente Crawler für strukturierte Datenerfassung und Prozessautomatisierung via Headless Browsers.",
+    category: "Web-Scraping",
+    description: "Intelligente Crawler für strukturierte Datenerfassung und Prozessautomatisierung via Headless Browsern.",
     tech: ["Python", "Selenium", "Pandas", "Beautiful Soup"],
     icon: <Bot className="w-8 h-8 text-green-400" />,
     visual: "terminal",
@@ -108,9 +108,9 @@ const labProjects = [
   },
   {
     title: "Python Arcade",
-    category: "Game Dev",
+    category: "Spieleentwicklung",
     description: "Entwicklung diverser Spielprototypen (Runner, Sudoku) zur Vertiefung von Algorithmen-Logik.",
-    tech: ["Python", "Pygame", "Logic"],
+    tech: ["Python", "Pygame", "Logik"],
     icon: <Code2 className="w-8 h-8 text-blue-400" />,
     visual: "grid",
     codeSnippet: `class Player(arcade.Sprite):
@@ -481,13 +481,10 @@ export const Projects = () => {
             terminalTitle={
               <>
                 <Terminal className="w-3 h-3" />
-                ~/projects — git log --all
+                ~/projects
               </>
             }
-            command="ls"
-            args={["-la", "./work"]}
-            title={<>Selected <span className="text-sky-400">Work</span></>}
-            subtitle="Ein tieferer Einblick in meine kommerziellen Projekte, akademischen Arbeiten und technischen Experimente."
+            title={<>Ausgewählte <span className="text-sky-400">Projekte</span></>}
           />
         </div>
 
@@ -498,25 +495,15 @@ export const Projects = () => {
               key={index}
               className="project-card-featured bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden group hover:border-sky-500/30 transition-all duration-300"
             >
-              {/* Git Commit Header */}
-              <div className="git-commit-header h-12 bg-[#151921] border-b border-white/5 flex items-center px-6 gap-4">
-                <TerminalHeader
-                  className="!h-auto !bg-transparent !border-0 !p-0 flex-1"
-                  title={
-                    <div className="flex items-center gap-3 font-mono text-xs text-gray-500">
-                      <Terminal className="w-3 h-3" />
-                      <span>git show</span>
-                      <span className={`text-transparent bg-clip-text bg-gradient-to-r ${project.color}`}>
-                        {project.id}a4f7c
-                      </span>
-                    </div>
-                  }
-                />
-                <div className="flex items-center gap-2">
-                  <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r ${project.color} text-white`}>
-                    {project.type}
-                  </span>
+              {/* Project Header */}
+              <div className="git-commit-header h-12 bg-[#151921] border-b border-white/5 flex items-center px-6 justify-between">
+                <div className="flex items-center gap-3 font-mono text-xs text-gray-500">
+                  <Terminal className="w-3 h-3" />
+                  <span className="text-gray-400">{project.title.toLowerCase().replace(/[\s.]/g, '-')}</span>
                 </div>
+                <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r ${project.color} text-white`}>
+                  {project.type === 'web' ? 'Web' : project.type === 'mobile' ? 'Mobile' : project.type === 'automation' ? 'Automation' : project.type}
+                </span>
               </div>
 
               {/* Commit Content */}
@@ -524,34 +511,22 @@ export const Projects = () => {
 
                 {/* Left: Commit Info */}
                 <div className="commit-info font-mono space-y-6">
-                  {/* Commit Message */}
+                  {/* Title */}
                   <div>
-                    <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
-                      <span className="text-yellow-500">commit</span>
-                      <span className={`text-transparent bg-clip-text bg-gradient-to-r ${project.color}`}>
-                        {project.id}a4f7c2d8b3e1
-                      </span>
-                    </div>
                     <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{project.title}</h3>
                     <p className={`text-lg font-medium text-transparent bg-clip-text bg-gradient-to-r ${project.color} mb-4`}>
                       {project.subtitle}
                     </p>
                   </div>
 
-                  {/* Commit Details */}
-                  <div className="space-y-2 text-sm">
-                    <div className="flex gap-3">
-                      <span className="text-gray-500">Author:</span>
-                      <span className="text-gray-300">Jakob Dickhardt</span>
-                    </div>
-                    <div className="flex gap-3">
-                      <span className="text-gray-500">Date:</span>
-                      <span className="text-gray-300">{project.stats[1].value}</span>
-                    </div>
-                    <div className="flex gap-3">
-                      <span className="text-gray-500">Branch:</span>
-                      <span className="text-cyan-400">{project.stats[0].value.toLowerCase().replace(' ', '-')}</span>
-                    </div>
+                  {/* Details */}
+                  <div className="flex flex-wrap gap-4 text-sm">
+                    {project.stats.map((stat: any, i: number) => (
+                      <div key={i} className="flex gap-2">
+                        <span className="text-gray-500">{stat.label}:</span>
+                        <span className="text-gray-300">{stat.value}</span>
+                      </div>
+                    ))}
                   </div>
 
                   {/* Description */}
@@ -561,7 +536,6 @@ export const Projects = () => {
 
                   {/* Tech Stack Tags */}
                   <div>
-                    <div className="text-xs text-gray-600 mb-2">// Stack:</div>
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag: string) => (
                         <span key={tag} className="tech-tag px-2 py-1 text-xs rounded bg-white/5 border border-white/10 text-gray-400">
@@ -576,18 +550,18 @@ export const Projects = () => {
                     {project.links.repo === 'private' ? (
                       <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/5 opacity-60 cursor-not-allowed text-sm">
                         <Lock className="w-4 h-4" />
-                        <span>Private Repo</span>
+                        <span>Privates Repo</span>
                       </div>
                     ) : (
                       <a href={project.links.repo} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:border-sky-500/30 text-white hover:text-sky-400 transition-all text-sm">
                         <Github className="w-4 h-4" />
-                        <span>View Code</span>
+                        <span>Code ansehen</span>
                       </a>
                     )}
                     {project.links.demo && (
                       <a href={project.links.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-500/10 border border-sky-500/30 text-sky-400 hover:bg-sky-500/20 transition-all text-sm font-semibold">
                         <ExternalLink className="w-4 h-4" />
-                        Live Demo
+                        Live-Demo
                       </a>
                     )}
                   </div>
@@ -606,7 +580,7 @@ export const Projects = () => {
                       className="!h-8"
                       title={
                         <span className="text-[10px] text-gray-600 font-mono hidden sm:block">
-                          {project.type === 'web' ? 'Browser Preview' : project.type === 'mobile' ? 'Mobile Simulator' : 'Workflow Editor'}
+                          {project.type === 'web' ? 'Browser-Vorschau' : project.type === 'mobile' ? 'Mobile-Simulator' : 'Workflow-Editor'}
                         </span>
                       }
                     />
@@ -666,18 +640,14 @@ export const Projects = () => {
               title={
                 <>
                   <GraduationCap className="w-3 h-3" />
-                  ~/academic — research notes
+                  ~/academic
                 </>
               }
             />
             <div className="p-6 font-mono">
-              <div className="flex items-center gap-3 mb-2 text-sm">
-                <span className="text-purple-400">📚</span>
-                <span className="text-gray-400">cat</span>
-                <span className="text-cyan-400">university-projects.md</span>
-              </div>
-              <h3 className="text-2xl font-bold text-white">Academic Projects</h3>
-              <p className="text-gray-500 text-xs mt-2"># Hochschulprojekte mit Fokus auf Software-Architektur und Informatik-Grundlagen</p>
+              <h3 className="text-2xl font-bold text-white flex items-center gap-2">
+                <span className="text-purple-400">Uni</span>Projekte
+              </h3>
             </div>
           </div>
 
@@ -690,14 +660,9 @@ export const Projects = () => {
                 <TerminalHeader
                   dots="small"
                   title={
-                    <div className="flex items-center justify-between w-full">
-                      <span className="font-mono text-[10px] text-gray-500">
-                        lab-entry-{index + 1}.txt
-                      </span>
-                      <span className="font-mono text-[10px] text-purple-400 border border-purple-500/20 px-2 py-0.5 rounded">
-                        {project.year}
-                      </span>
-                    </div>
+                    <span className="font-mono text-[10px] text-purple-400">
+                      {project.year}
+                    </span>
                   }
                 />
 
@@ -710,7 +675,7 @@ export const Projects = () => {
                     </div>
                     <div className="flex-1">
                       <h4 className="text-xl font-bold text-white mb-1">{project.title}</h4>
-                      <p className="text-purple-400 text-xs">// {project.role}</p>
+                      <p className="text-purple-400 text-xs">{project.role}</p>
                     </div>
                   </div>
 
@@ -721,7 +686,6 @@ export const Projects = () => {
 
                   {/* Tags */}
                   <div className="mb-4">
-                    <div className="text-[10px] text-gray-600 mb-2">tech_stack[]:</div>
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map(tag => (
                         <span key={tag} className="text-xs text-gray-400 bg-white/5 border border-white/10 px-2 py-1 rounded">
@@ -740,7 +704,7 @@ export const Projects = () => {
                       className="inline-flex items-center gap-2 text-sm text-purple-400 hover:text-purple-300 transition-colors border-b border-purple-500/30 pb-1"
                     >
                       <ExternalLink className="w-4 h-4" />
-                      <span>View Project</span>
+                      <span>Projekt ansehen</span>
                     </a>
                   )}
                 </div>
@@ -758,91 +722,55 @@ export const Projects = () => {
               title={
                 <>
                   <Terminal className="w-3 h-3" />
-                  ~/lab — htop --processes
+                  ~/lab
                 </>
               }
             />
             <div className="p-6 font-mono">
-              <div className="flex items-center gap-3 mb-2 text-sm">
-                <span className="text-green-400">⚡</span>
-                <span className="text-gray-400">ps</span>
-                <span className="text-cyan-400">aux</span>
-                <span className="text-gray-500">| grep experiments</span>
-              </div>
-              <h3 className="text-2xl font-bold text-white">Other Projects</h3>
-              <p className="text-gray-500 text-xs mt-2"># Engineering, Hardware-Hacks & Automatisierungs-Skripte</p>
+              <h3 className="text-2xl font-bold text-white flex items-center gap-2">
+                <span className="text-green-400">Weitere</span> Projekte
+              </h3>
             </div>
           </div>
 
-          {/* Process Monitor Table */}
-          <div className="process-monitor bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
-            {/* Table Header */}
-            <TerminalHeader
-              dots="small"
-              title={<span className="text-[10px] font-mono text-gray-500">process_monitor.log — 3 active tasks</span>}
-            />
+          {/* Project Cards */}
+          <div className="process-monitor grid gap-6">
+            {labProjects.map((project, index) => (
+              <div
+                key={index}
+                className="lab-card bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden hover:border-green-500/30 transition-all duration-300 group"
+              >
+                <TerminalHeader
+                  dots="small"
+                  title={<span className="text-[10px] text-gray-500">{project.category}</span>}
+                />
 
-            {/* Table Content */}
-            <div className="divide-y divide-white/5">
-              {labProjects.map((project, index) => (
-                <div
-                  key={index}
-                  className="lab-card p-6 hover:bg-white/[0.02] transition-colors group"
-                >
+                <div className="p-6">
                   <div className="grid md:grid-cols-[auto_1fr] gap-6">
 
-                    {/* Left: Process Status Indicator */}
-                    <div className="flex flex-col items-center gap-3">
-                      {/* Icon */}
-                      <div className="process-icon relative">
-                        <div className="absolute -inset-2 bg-green-500/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <div className="relative p-4 bg-green-500/10 rounded-xl border border-green-500/20 group-hover:border-green-500/40 transition-all">
-                          {project.icon}
-                        </div>
-                      </div>
-
-                      {/* Status */}
-                      <div className="status-badge flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/5 border border-green-500/20">
-                        <span className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                        </span>
-                        <span className="text-[10px] font-mono text-green-400 font-bold">RUNNING</span>
+                    {/* Left: Icon */}
+                    <div className="flex flex-col items-center">
+                      <div className="process-icon relative p-4 bg-green-500/10 rounded-xl border border-green-500/20 group-hover:border-green-500/40 transition-all">
+                        {project.icon}
                       </div>
                     </div>
 
-                    {/* Right: Process Details */}
+                    {/* Right: Details */}
                     <div className="process-details font-mono space-y-4">
-
-                      {/* Process Header */}
                       <div>
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-xs text-gray-600">PID:</span>
-                              <span className="text-xs text-green-400 font-bold">{1000 + index}</span>
-                              <span className="text-xs text-gray-600">|</span>
-                              <span className="text-[10px] text-emerald-400 uppercase tracking-wider font-bold">{project.category}</span>
-                            </div>
-                            <h4 className="text-xl font-bold text-white">{project.title}</h4>
-                          </div>
-                        </div>
+                        <h4 className="text-xl font-bold text-white mb-2">{project.title}</h4>
                         <p className="text-sm text-gray-400 leading-relaxed">
                           {project.description}
                         </p>
                       </div>
 
-                      {/* Code Output */}
+                      {/* Code Snippet */}
                       {project.codeSnippet && (
                         <div className="code-output bg-[#0a0a0a] rounded-lg border border-white/5 p-4 group-hover:border-green-500/20 transition-colors">
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="text-[10px] text-gray-600">STDOUT:</span>
-                            <div className="h-px flex-1 bg-white/5"></div>
-                          </div>
-                          <div className="font-mono text-xs text-green-500/70 space-y-1">
+                          <div className="font-mono text-xs space-y-1">
                             {project.codeSnippet.split('\n').map((line, i) => (
                               <div key={i} className="code-line flex gap-2">
-                                <span className="text-gray-700">{i + 1}</span>
+                                <span className="text-gray-700 select-none">{i + 1}</span>
                                 <span className="text-gray-500">{line}</span>
                               </div>
                             ))}
@@ -850,35 +778,19 @@ export const Projects = () => {
                         </div>
                       )}
 
-                      {/* Tech Stack - Process Resources */}
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-[10px] text-gray-600">DEPENDENCIES:</span>
-                          <div className="h-px flex-1 bg-white/5"></div>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {project.tech.map((t, i) => (
-                            <span key={t} className="dependency-tag text-[10px] font-mono text-gray-500 bg-white/5 border border-white/10 px-2 py-1 rounded">
-                              <span className="text-green-400">[{i + 1}]</span> {t}
-                            </span>
-                          ))}
-                        </div>
+                      {/* Tech Stack */}
+                      <div className="flex flex-wrap gap-2">
+                        {project.tech.map((t) => (
+                          <span key={t} className="dependency-tag text-xs font-mono text-gray-400 bg-white/5 border border-white/10 px-2 py-1 rounded">
+                            {t}
+                          </span>
+                        ))}
                       </div>
-
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Footer Stats */}
-            <div className="process-footer h-10 bg-[#0a0a0a] border-t border-white/5 flex items-center px-6 font-mono text-[10px] text-gray-600">
-              <span className="text-green-400">3</span>&nbsp;processes&nbsp;
-              <span className="text-gray-700 mx-2">|</span>
-              <span className="text-green-400">100%</span>&nbsp;uptime&nbsp;
-              <span className="text-gray-700 mx-2">|</span>
-              <span>Last updated: just now</span>
-            </div>
+              </div>
+            ))}
           </div>
         </div>
 

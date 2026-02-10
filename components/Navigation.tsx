@@ -101,7 +101,7 @@ export const Navigation = () => {
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-14">
+        <div className="relative flex items-center h-14">
 
             {/* Logo */}
             <a
@@ -120,7 +120,7 @@ export const Navigation = () => {
             </a>
 
             {/* Desktop Nav Links */}
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden md:flex items-center gap-1 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
               {navLinks.map((link, index) => (
                 <a
                   key={link.name}
@@ -136,7 +136,7 @@ export const Navigation = () => {
             </nav>
 
             {/* Desktop Social + CTA */}
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-2 ml-auto">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -165,7 +165,7 @@ export const Navigation = () => {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden text-white p-2 relative"
+            className="md:hidden text-white p-2 relative ml-auto"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -292,7 +292,7 @@ export const Navigation = () => {
                 transitionDuration: '300ms'
               }}
             >
-              Let's Talk →
+              Kontakt aufnehmen →
             </a>
 
             {/* Footer Info */}

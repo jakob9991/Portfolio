@@ -19,6 +19,11 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Jakob Dickhardt - Portfolio",
   description: "Full-Stack Entwickler, Medieninformatik Student & KI-Enthusiast",
+  icons: {
+    icon: "/images/titleLogo.svg",
+    shortcut: "/images/titleLogo.svg",
+    apple: "/images/titleLogo.svg",
+  },
 };
 
 export default function RootLayout({

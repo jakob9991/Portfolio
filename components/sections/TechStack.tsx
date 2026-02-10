@@ -5,7 +5,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Terminal, Package, Cpu, Code2, Wrench } from "lucide-react";
 import { TerminalHeader, SectionHeader } from "@/components/ui/terminal";
 import { useMobile } from "@/hooks/useMobile";
-import { useInView } from "@/hooks/useInView";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,32 +23,31 @@ export const TechStack = () => {
     ],
 
     frameworks: [
-      { name: "React Native", icon: "⚛️", level: 100, status: "Expert", desc: "Cross-Platform Mobile" },
-      { name: "Flutter", icon: "💙", level: 20, status: "Learning", desc: "UI Toolkit (Transitioning)" },
-      { name: "React / Next.js", icon: "▲", level: 95, status: "Expert", desc: "Web & Server Components" },
-         { name: "Vue.js", icon: "💚", level: 80, status: "Advanced", desc: "Progressive Web Framework" }, 
-      { name: "Tailwind CSS", icon: "🎨", level: 90, status: "Expert", desc: "Utility-First Styling" },
+      { name: "React Native", icon: "⚛️", level: 100, status: "Experte", desc: "Cross-Platform Mobile Apps" },
+      { name: "Flutter", icon: "💙", level: 20, status: "Lernend", desc: "UI-Toolkit (im Umstieg)" },
+      { name: "React / Next.js", icon: "▲", level: 95, status: "Experte", desc: "Web & Server Components" },
+         { name: "Vue.js", icon: "💚", level: 80, status: "Fortgeschritten", desc: "Progressives Web-Framework" }, 
+      { name: "Tailwind CSS", icon: "🎨", level: 90, status: "Experte", desc: "Utility-First Styling" },
 
     ],
 
     infrastructure: [
-      { name: "Firebase / Firestore", icon: "🔥", level: 90, status: "Expert" },
-      { name: "Node.js", icon: "🟢", level: 85, status: "Advanced" },
-      { name: "Docker", icon: "🐳", level: 75, status: "Advanced" },
-      { name: "PostgreSQL", icon: "🐘", level: 60, status: "Intermediate" },
+      { name: "Firebase / Firestore", icon: "🔥", level: 90, status: "Experte" },
+      { name: "Node.js", icon: "🟢", level: 85, status: "Fortgeschritten" },
+      { name: "Docker", icon: "🐳", level: 75, status: "Fortgeschritten" },
+      { name: "PostgreSQL", icon: "🐘", level: 60, status: "Solide" },
     ],
 
     tools: [
-      { name: "n8n (AI Auto)", icon: "🔄", desc: "Workflow Automation" },
-      { name: "Git / GitHub", icon: "📦", desc: "Version Control" },
-      { name: "Figma", icon: "🖌️", desc: "UI/UX Design" },
-      { name: "GSAP", icon: "🎬", desc: "High-Perf Animations" },
+      { name: "n8n (AI Auto)", icon: "🔄", desc: "Workflow-Automatisierung" },
+      { name: "Git / GitHub", icon: "📦", desc: "Versionsverwaltung" },
+      { name: "Figma", icon: "🖌️", desc: "UI/UX-Design" },
+      { name: "GSAP", icon: "🎬", desc: "High-Performance Animationen" },
     ]
   };
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const isMobile = useMobile();
-  const isInView = useInView(sectionRef, { threshold: 0.1 });
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -330,13 +328,10 @@ export const TechStack = () => {
             terminalTitle={
               <>
                 <Terminal className="w-3 h-3" />
-                ~/skills — stack.config
+                ~/skills
               </>
             }
-            command="cat"
-            args={["tech-stack.yml"]}
-            title={<>Tech <span className="text-purple-400">Stack</span></>}
-            subtitle="Ein Überblick über mein technologisches Portfolio — Sprachen, Frameworks, Infrastructure & Tools."
+            title={<>Tech-<span className="text-purple-400">Stack</span></>}
           />
         </div>
 
@@ -348,15 +343,14 @@ export const TechStack = () => {
               title={
                 <>
                   <Code2 className="w-3 h-3" />
-                  gcc --version && python --version && java --version
+                  ~/languages
                 </>
               }
             />
             <div className="p-6 font-mono">
               <h3 className="text-2xl font-bold text-white flex items-center gap-2">
-                <span className="text-yellow-400">Programming</span> Languages
+                <span className="text-yellow-400">Programmiersprachen</span>
               </h3>
-              <p className="text-gray-500 text-xs mt-2"># Core Language Proficiencies</p>
             </div>
           </div>
 
@@ -450,15 +444,14 @@ export const TechStack = () => {
               title={
                 <>
                   <Package className="w-3 h-3" />
-                  npm list --global frameworks
+                  ~/frameworks
                 </>
               }
             />
             <div className="p-6 font-mono">
               <h3 className="text-2xl font-bold text-white flex items-center gap-2">
-                <span className="text-blue-400">Frameworks</span> & Libraries
+                <span className="text-blue-400">Frameworks</span> & Bibliotheken
               </h3>
-              <p className="text-gray-500 text-xs mt-2"># UI, Mobile & Web Development Frameworks</p>
             </div>
           </div>
 
@@ -478,15 +471,14 @@ export const TechStack = () => {
                       {framework.icon}
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-mono font-bold text-white text-xl mb-1">{framework.name}</h4>
-                      <p className="text-xs text-gray-500">{framework.desc}</p>
+                      <h4 className="font-mono font-bold text-white text-xl">{framework.name}</h4>
                     </div>
                   </div>
 
                   {/* Progress Bar */}
                   <div className="space-y-2">
                     <div className="flex justify-between text-xs font-mono">
-                      <span className="text-gray-500">Proficiency</span>
+                      <span className="text-gray-500">Kenntnisstand</span>
                       <span className="text-blue-400 font-bold">{framework.level}%</span>
                     </div>
                     <div className="h-2 bg-white/5 rounded-full overflow-hidden">
@@ -510,36 +502,22 @@ export const TechStack = () => {
               title={
                 <>
                   <Cpu className="w-3 h-3" />
-                  htop --process-tree /infrastructure
+                  ~/infrastructure
                 </>
               }
             />
             <div className="p-6 font-mono">
               <h3 className="text-2xl font-bold text-white flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                <span className="text-green-400">Infrastructure</span>
+                <span className="text-green-400">Infrastruktur</span>
                 <span className="hidden sm:inline">&</span>
                 <span className="sm:inline">Backend</span>
               </h3>
-              <p className="text-gray-500 text-xs mt-2"># Backend, Database & DevOps — System Monitor</p>
             </div>
           </div>
 
           {/* System Monitor Display */}
           <div className="bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden">
-            <TerminalHeader
-              dots="small"
-              title={<span className="text-[9px] text-gray-600">htop — {techStack.infrastructure.length} running processes</span>}
-            />
-
             <div className="p-4 sm:p-6 font-mono text-sm">
-              {/* System Monitor Header - Desktop Only */}
-              <div className="hidden md:grid grid-cols-12 gap-2 mb-4 pb-3 border-b border-white/5 text-[10px] text-gray-600 font-bold">
-                <div className="col-span-1">PID</div>
-                <div className="col-span-4">PROCESS</div>
-                <div className="col-span-2 text-center">STATUS</div>
-                <div className="col-span-3 text-center">SKILL LEVEL</div>
-                <div className="col-span-2 text-right">UPTIME</div>
-              </div>
 
               {/* Process List */}
               <div className="space-y-3 md:space-y-3">
@@ -569,7 +547,7 @@ export const TechStack = () => {
                         {/* Skill Level Bar - Mobile */}
                         <div className="space-y-2">
                           <div className="flex items-center justify-between text-xs">
-                            <span className="text-gray-500">Skill Level</span>
+                            <span className="text-gray-500">Kenntnisstand</span>
                             <span className={`font-bold ${colors.text}`}>{tech.level}%</span>
                           </div>
                           <div className="h-2.5 bg-[#0a0a0a] rounded-full overflow-hidden border border-white/5">
@@ -583,51 +561,28 @@ export const TechStack = () => {
 
                       {/* Desktop Layout */}
                       <div className="hidden md:grid grid-cols-12 gap-2 items-center">
-                        {/* PID */}
-                        <div className="col-span-1 text-gray-600 text-xs">
-                          {2000 + index}
-                        </div>
-
-                        {/* Process Name */}
-                        <div className="col-span-4 flex items-center gap-2">
+                        <div className="col-span-5 flex items-center gap-2">
                           <span className="text-2xl">{tech.icon}</span>
                           <div>
                             <div className={`font-bold ${colors.text}`}>{tech.name}</div>
-                            <div className="text-[9px] text-gray-600">{tech.status}</div>
-                          </div>
-                        </div>
-
-                        {/* Status Badge */}
-                        <div className="col-span-2 flex justify-center">
-                          <div className={`px-2 py-1 rounded-md text-[9px] font-bold ${colors.text} border ${colors.border} flex items-center gap-1`}
-                            style={{ backgroundColor: `rgb(${colors.bg.includes('purple') ? '168 85 247' : colors.bg.includes('emerald') ? '16 185 129' : colors.bg.includes('blue') ? '59 130 246' : '6 182 212'} / 0.1)` }}>
-                            <span className="relative flex h-1.5 w-1.5">
-                              <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${colors.bg} opacity-75`}></span>
-                              <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${colors.bg}`}></span>
-                            </span>
-                            ACTIVE
+                            <div className="text-[10px] text-gray-500">{tech.status}</div>
                           </div>
                         </div>
 
                         {/* Skill Level Bar */}
-                        <div className="col-span-3">
+                        <div className="col-span-7">
                           <div className="space-y-1">
-                            <div className="flex items-center justify-between text-[9px]">
-                              <span className="text-gray-600">SKILL</span>
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="text-gray-500">Kenntnisstand</span>
                               <span className={`font-bold ${colors.text}`}>{tech.level}%</span>
                             </div>
                             <div className="h-2 bg-[#0a0a0a] rounded-full overflow-hidden border border-white/5">
                               <div
-                                className={`h-full rounded-full ${colors.bg} ${colors.glow} transition-all duration-1000`}
+                                className={`h-full rounded-full ${colors.bg} transition-all duration-1000`}
                                 style={{ width: `${tech.level}%` }}
                               ></div>
                             </div>
                           </div>
-                        </div>
-
-                        {/* Uptime */}
-                        <div className="col-span-2 text-right text-cyan-400 text-xs">
-                          99.9%
                         </div>
                       </div>
                     </div>
@@ -635,29 +590,6 @@ export const TechStack = () => {
                 })}
               </div>
 
-              {/* System Footer Stats */}
-              <div className="mt-6 pt-4 border-t border-white/5 grid grid-cols-3 gap-4 text-xs">
-                <div className="text-center">
-                  <div className="text-gray-600 mb-1">TOTAL PROCESSES</div>
-                  <div className="text-green-400 font-bold text-lg">{techStack.infrastructure.length}</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-gray-600 mb-1">AVG SKILL LEVEL</div>
-                  <div className="text-purple-400 font-bold text-lg">
-                    {Math.round(techStack.infrastructure.reduce((sum, t) => sum + t.level, 0) / techStack.infrastructure.length)}%
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-gray-600 mb-1">SYSTEM STATUS</div>
-                  <div className="text-emerald-400 font-bold text-lg flex items-center justify-center gap-2">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                    OPTIMAL
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -670,7 +602,7 @@ export const TechStack = () => {
               title={
                 <>
                   <Wrench className="w-3 h-3" />
-                  ls -la ~/.config/tools
+                  ~/tools
                 </>
               }
             />
@@ -678,7 +610,6 @@ export const TechStack = () => {
               <h3 className="text-2xl font-bold text-white flex items-center gap-2">
                 <span className="text-orange-400">Tools</span> & Workflows
               </h3>
-              <p className="text-gray-500 text-xs mt-2"># Development Tools & Automation</p>
             </div>
           </div>
 
@@ -691,8 +622,7 @@ export const TechStack = () => {
                     {tool.icon}
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-mono font-bold text-white text-lg mb-1">{tool.name}</h4>
-                    <p className="text-xs text-gray-500">{tool.desc}</p>
+                    <h4 className="font-mono font-bold text-white text-lg">{tool.name}</h4>
                   </div>
                 </div>
               </div>

@@ -32,7 +32,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
 
         {subtitle && (
           <p className="text-gray-400 text-sm leading-relaxed">
-            <span className="text-gray-600">#</span> {subtitle}
+            {subtitle}
           </p>
         )}
       </div>
