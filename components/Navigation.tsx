@@ -155,7 +155,7 @@ export const Navigation = () => {
 
               <a
                 href="#contact"
-                onClick={(e) => handleNavClick(e, '#contact')}
+                onClick={(e) => handleNavClick(e, '#kontakt')}
                 className="ml-2 px-4 py-1.5 text-xs font-bold font-mono bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-md hover:from-cyan-400 hover:to-blue-400 transition-all shadow-lg shadow-cyan-500/20"
               >
                 <span className="text-cyan-200 mr-1">$</span>
