@@ -42,70 +42,36 @@ export const About = ({ profile, stats, resume }: AboutProps) => {
     }
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        containerRef.current,
-        {
-          opacity: 0,
-          y: 36,
-          scale: 0.985,
-          filter: "blur(6px)",
-          clipPath: "inset(0 0 14% 0)",
-        },
-        {
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 80%",
-            toggleActions: "play reset play reset",
-          },
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          filter: "blur(0px)",
-          clipPath: "inset(0 0 0% 0)",
-          duration: 0.9,
-          ease: "power3.out",
-        },
-      );
+      if (imageRef.current) {
+        gsap.set(imageRef.current, { autoAlpha: 0, y: 16, scale: 0.94 });
+      }
+      if (textRef.current) {
+        gsap.set(textRef.current, { autoAlpha: 0, y: 20 });
+      }
 
-      gsap.fromTo(
-        ".about-container-glow",
-        { opacity: 0, scale: 0.85 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 1.1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 82%",
-            toggleActions: "play reset play reset",
-          },
-        },
-      );
-
-      gsap.from(imageRef.current, {
+      gsap.to(imageRef.current, {
         scrollTrigger: {
           trigger: imageRef.current,
-          start: "top 80%",
-          toggleActions: "play reset play reset",
+          start: "top 92%",
+          toggleActions: "play none none reset",
         },
-        opacity: 0,
-        scale: 0.9,
+        autoAlpha: 1,
+        y: 0,
+        scale: 1,
         duration: 0.6,
-        delay: 0.2,
         ease: "power3.out",
       });
 
-      gsap.from(textRef.current, {
+      gsap.to(textRef.current, {
         scrollTrigger: {
           trigger: textRef.current,
-          start: "top 80%",
-          toggleActions: "play reset play reset",
+          start: "top 92%",
+          toggleActions: "play none none reset",
         },
-        opacity: 0,
-        x: 30,
+        autoAlpha: 1,
+        y: 0,
         duration: 0.6,
-        delay: 0.3,
+        delay: 0.08,
         ease: "power3.out",
       });
     }, sectionRef);
