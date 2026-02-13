@@ -28,7 +28,6 @@ export const AboutProfileCard = ({ profile }: AboutProfileCardProps) => {
           fill
           className="object-cover"
           sizes="400px"
-          priority
         />
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0f1219] via-[#0f1219]/50 to-transparent" />
       </div>

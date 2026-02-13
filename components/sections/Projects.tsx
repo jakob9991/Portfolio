@@ -303,9 +303,18 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
+      const safeFromTo = (
+        target: gsap.TweenTarget | null | undefined,
+        fromVars: gsap.TweenVars,
+        toVars: gsap.TweenVars,
+      ) => {
+        if (!target) return;
+        if (Array.isArray(target) && target.length === 0) return;
+        gsap.fromTo(target, fromVars, toVars);
+      };
 
       // 1. Main Section Header - Simplified on mobile
-      gsap.fromTo(".section-header",
+      safeFromTo(".section-header",
         isMobile ? { y: 30, opacity: 0 } : { y: 50, opacity: 0, scale: 0.95, rotateX: -15 },
         {
           y: 0,
@@ -323,9 +332,9 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
       );
 
       // 2. Featured Projects - Git Commit Cards mit Stagger
-      gsap.utils.toArray(".project-card-featured").forEach((card: any, index: number) => {
+      gsap.utils.toArray<HTMLElement>(".project-card-featured").forEach((card) => {
         // Terminal Header Animation - Simplified on mobile
-        gsap.fromTo(card.querySelector(".git-commit-header"),
+        safeFromTo(card.querySelector(".git-commit-header"),
           { opacity: 0, x: isMobile ? -10 : -20 },
           {
             opacity: 1,
@@ -341,7 +350,7 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
         );
 
         // Commit Info (Left Side)
-        gsap.fromTo(card.querySelector(".commit-info"),
+        safeFromTo(card.querySelector(".commit-info"),
           { opacity: 0, x: isMobile ? -15 : -30 },
           {
             opacity: 1,
@@ -357,7 +366,7 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
         );
 
         // Visual Preview (Right Side) - No rotation on mobile
-        gsap.fromTo(card.querySelector(".visual-preview"),
+        safeFromTo(card.querySelector(".visual-preview"),
           isMobile ? { opacity: 0, scale: 0.95 } : { opacity: 0, scale: 0.9, rotateY: 10 },
           {
             opacity: 1,
@@ -375,7 +384,7 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
         );
 
         // Tech Tags Stagger - Reduced on mobile
-        gsap.fromTo(card.querySelectorAll(".tech-tag"),
+        safeFromTo(card.querySelectorAll(".tech-tag"),
           { opacity: 0, scale: 0.8, y: 10 },
           {
             opacity: 1,
@@ -394,7 +403,7 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
       });
 
       // 3. Academic Section Header - Simplified on mobile
-      gsap.fromTo(".academic-header",
+      safeFromTo(".academic-header",
         isMobile ? { y: 30, opacity: 0 } : { y: 40, opacity: 0, scale: 0.95 },
         {
           y: 0,
@@ -411,8 +420,8 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
       );
 
       // 4. Academic Cards - Lab Notebook Style
-      gsap.utils.toArray(".academic-card").forEach((card: any, index: number) => {
-        gsap.fromTo(card,
+      gsap.utils.toArray<HTMLElement>(".academic-card").forEach((card, index) => {
+        safeFromTo(card,
           isMobile ? { y: 30, opacity: 0 } : { y: 60, opacity: 0, rotateX: -10, scale: 0.95 },
           {
             y: 0,
@@ -431,7 +440,7 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
         );
 
         // Icon Animation - No rotation on mobile
-        gsap.fromTo(card.querySelector(".academic-icon"),
+        safeFromTo(card.querySelector(".academic-icon"),
           isMobile ? { scale: 0, opacity: 0 } : { scale: 0, rotation: -180 },
           {
             scale: 1,
@@ -450,7 +459,7 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
       });
 
       // 5. Lab Section Header - Simplified on mobile
-      gsap.fromTo(".lab-header",
+      safeFromTo(".lab-header",
         isMobile ? { y: 30, opacity: 0 } : { y: 40, opacity: 0, scale: 0.95 },
         {
           y: 0,
@@ -467,7 +476,7 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
       );
 
       // 6. Process Monitor Table - Simplified on mobile
-      gsap.fromTo(".process-monitor",
+      safeFromTo(".process-monitor",
         isMobile ? { y: 30, opacity: 0 } : { y: 50, opacity: 0, scale: 0.98 },
         {
           y: 0,
@@ -484,9 +493,9 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
       );
 
       // 7. Lab Cards - Process Entries mit Stagger
-      gsap.utils.toArray(".lab-card").forEach((card: any, index: number) => {
+      gsap.utils.toArray<HTMLElement>(".lab-card").forEach((card, index) => {
         // Process Icon pulsiert beim Erscheinen
-        gsap.fromTo(card.querySelector(".process-icon"),
+        safeFromTo(card.querySelector(".process-icon"),
           {
             scale: 0,
             opacity: 0,
@@ -505,27 +514,8 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
           }
         );
 
-        // Status Badge
-        gsap.fromTo(card.querySelector(".status-badge"),
-          {
-            opacity: 0,
-            x: isMobile ? -5 : -10
-          },
-          {
-            opacity: 1,
-            x: 0,
-            duration: isMobile ? 0.3 : 0.5,
-            delay: isMobile ? index * 0.08 + 0.1 : index * 0.15 + 0.2,
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-              toggleActions: "play reset play reset",
-            }
-          }
-        );
-
         // Dependencies Tags
-        gsap.fromTo(card.querySelectorAll(".dependency-tag"),
+        safeFromTo(card.querySelectorAll(".dependency-tag"),
           { opacity: 0, scale: 0.8, y: 5 },
           {
             opacity: 1,
@@ -542,24 +532,6 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
           }
         );
       });
-
-      // 8. Footer Stats Animation - Simplified on mobile
-      gsap.fromTo(".process-footer",
-        {
-          opacity: 0,
-          y: isMobile ? 10 : 20
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: isMobile ? 0.4 : 0.6,
-          scrollTrigger: {
-            trigger: ".process-footer",
-            start: "top 90%",
-            toggleActions: "play reset play reset",
-          }
-        }
-      );
 
     }, sectionRef);
     return () => ctx.revert();
@@ -589,7 +561,7 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
 
         {/* --- 1. FEATURED PROJECTS - Git Commit Style --- */}
         <div className="space-y-8 mb-32">
-          {featuredProjects.map((project: any, index) => (
+          {featuredProjects.map((project: FeaturedProject, index) => (
             <div
               key={index}
               className="project-card-featured bg-[#0f1219]/60 backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden group hover:border-sky-500/30 transition-all duration-300"
@@ -620,7 +592,7 @@ export const Projects = ({ projects = [], projectStackItems = [], projectImages 
 
                   {/* Details */}
                   <div className="flex flex-wrap gap-4 text-sm">
-                    {project.stats.map((stat: any, i: number) => (
+                    {project.stats.map((stat: { label: string; value: string }, i: number) => (
                       <div key={i} className="flex gap-2">
                         <span className="text-gray-500">{stat.label}:</span>
                         <span className="text-gray-300">{stat.value}</span>
