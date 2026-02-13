@@ -42,17 +42,46 @@ export const About = ({ profile, stats, resume }: AboutProps) => {
     }
 
     const ctx = gsap.context(() => {
-      gsap.from(containerRef.current, {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-          toggleActions: "play reset play reset",
+      gsap.fromTo(
+        containerRef.current,
+        {
+          opacity: 0,
+          y: 36,
+          scale: 0.985,
+          filter: "blur(6px)",
+          clipPath: "inset(0 0 14% 0)",
         },
-        opacity: 0,
-        y: 30,
-        duration: 0.6,
-        ease: "power3.out",
-      });
+        {
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+            toggleActions: "play reset play reset",
+          },
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          clipPath: "inset(0 0 0% 0)",
+          duration: 0.9,
+          ease: "power3.out",
+        },
+      );
+
+      gsap.fromTo(
+        ".about-container-glow",
+        { opacity: 0, scale: 0.85 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 82%",
+            toggleActions: "play reset play reset",
+          },
+        },
+      );
 
       gsap.from(imageRef.current, {
         scrollTrigger: {
@@ -93,6 +122,7 @@ export const About = ({ profile, stats, resume }: AboutProps) => {
       <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(14,165,233,0.02)_1px,transparent_1px),linear-gradient(45deg,rgba(14,165,233,0.02)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none" />
 
       <div ref={containerRef} className="container mx-auto px-4 relative z-10">
+        <div className="about-container-glow absolute left-1/2 -translate-x-1/2 top-10 w-[540px] h-[320px] rounded-full bg-cyan-500/10 blur-[90px] pointer-events-none" />
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-[400px_1fr] gap-6 items-start">
             <div ref={imageRef}>

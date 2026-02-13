@@ -1,8 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Terminal } from 'lucide-react';
-import Image from "next/image"
-import logo from "../public/images/logo.svg"
+import { LogoInline } from './LogoInline';
 import { socialLinks } from '@/public/data/socialLinks';
 
 export const Navigation = () => {
@@ -108,15 +107,9 @@ export const Navigation = () => {
               href="#start"
               className="relative group"
               onClick={(e) => handleNavClick(e, '#start')}
+              aria-label="Start"
             >
-              <Image
-                src={logo}
-                alt="Jakob Dickhardt Logo"
-                width={40}
-                height={40}
-                className="h-7 w-auto brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all"
-              />
-              <div className="absolute -inset-2 bg-cyan-500/20 blur-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <LogoInline className="h-9 w-auto" />
             </a>
 
             {/* Desktop Nav Links */}
@@ -155,11 +148,10 @@ export const Navigation = () => {
 
               <a
                 href="#contact"
-                onClick={(e) => handleNavClick(e, '#kontakt')}
+                onClick={(e) => handleNavClick(e, '#contact')}
                 className="ml-2 px-4 py-1.5 text-xs font-bold font-mono bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-md hover:from-cyan-400 hover:to-blue-400 transition-all shadow-lg shadow-cyan-500/20"
               >
-                <span className="text-cyan-200 mr-1">$</span>
-                contact
+                Kontakt
               </a>
             </div>
 

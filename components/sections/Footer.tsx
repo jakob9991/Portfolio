@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Terminal } from "lucide-react";
 import { TerminalHeader } from "@/components/ui/terminal";
+import { LogoInline } from "@/components/LogoInline";
 import { useMobile } from "@/hooks/useMobile";
 import {
   FooterBottom,
@@ -73,11 +74,10 @@ export const Footer = ({ links, contacts, meta }: FooterProps) => {
 
       gsap.fromTo(
         ".footer-logo",
-        isMobile ? { scale: 0, opacity: 0 } : { scale: 0, rotation: -180 },
+        isMobile ? { scale: 0, opacity: 0 } : { scale: 0, opacity: 0 },
         {
           scale: 1,
           opacity: 1,
-          rotation: 0,
           duration: isMobile ? 0.5 : 0.8,
           delay: isMobile ? 0.2 : 0.3,
           ease: "back.out(1.7)",
@@ -199,16 +199,7 @@ export const Footer = ({ links, contacts, meta }: FooterProps) => {
                   }}
                   className="group transition-transform duration-300 hover:scale-105"
                 >
-                  <img
-                    src="/images/logo.svg"
-                    alt={`${footerMeta.brand_name} Logo`}
-                    className="h-14 w-auto filter brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                      e.currentTarget.nextElementSibling?.classList.remove("hidden");
-                    }}
-                  />
-                  <span className="hidden text-3xl font-mono font-bold text-white">&lt;J/D&gt;</span>
+                  <LogoInline className="h-14 w-auto opacity-90 group-hover:opacity-100 transition-opacity" />
                 </a>
               </div>
 

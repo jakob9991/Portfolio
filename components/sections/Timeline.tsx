@@ -87,32 +87,40 @@ export const Timeline = () => {
                 // Light up dots as the line reaches them
                 const dots = gsap.utils.toArray(".timeline-dot");
                 const progress = self.progress;
+                const lineTrack = lineRef.current?.parentElement;
+                const trackRect = lineTrack?.getBoundingClientRect();
 
-                dots.forEach((dot: any, i) => {
-                  // Calculate when this dot should light up (evenly distributed)
-                  const dotThreshold = i / (dots.length - 1);
+                dots.forEach((dot: any) => {
+                  if (!trackRect) return;
+
+                  // Use the actual dot center position on the rendered line (more precise than index-based spacing)
+                  const dotRect = (dot as HTMLElement).getBoundingClientRect();
+                  const dotCenterY = dotRect.top + dotRect.height / 2;
+                  const dotThresholdRaw = (dotCenterY - trackRect.top) / trackRect.height;
+                  const dotThreshold = Math.min(1, Math.max(0, dotThresholdRaw));
+                  const innerDot = (dot as HTMLElement).querySelector(".timeline-dot-inner");
+
+                  if (!innerDot) return;
 
                   if (progress >= dotThreshold) {
-                    // Light up the dot
-                    const innerDot = dot.querySelector(".timeline-dot-inner");
-                    if (innerDot) {
+                    if ((innerDot as HTMLElement).dataset.active !== "1") {
+                      (innerDot as HTMLElement).dataset.active = "1";
                       gsap.to(innerDot, {
                         scale: 1.2,
                         opacity: 1,
                         boxShadow: "0 0 20px currentColor",
-                        duration: 0.3,
+                        duration: 0.25,
                         ease: "power2.out"
                       });
                     }
                   } else {
-                    // Dim the dot
-                    const innerDot = dot.querySelector(".timeline-dot-inner");
-                    if (innerDot) {
+                    if ((innerDot as HTMLElement).dataset.active !== "0") {
+                      (innerDot as HTMLElement).dataset.active = "0";
                       gsap.to(innerDot, {
                         scale: 1,
                         opacity: 0.5,
                         boxShadow: "none",
-                        duration: 0.3,
+                        duration: 0.25,
                         ease: "power2.out"
                       });
                     }
@@ -174,32 +182,34 @@ export const Timeline = () => {
       // 3. Dot Animations - Simplified on mobile
       gsap.utils.toArray(".timeline-dot").forEach((dot: any) => {
         if (isMobile) {
-          // Mobile: Just fade in
+          // Mobile: keep dots visible from the start, only subtle pop-in
           gsap.fromTo(dot,
-            { opacity: 0 },
+            { scale: 0.92, opacity: 0.75 },
             {
+              scale: 1,
               opacity: 1,
-              duration: 0.4,
+              duration: 0.3,
+              ease: "power2.out",
               scrollTrigger: {
                 trigger: dot,
-                start: "top 80%",
+                start: "top 95%",
                 toggleActions: "play reset play reset"
               }
             }
           );
         } else {
-          // Desktop: Full animation
+          // Desktop: keep dots visible from the start, no hard hide
           gsap.fromTo(dot,
-            { scale: 0, opacity: 0, rotation: -180 },
+            { scale: 0.9, opacity: 0.8, rotation: -20 },
             {
               scale: 1,
               opacity: 1,
               rotation: 0,
-              duration: 0.8,
-              ease: "back.out(1.7)",
+              duration: 0.45,
+              ease: "power2.out",
               scrollTrigger: {
                 trigger: dot,
-                start: "top 70%",
+                start: "top 95%",
                 toggleActions: "play reset play reset"
               }
             }

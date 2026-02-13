@@ -1,5 +1,5 @@
-'use client'
-import { useEffect, useRef } from "react";
+﻿'use client'
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ExternalLink, Github, Code2, GraduationCap, Layout, Lock, Smartphone, Terminal, Workflow, Tv, Bot, Gamepad2 } from "lucide-react";
@@ -9,8 +9,110 @@ import { useInView } from "@/hooks/useInView";
 
 gsap.registerPlugin(ScrollTrigger);
 
+type ProjectType = "web" | "mobile" | "automation";
+
+type ProjectDbRow = {
+  id: number;
+  title: string;
+  subtitle: string | null;
+  contribution: string;
+  timeframe: string;
+  context: string;
+  description: string;
+  demo_url: string | null;
+  repo_url: string | null;
+  image_url: string | null;
+  type: ProjectType;
+  is_visible: boolean;
+  sort_order: number;
+};
+
+type ProjectStackDbRow = {
+  id: number;
+  project_id: number;
+  item: string;
+  sort_order: number;
+};
+
+type ProjectImageDbRow = {
+  id: number;
+  project_id: number;
+  image_url: string;
+  image_alt: string | null;
+  sort_order: number;
+};
+
+type FeaturedProject = {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  stats: Array<{ label: string; value: string }>;
+  tags: string[];
+  links: { demo?: string; repo: string };
+  color: string;
+  type: ProjectType;
+  image?: string;
+  images?: string[];
+};
+
+type ProjectsProps = {
+  projects?: ProjectDbRow[];
+  projectStackItems?: ProjectStackDbRow[];
+  projectImages?: ProjectImageDbRow[];
+};
+
+const typeColorMap: Record<ProjectType, string> = {
+  web: "from-blue-500 to-indigo-600",
+  mobile: "from-emerald-400 to-cyan-500",
+  automation: "from-orange-400 to-red-500",
+};
+
+const mapDatabaseProjectsToFeatured = (
+  projects: ProjectDbRow[] = [],
+  projectStackItems: ProjectStackDbRow[] = [],
+  projectImages: ProjectImageDbRow[] = [],
+): FeaturedProject[] => {
+  const visibleProjects = projects
+    .filter((project) => project.is_visible)
+    .sort((a, b) => a.sort_order - b.sort_order);
+
+  return visibleProjects.map((project, index) => {
+    const tags = projectStackItems
+      .filter((item) => item.project_id === project.id)
+      .sort((a, b) => a.sort_order - b.sort_order)
+      .map((item) => item.item);
+
+    const images = projectImages
+      .filter((item) => item.project_id === project.id)
+      .sort((a, b) => a.sort_order - b.sort_order)
+      .map((item) => item.image_url);
+
+    return {
+      id: String(project.id ?? index + 1),
+      title: project.title,
+      subtitle: project.subtitle ?? "",
+      description: project.description,
+      stats: [
+        { label: "Beitrag", value: project.contribution },
+        { label: "Zeitraum", value: project.timeframe },
+        { label: "Kontext", value: project.context },
+      ],
+      tags,
+      links: {
+        demo: project.demo_url ?? undefined,
+        repo: project.repo_url ?? "private",
+      },
+      color: typeColorMap[project.type] ?? typeColorMap.web,
+      type: project.type,
+      image: images.length > 0 ? images[0] : project.image_url ?? undefined,
+      images: images.length > 0 ? images : undefined,
+    };
+  });
+};
+
 // --- 1. FEATURED (Commercial & Startups) ---
-const featuredProjects = [
+const fallbackFeaturedProjects: FeaturedProject[] = [
   {
     id: "01",
     title: "Cenra.ai",
@@ -121,10 +223,81 @@ const labProjects = [
   }
 ];
 
-export const Projects = () => {
+const TypewriterCodeBlock = ({ codeSnippet }: { codeSnippet: string }) => {
+  const blockRef = useRef<HTMLDivElement | null>(null);
+  const inViewRef = useRef(false);
+  const lastScrollYRef = useRef(0);
+  const scrollDirectionRef = useRef<"up" | "down">("down");
+  const [shouldType, setShouldType] = useState(false);
+  const [charCount, setCharCount] = useState(0);
+  const fullLines = codeSnippet.split("\n");
+
+  useEffect(() => {
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      scrollDirectionRef.current = currentY >= lastScrollYRef.current ? "down" : "up";
+      lastScrollYRef.current = currentY;
+    };
+
+    lastScrollYRef.current = window.scrollY;
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const element = blockRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !inViewRef.current && scrollDirectionRef.current === "down") {
+          setCharCount(0);
+          setShouldType(true);
+        }
+        inViewRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.25 },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!shouldType) return;
+    if (charCount >= codeSnippet.length) return;
+
+    const timeout = window.setTimeout(() => {
+      setCharCount((prev) => Math.min(prev + 1, codeSnippet.length));
+    }, 12);
+
+    return () => window.clearTimeout(timeout);
+  }, [shouldType, charCount, codeSnippet.length]);
+
+  const typedText = codeSnippet.slice(0, charCount);
+  const typedLines = typedText.split("\n");
+
+  return (
+    <div ref={blockRef} className="code-output bg-[#0a0a0a] rounded-lg border border-white/5 p-4 group-hover:border-green-500/20 transition-colors">
+      <div className="font-mono text-xs space-y-1">
+        {fullLines.map((_, i) => (
+          <div key={i} className="code-line flex gap-2">
+            <span className="text-gray-700 select-none">{i + 1}</span>
+            <span className="text-gray-500">{typedLines[i] ?? ""}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export const Projects = ({ projects = [], projectStackItems = [], projectImages = [] }: ProjectsProps) => {
   const sectionRef = useRef<HTMLElement | null>(null);
   const isMobile = useMobile();
   const isInView = useInView(sectionRef, { threshold: 0.1 });
+  const dbFeaturedProjects = mapDatabaseProjectsToFeatured(projects, projectStackItems, projectImages);
+  const featuredProjects = dbFeaturedProjects.length > 0 ? dbFeaturedProjects : fallbackFeaturedProjects;
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -350,80 +523,6 @@ export const Projects = () => {
             }
           }
         );
-
-        // Process Details
-        gsap.fromTo(card.querySelector(".process-details"),
-          {
-            opacity: 0,
-            x: isMobile ? 10 : 20
-          },
-          {
-            opacity: 1,
-            x: 0,
-            duration: isMobile ? 0.4 : 0.6,
-            delay: isMobile ? index * 0.08 + 0.15 : index * 0.15 + 0.3,
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-              toggleActions: "play reset play reset",
-            }
-          }
-        );
-
-        // Code Output Terminal
-        const codeOutput = card.querySelector(".code-output");
-        if (codeOutput) {
-          gsap.fromTo(codeOutput,
-            isMobile ? { opacity: 0, y: 5 } : { opacity: 0, y: 10, scaleY: 0.95 },
-            {
-              opacity: 1,
-              y: 0,
-              scaleY: 1,
-              duration: isMobile ? 0.3 : 0.5,
-              delay: isMobile ? index * 0.08 + 0.2 : index * 0.15 + 0.4,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 80%",
-                toggleActions: "play reset play reset",
-              }
-            }
-          );
-
-          // Code Lines einzeln erscheinen lassen - Skip on mobile for performance
-          if (!isMobile) {
-            gsap.fromTo(codeOutput.querySelectorAll(".code-line"),
-              { opacity: 0, x: -10 },
-              {
-                opacity: 1,
-                x: 0,
-                duration: 0.3,
-                stagger: 0.05,
-                delay: index * 0.15 + 0.5,
-                scrollTrigger: {
-                  trigger: card,
-                  start: "top 75%",
-                  toggleActions: "play reset play reset",
-                }
-              }
-            );
-          } else {
-            // On mobile, just fade in all code lines together
-            gsap.fromTo(codeOutput.querySelectorAll(".code-line"),
-              { opacity: 0 },
-              {
-                opacity: 1,
-                duration: 0.3,
-                delay: index * 0.08 + 0.25,
-                scrollTrigger: {
-                  trigger: card,
-                  start: "top 75%",
-                  toggleActions: "play reset play reset",
-                }
-              }
-            );
-          }
-        }
 
         // Dependencies Tags
         gsap.fromTo(card.querySelectorAll(".dependency-tag"),
@@ -766,16 +865,7 @@ export const Projects = () => {
 
                       {/* Code Snippet */}
                       {project.codeSnippet && (
-                        <div className="code-output bg-[#0a0a0a] rounded-lg border border-white/5 p-4 group-hover:border-green-500/20 transition-colors">
-                          <div className="font-mono text-xs space-y-1">
-                            {project.codeSnippet.split('\n').map((line, i) => (
-                              <div key={i} className="code-line flex gap-2">
-                                <span className="text-gray-700 select-none">{i + 1}</span>
-                                <span className="text-gray-500">{line}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
+                        <TypewriterCodeBlock codeSnippet={project.codeSnippet} />
                       )}
 
                       {/* Tech Stack */}

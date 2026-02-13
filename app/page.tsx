@@ -10,6 +10,9 @@ import { supabase } from "@/supabase/server";
 export default async function Home() {
   const [
     skillsRes,
+    projectsRes,
+    projectStackItemsRes,
+    projectImagesRes,
     aboutProfileRes,
     aboutStatsRes,
     aboutResumeRes,
@@ -18,6 +21,9 @@ export default async function Home() {
     footerMetaRes,
   ] = await Promise.all([
     supabase.from("skills").select("*"),
+    supabase.from("projects").select("*"),
+    supabase.from("project_stack_items").select("*"),
+    supabase.from("project_images").select("*"),
     supabase.from("about_profile").select("*").limit(1).maybeSingle(),
     supabase.from("about_stats").select("*").order("sort_order", { ascending: true }),
     supabase.from("about_resume").select("*").limit(1).maybeSingle(),
@@ -36,7 +42,11 @@ export default async function Home() {
         resume={aboutResumeRes.data ?? null}
       />
       <TechStack skills={skillsRes.data ?? []} />
-      <Projects />
+      <Projects
+        projects={projectsRes.data ?? []}
+        projectStackItems={projectStackItemsRes.data ?? []}
+        projectImages={projectImagesRes.data ?? []}
+      />
       <Timeline />
       <Footer
         links={footerLinksRes.data ?? []}
