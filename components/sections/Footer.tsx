@@ -191,16 +191,9 @@ export const Footer = ({ links, contacts, meta }: FooterProps) => {
 
             <div className="p-8 md:p-12 font-mono">
               <div className="footer-logo flex justify-center mb-10">
-                <a
-                  href="#start"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection("#start");
-                  }}
-                  className="group transition-transform duration-300 hover:scale-105"
-                >
+                <div className="group transition-transform duration-300 hover:scale-105">
                   <LogoInline className="h-14 w-auto opacity-90 group-hover:opacity-100 transition-opacity" />
-                </a>
+                </div>
               </div>
 
               <FooterContacts contacts={visibleContacts} />
