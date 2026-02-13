@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, Terminal } from 'lucide-react';
 import { LogoInline } from './LogoInline';
 import { socialLinks } from '@/public/data/socialLinks';
+import { useMobile } from '@/hooks/useMobile';
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isMobile = useMobile();
 
   // Handle Scroll Effect with Throttling for Performance
   useEffect(() => {
@@ -94,7 +96,11 @@ export const Navigation = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+        isMobile
+          ? isScrolled
+            ? 'bg-[#0a0d14]/90 backdrop-blur-xl border-b border-white/10 py-3'
+            : 'bg-[#0a0d14]/90 backdrop-blur-md py-4'
+          : isScrolled
           ? 'bg-[#0f1219]/95 backdrop-blur-xl border-b border-white/10 py-3'
           : 'bg-[#0a0d14]/80 backdrop-blur-md py-4'
       }`}
@@ -157,7 +163,7 @@ export const Navigation = () => {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden text-white p-2 relative ml-auto"
+            className="md:hidden text-white relative ml-auto w-10 h-10 flex items-center justify-end"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >

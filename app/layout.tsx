@@ -19,6 +19,11 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Jakob Dickhardt - Portfolio",
   description: "Full-Stack Entwickler, Medieninformatik Student & KI-Enthusiast",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Jakob Dickhardt - Portfolio",
+  },
   icons: {
     icon: "/images/titleLogo.svg",
     shortcut: "/images/titleLogo.svg",
@@ -27,7 +32,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0d14",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#0f1729" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f1729" },
+  ],
 };
 
 export default function RootLayout({
