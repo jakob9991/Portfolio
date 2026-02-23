@@ -7,6 +7,8 @@ import { Timeline } from "@/components/sections/Timeline";
 import { Footer } from "@/components/sections/Footer";
 import { supabase } from "@/supabase/server";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const [
     skillsRes,

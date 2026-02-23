@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React from 'react';
 
 type LogoInlineProps = {
   className?: string;
@@ -32,11 +32,11 @@ const iconPaths = [
 
 const JAKOB_PATH_COUNT = 5;
 
+const letterGlowFilterId = 'logo-letter-glow';
+const iconGlowFilterId = 'logo-icon-glow';
+const dotGlowFilterId = 'logo-dot-glow';
+
 export const LogoInline = ({ className }: LogoInlineProps) => {
-  const filterSeed = useId().replace(/:/g, '');
-  const letterGlowFilterId = `logo-letter-glow-${filterSeed}`;
-  const iconGlowFilterId = `logo-icon-glow-${filterSeed}`;
-  const dotGlowFilterId = `logo-dot-glow-${filterSeed}`;
 
   return (
     <>
