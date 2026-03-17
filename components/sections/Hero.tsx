@@ -123,26 +123,54 @@ export const Hero = () => {
       // 3. 3D Tilt Effect - STRICTLY DESKTOP ONLY
       // Moving event listeners inside the condition ensures mobile doesn't attach them
       if (!isMobile) {
+        const heroEl = heroRef.current;
+        if (!heroEl) return;
+
+        let isInsideHero = false;
+
+        const resetTilt = () => {
+          gsap.to(cardRef.current, {
+            rotateY: 0,
+            rotateX: 0,
+            duration: 0.8,
+            ease: "elastic.out(1, 0.5)",
+            overwrite: true
+          });
+          gsap.to(".code-layer", {
+            x: 0,
+            y: 0,
+            duration: 1,
+            ease: "power2.out",
+            overwrite: "auto"
+          });
+        };
+
         const handleMouseMove = (e: MouseEvent) => {
-          // Performance: If we are not looking at the hero, don't calculate math
           if (!cardRef.current || !isInView) return;
-          
-          const { clientX, clientY } = e;
-          const { innerWidth, innerHeight } = window;
-          
-          const xPct = (clientX / innerWidth - 0.5);
-          const yPct = (clientY / innerHeight - 0.5);
-          
-          const rotateY = xPct * 10; 
-          const rotateX = -yPct * 10;
+
+          const rect = heroEl.getBoundingClientRect();
+          const insideNow = e.clientY <= rect.bottom && e.clientY >= 0;
+
+          if (!insideNow) {
+            if (isInsideHero) {
+              isInsideHero = false;
+              resetTilt();
+            }
+            return;
+          }
+
+          isInsideHero = true;
+
+          const xPct = (e.clientX / window.innerWidth - 0.5);
+          const yPct = ((e.clientY - rect.top) / rect.height - 0.5);
 
           gsap.to(cardRef.current, {
-            rotateY: rotateY,
-            rotateX: rotateX,
+            rotateY: xPct * 10,
+            rotateX: -yPct * 10,
             transformPerspective: 1000,
             duration: 0.5,
             ease: "power2.out",
-            overwrite: "auto" // Prevent conflict with reset animation
+            overwrite: "auto"
           });
 
           gsap.to(".code-layer", {
@@ -154,24 +182,10 @@ export const Hero = () => {
           });
         };
 
-        const handleMouseLeave = () => {
-           gsap.to(cardRef.current, {
-            rotateY: 0,
-            rotateX: 0,
-            duration: 0.8,
-            ease: "elastic.out(1, 0.5)",
-            overwrite: true
-          });
-        };
-
         window.addEventListener("mousemove", handleMouseMove);
-        // Using heroRef for leave is safer than window to reset when cursor leaves the section
-        heroRef.current?.addEventListener("mouseleave", handleMouseLeave);
 
-        // Cleanup function specifically for these listeners within the context scope
         return () => {
           window.removeEventListener("mousemove", handleMouseMove);
-          heroRef.current?.removeEventListener("mouseleave", handleMouseLeave);
         };
       }
 
