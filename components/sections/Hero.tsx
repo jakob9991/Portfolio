@@ -83,16 +83,21 @@ export const Hero = () => {
 
     const ctx = gsap.context(() => {
 
-      // 1. Floating Code Background - Only created if NOT mobile
-      // We store this in a ref to control playback later based on view state
-      if (!isMobile) {
-        const snippets = gsap.utils.toArray(".code-snippet");
-        
-        // Create a timeline or simple tweens. A timeline is easier to control.
-        const tl = gsap.timeline({ repeat: -1, yoyo: true });
-        
+      // 1. Floating Code Background
+      const snippets = gsap.utils.toArray(".code-snippet");
+      const tl = gsap.timeline({ repeat: -1, yoyo: true });
+
+      if (isMobile) {
         snippets.forEach((snippet: any) => {
-          // Add to timeline with offset (position parameter 0 to start all at once)
+          tl.to(snippet, {
+            y: "random(-20, 20)",
+            opacity: "random(0.15, 0.3)",
+            duration: "random(4, 7)",
+            ease: "sine.inOut"
+          }, 0);
+        });
+      } else {
+        snippets.forEach((snippet: any) => {
           tl.to(snippet, {
             y: "random(-50, 50)",
             x: "random(-20, 20)",
@@ -101,9 +106,9 @@ export const Hero = () => {
             ease: "sine.inOut"
           }, 0);
         });
-        
-        floatingTlRef.current = tl;
       }
+
+      floatingTlRef.current = tl;
 
       // 2. Entrance Animation (Runs once)
       const tlEntry = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -120,8 +125,30 @@ export const Hero = () => {
         duration: 0.8
       }, "-=0.6");
 
-      // 3. 3D Tilt Effect - STRICTLY DESKTOP ONLY
-      // Moving event listeners inside the condition ensures mobile doesn't attach them
+      // 3. Mobile: automatic subtle 3D tilt animation
+      if (isMobile && cardRef.current) {
+        gsap.timeline({ repeat: -1, yoyo: true, defaults: { ease: "sine.inOut" } })
+          .to(cardRef.current, {
+            rotateX: 3,
+            rotateY: -4,
+            transformPerspective: 1000,
+            duration: 3,
+          })
+          .to(cardRef.current, {
+            rotateX: -2,
+            rotateY: 3,
+            transformPerspective: 1000,
+            duration: 3.5,
+          })
+          .to(cardRef.current, {
+            rotateX: 2,
+            rotateY: 5,
+            transformPerspective: 1000,
+            duration: 2.8,
+          });
+      }
+
+      // 4. 3D Tilt Effect - DESKTOP ONLY
       if (!isMobile) {
         const heroEl = heroRef.current;
         if (!heroEl) return;
@@ -224,24 +251,21 @@ export const Hero = () => {
       <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)] pointer-events-none"></div>
 
       {/* 2. Floating Code Snippets (Parallax Layer) */}
-      {/* Optimization: Hide DOM elements entirely on mobile to reduce DOM size */}
-      {!isMobile && (
-        <div className="code-layer absolute inset-0 overflow-hidden pointer-events-none will-change-transform">
-          {codeSnippets.map((snippet, i) => (
-            <div
-              key={i}
-              className="code-snippet absolute font-mono text-xs md:text-sm text-sky-500/20 whitespace-nowrap select-none blur-[1px] will-change-transform"
-              style={{
-                top: `${snippet.top}%`,
-                left: `${snippet.left}%`,
-                transform: `rotate(${snippet.rotate}deg)`
-              }}
-            >
-              {snippet.text}
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="code-layer absolute inset-0 overflow-hidden pointer-events-none will-change-transform">
+        {(isMobile ? codeSnippets.slice(0, 4) : codeSnippets).map((snippet, i) => (
+          <div
+            key={i}
+            className="code-snippet absolute font-mono text-xs md:text-sm text-sky-500/20 whitespace-nowrap select-none blur-[1px] will-change-transform"
+            style={{
+              top: `${snippet.top}%`,
+              left: `${snippet.left}%`,
+              transform: `rotate(${snippet.rotate}deg)`
+            }}
+          >
+            {snippet.text}
+          </div>
+        ))}
+      </div>
 
       {/* 3. Ambient Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-sky-500/5 blur-[80px] md:blur-[120px] rounded-full pointer-events-none will-change-transform"></div>
