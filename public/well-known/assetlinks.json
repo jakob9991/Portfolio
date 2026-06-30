@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.game_collection",
+      "sha256_cert_fingerprints": [
+        "78:78:7B:03:1D:A6:D1:5A:E6:05:8A:7B:E8:C1:E0:BB:1A:B3:2B:B7:B5:7C:50:C6:5F:62:59:1A:73:9A:14:68"
+      ]
+    }
+  }
+]
